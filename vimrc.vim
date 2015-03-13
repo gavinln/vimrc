@@ -33,13 +33,12 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'bling/vim-airline'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/syntastic'
-"Plugin 'jlanzarotta/bufexplorer'
+Plugin 'jlanzarotta/bufexplorer'
 Plugin 'yegappan/mru'
 Plugin 'vim-scripts/sessionman.vim'
 Plugin 'vim-scripts/TaskList.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Raimondi/delimitMate'
 Plugin 'jelera/vim-javascript-syntax'
@@ -47,6 +46,10 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'vimoutliner/vimoutliner'
+
+" In the file vimfiles\bundle\vimoutliner\vimoutlinerc
+" uncomment the following line for the comma comma keyboard mappings to work
+" let maplocalleader = ',,'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
