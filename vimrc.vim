@@ -24,7 +24,7 @@ Plugin 'gmarik/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdtree'
 Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/nerdcommenter'
@@ -43,7 +43,7 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Raimondi/delimitMate'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'editorconfig/editorconfig-vim'
+"Plugin 'editorconfig/editorconfig-vim'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'vimoutliner/vimoutliner'
 
@@ -122,10 +122,10 @@ set diffexpr=
         endif
     endfunction
 
-    augroup resCur
-        autocmd!
-        autocmd BufWinEnter * call ResCur()
-    augroup END
+    "augroup resCur
+    "    autocmd!
+    "    autocmd BufWinEnter * call ResCur()
+    "augroup END
 
     " Setting up the directories {
         set backup                  " Backups are nice ...
