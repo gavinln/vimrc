@@ -30,6 +30,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-vinegar'
 Plugin 'tpope/vim-repeat'
+Plugin 'kshenoy/vim-signature'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 Plugin 'sjl/gundo.vim'
@@ -46,9 +47,8 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Raimondi/delimitMate'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'Shougo/neocomplete.vim'
 Plugin 'vimoutliner/vimoutliner'
-Plugin 'kien/ctrlp.vim'
+Plugin 'Valloric/YouCompleteMe'
 "Plugin 'vim-scripts/TaskList.vim'
 "Plugin 'editorconfig/editorconfig-vim'
 "Plugin 'vim-scripts/sessionman.vim'
@@ -212,6 +212,80 @@ set diffexpr=
 
 " }
 
+" Functions {
+
+    " Initialize directories {
+    function! InitializeDirectories()
+        let parent = $HOME
+        let prefix = 'vim'
+        let dir_list = {
+                    \ 'backup': 'backupdir',
+                    \ 'views': 'viewdir',
+                    \ 'swap': 'directory' }
+
+        if has('persistent_undo')
+            let dir_list['undo'] = 'undodir'
+        endif
+
+        let common_dir = parent . '/.' . prefix
+
+        for [dirname, settingname] in items(dir_list)
+            let directory = common_dir . dirname . '/'
+            if exists("*mkdir")
+                if !isdirectory(directory)
+                    call mkdir(directory)
+                endif
+            endif
+            if !isdirectory(directory)
+                echo "Warning: Unable to create backup directory: " . directory
+                echo "Try: mkdir -p " . directory
+            else
+                let directory = substitute(directory, " ", "\\\\ ", "g")
+                exec "set " . settingname . "=" . directory
+            endif
+        endfor
+    endfunction
+    call InitializeDirectories()
+    " }
+
+    " Strip whitespace {
+    function! StripTrailingWhitespace()
+        " Preparation: save last search, and cursor position.
+        let _s=@/
+        let l = line(".")
+        let c = col(".")
+        " do the business:
+        %s/\s\+$//e
+        " clean up: restore previous search history, and cursor position
+        let @/=_s
+        call cursor(l, c)
+    endfunction
+    " }
+
+    " Shell command {
+    function! s:RunShellCommand(cmdline)
+        botright new
+
+        setlocal buftype=nofile
+        setlocal bufhidden=delete
+        setlocal nobuflisted
+        setlocal noswapfile
+        setlocal nowrap
+        setlocal filetype=shell
+        setlocal syntax=shell
+
+        call setline(1, a:cmdline)
+        call setline(2, substitute(a:cmdline, '.', '=', 'g'))
+        execute 'silent $read !' . escape(a:cmdline, '%#')
+        setlocal nomodifiable
+        1
+    endfunction
+
+    command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
+    " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
+    " }
+" 
+
 " Plugins {
     " Syntastic {
         let g:syntastic_python_checkers = ['pep8']
@@ -236,6 +310,15 @@ set diffexpr=
     " Javascript-Syntax {
         au FileType javascript call JavaScriptFold()
     "}
+
+    " vim-session {
+    	let g:session_autosave = 'no'
+	let g:session_autoload = 'no'
+    " }
+
+    " YouCompleteMe {
+    	let g:ycm_python_binary_path = '/usr/bin/python3'
+    " }
 " }
 
 " Miscellaneous Key Mappings {
