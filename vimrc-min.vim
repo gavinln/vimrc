@@ -37,17 +37,18 @@ Plugin 'sjl/gundo.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'majutsushi/tagbar'
 Plugin 'Lokaltog/vim-easymotion'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'scrooloose/syntastic'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'yegappan/mru'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Raimondi/delimitMate'
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vimoutliner/vimoutliner'
+Plugin 'flazz/vim-colorschemes'
 " Plugin 'Valloric/YouCompleteMe'
 "Plugin 'vim-scripts/TaskList.vim'
 "Plugin 'editorconfig/editorconfig-vim'
@@ -132,12 +133,10 @@ set diffexpr=
 " Vim UI {
     syntax enable
     set background=dark
-    colorscheme solarized
 
     set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode
 
-    set cursorline                  " Highlight current line
 
     highlight clear SignColumn      " SignColumn should match background for
                                     " things like vim-gitgutter
@@ -226,6 +225,14 @@ set diffexpr=
         "set term=builtin_ansi       " Make arrow and other keys work
     endif
 
+    let g:airline_theme='solarized'
+    if has('gui_running')
+        colorscheme solarized
+        set cursorline                  " Highlight current line
+    else
+        colorscheme default
+        set nocursorline
+    endif
 " }
 
 " Key Mappings {
