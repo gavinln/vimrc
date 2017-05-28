@@ -49,6 +49,8 @@ Plugin 'jelera/vim-javascript-syntax'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vimoutliner/vimoutliner'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'hashivim/vim-terraform'
 " Plugin 'Valloric/YouCompleteMe'
 "Plugin 'vim-scripts/TaskList.vim'
 "Plugin 'editorconfig/editorconfig-vim'
@@ -477,6 +479,14 @@ set diffexpr=
 
     " clear all signs placed by pymode checker, syntastic
     map <F12> :sign unplace *<cr>
+
+    " mappings for easy align https://github.com/junegunn/vim-easy-align
+
+    " Start interactive EasyAlign in visual mode (e.g. vipga)
+    xmap ga <Plug>(EasyAlign)
+
+    " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+    nmap ga <Plug>(EasyAlign)
 
     " Search in visual mode for current selection {
     vnoremap <silent> * :call VisualSearch('f')<CR>
