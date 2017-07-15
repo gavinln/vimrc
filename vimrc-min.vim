@@ -52,9 +52,9 @@ Plugin 'flazz/vim-colorschemes'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'hashivim/vim-terraform'
 " Plugin 'Valloric/YouCompleteMe'
-"Plugin 'vim-scripts/TaskList.vim'
-"Plugin 'editorconfig/editorconfig-vim'
-"Plugin 'vim-scripts/sessionman.vim'
+" Plugin 'vim-scripts/TaskList.vim'
+" Plugin 'editorconfig/editorconfig-vim'
+" Plugin 'vim-scripts/sessionman.vim'
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
