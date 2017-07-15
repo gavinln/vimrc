@@ -30,6 +30,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-vinegar'
 Plugin 'tpope/vim-repeat'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 Plugin 'kshenoy/vim-signature'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
@@ -403,6 +405,10 @@ set diffexpr=
 
     " YouCompleteMe {
         let g:ycm_python_binary_path = '/usr/bin/python3'
+    " }
+
+    " Markdown {
+        let g:vim_markdown_folding_style_pythonic = 1
     " }
 " }
 
