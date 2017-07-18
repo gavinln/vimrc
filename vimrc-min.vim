@@ -410,6 +410,14 @@ set diffexpr=
     " Markdown {
         let g:vim_markdown_folding_style_pythonic = 1
     " }
+
+    " vim-easy-align {
+        " Start interactive EasyAlign in visual mode (e.g. vipga)
+        xmap ga <Plug>(EasyAlign)
+
+        " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+        nmap ga <Plug>(EasyAlign)
+    " }
 " }
 
 " Miscellaneous Key Mappings {
@@ -485,14 +493,6 @@ set diffexpr=
 
     " clear all signs placed by pymode checker, syntastic
     map <F12> :sign unplace *<cr>
-
-    " mappings for easy align https://github.com/junegunn/vim-easy-align
-
-    " Start interactive EasyAlign in visual mode (e.g. vipga)
-    xmap ga <Plug>(EasyAlign)
-
-    " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-    nmap ga <Plug>(EasyAlign)
 
     " Search in visual mode for current selection {
     vnoremap <silent> * :call VisualSearch('f')<CR>
