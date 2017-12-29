@@ -29,12 +29,11 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-vinegar'
 Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-obsession'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'kshenoy/vim-signature'
 Plugin 'xolox/vim-misc'
-"Plugin 'xolox/vim-session'
+Plugin 'xolox/vim-session'
 Plugin 'sjl/gundo.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'majutsushi/tagbar'
@@ -42,7 +41,15 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'scrooloose/syntastic'
+" VIM as Python IDE from http://liuchengxu.org/posts/use-vim-as-a-python-ide/
+" Install flake8 for Python linter: conda install flake8
+" Install yapf for Python fixer: pip install fixer
+Plugin 'w0rp/ale'
+" Install isort to sort Python imports: conda install isort
+" Type :Isort to sort Python imports
+Plugin 'fisadev/vim-isort'
+Plugin 'skywind3000/asyncrun.vim'
+
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'yegappan/mru'
 Plugin 'Raimondi/delimitMate'
@@ -52,8 +59,10 @@ Plugin 'vimoutliner/vimoutliner'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'hashivim/vim-terraform'
-" Plugin 'xolox/vim-session'
+"Plugin 'davidhalter/jedi-vim'
+" Plugin 'tpope/vim-obsession'
 " Plugin 'terryma/vim-multiple-cursors'
+" Plugin 'scrooloose/syntastic'
 " Plugin 'scrooloose/nerdtree'
 " Plugin 'Valloric/YouCompleteMe'
 " Plugin 'vim-scripts/TaskList.vim'
@@ -205,6 +214,8 @@ set diffexpr=
     autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> call StripTrailingWhitespace()
     autocmd FileType go autocmd BufWritePre <buffer> Fmt
     autocmd FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2
+    autocmd FileType python setlocal foldmethod=indent softtabstop=4 shiftwidth=4 expandtab
+    autocmd FileType python normal zR
 
 " }
 
@@ -377,11 +388,61 @@ set diffexpr=
 
 " Plugins {
     " Syntastic {
-        let g:syntastic_python_checkers = ['pep8']
-        let g:syntastic_javascript_checkers = ['jshint']
-        let g:syntastic_always_populate_loc_list = 1
-        let g:syntastic_check_on_open = 1
-        let g:syntastic_check_on_wq = 0
+    "    let g:syntastic_python_checkers = ['pep8']
+    "    let g:syntastic_javascript_checkers = ['jshint']
+    "    let g:syntastic_always_populate_loc_list = 1
+    "    let g:syntastic_check_on_open = 1
+    "    let g:syntastic_check_on_wq = 0
+    " }
+    "
+    " Ale {
+        let g:ale_linters = {
+        \   'python': ['flake8']
+        \}
+        let g:ale_fixers = {
+        \   'python': ['yapf']
+        \}
+        " fix files on save
+        let g:ale_fix_on_save = 0
+        " integrate with vim-airline
+        let g:airline#extensions#ale#enabled = 1
+        " use locallist instead of quickfix
+        let g:ale_set_loclist = 1
+        let g:ale_set_quickfix = 0
+
+        nnoremap <silent> <leader>aa :ALEFix<CR>
+    " }
+    "
+    " asyncrun {
+
+        " Quick run via <F5>
+        nnoremap <F5> :call <SID>compile_and_run()<CR>
+
+        augroup SPACEVIM_ASYNCRUN
+            autocmd!
+            " Automatically open the quickfix window
+            autocmd User AsyncRunStart call asyncrun#quickfix_toggle(15, 1)
+        augroup END
+
+        function! s:compile_and_run()
+            exec 'w'
+            if &filetype == 'c'
+                exec "AsyncRun! gcc % -o %<; time ./%<"
+            elseif &filetype == 'cpp'
+               exec "AsyncRun! g++ -std=c++11 % -o %<; time ./%<"
+            elseif &filetype == 'java'
+               exec "AsyncRun! javac %; time java %<"
+            elseif &filetype == 'sh'
+               exec "AsyncRun! bash %"
+            elseif &filetype == 'python'
+               exec "AsyncRun! python %"
+            endif
+        endfunction
+
+    " }
+
+    " Jedi {
+        let g:jedi#auto_initialization = 0
     " }
 
     " Fugitive {
@@ -401,7 +462,7 @@ set diffexpr=
     "}
 
     " vim-session {
-        let g:session_autosave = 'no'
+        let g:session_autosave = 'yes'
         let g:session_autoload = 'no'
     " }
 
@@ -425,10 +486,10 @@ set diffexpr=
 " Miscellaneous Key Mappings {
     " running external programs
     "open explorer in the current file's directory
-    map \e :!start explorer "%:p:h"<CR>
+    map <leader>oe :!start explorer "%:p:h"<CR>
 
     "open windows command prompt in the current file's directory
-    map \c :!start cmd /k cd "%:p:h"<CR>
+    map <leader>oc :!start cmd /k cd "%:p:h"<CR>
 
     " Change to directory of current file
     map <leader>cd :cd %:p:h<cr>
@@ -483,15 +544,6 @@ set diffexpr=
 
     " redirect output of last :g// command to new window
     nmap <F4> :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>
-
-    " Press F8 to toggle Syntastic
-    noremap <F8> :SyntasticToggleMode<CR>
-
-    " Press S-F8 to activate syntastic check if in passive mode
-    noremap <S-F8> :SyntasticCheck<CR>
-
-    " Press C-F8 to run PyLint from pythonmode
-    noremap <C-F8> :PyLint<CR>
 
     " clear all signs placed by pymode checker, syntastic
     map <F12> :sign unplace *<cr>
