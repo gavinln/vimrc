@@ -36,7 +36,6 @@ Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 Plugin 'sjl/gundo.vim'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'majutsushi/tagbar'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -59,7 +58,9 @@ Plugin 'vimoutliner/vimoutliner'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'hashivim/vim-terraform'
-"Plugin 'davidhalter/jedi-vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'davidhalter/jedi-vim'
+" Plugin 'majutsushi/tagbar'
 " Plugin 'tpope/vim-obsession'
 " Plugin 'terryma/vim-multiple-cursors'
 " Plugin 'scrooloose/syntastic'
@@ -442,7 +443,8 @@ set diffexpr=
     " }
 
     " Jedi {
-        let g:jedi#auto_initialization = 0
+        let g:jedi#auto_initialization = 1
+        let g:jedi#popup_on_dot = 0
     " }
 
     " Fugitive {
