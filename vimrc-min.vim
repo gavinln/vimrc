@@ -60,15 +60,13 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'hashivim/vim-terraform'
 Plugin 'kien/ctrlp.vim'
 Plugin 'davidhalter/jedi-vim'
-" Plugin 'majutsushi/tagbar'
-" Plugin 'tpope/vim-obsession'
-" Plugin 'terryma/vim-multiple-cursors'
-" Plugin 'scrooloose/syntastic'
-" Plugin 'scrooloose/nerdtree'
-" Plugin 'Valloric/YouCompleteMe'
-" Plugin 'vim-scripts/TaskList.vim'
-" Plugin 'editorconfig/editorconfig-vim'
-" Plugin 'vim-scripts/sessionman.vim'
+
+Plugin 'maralla/completor.vim'
+
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
@@ -445,6 +443,10 @@ set diffexpr=
     " Jedi {
         let g:jedi#auto_initialization = 1
         let g:jedi#popup_on_dot = 0
+    " }
+
+    " completor {
+        let g:completor_python_binary = '/C:/Users/gnoronha/AppData/Local/Continuum/miniconda3/python.exe'
     " }
 
     " Fugitive {
