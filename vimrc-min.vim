@@ -34,7 +34,7 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'kshenoy/vim-signature'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
-Plugin 'sjl/gundo.vim'
+Plugin 'mbbill/undotree'  " undo history visualizer
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'vim-airline/vim-airline'
@@ -57,7 +57,6 @@ Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vimoutliner/vimoutliner'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'junegunn/vim-easy-align'
-Plugin 'hashivim/vim-terraform'
 Plugin 'kien/ctrlp.vim'
 Plugin 'davidhalter/jedi-vim'
 
@@ -67,6 +66,19 @@ Plugin 'maralla/completor.vim'
 Plugin 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
+
+" test the following plugins
+"Plugin 'benmills/vimux'
+"Plugin 'ervandew/supertab'
+"Plugin 'gregsexton/gitv'
+"Plugin 'janko-m/vim-test'
+"Plugin 'jeetsukumaran/vim-buffergator'
+"Plugin 'jtratner/vim-flavored-markdown'
+"Plugin 'junegunn/fzf.vim'
+"Plugin 'majutsushi/tagbar'
+"Plugin 'reedes/vim-pencil'
+"Plugin 'tpope/vim-dispatch'
+"Plugin 'wesQ3/vim-windowswap'
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
@@ -538,7 +550,7 @@ set diffexpr=
     " Plugin key mappings
 
     " Press F2 to toggle Vim revision history
-   noremap <F2> :GundoToggle<CR>
+   noremap <F2> :UndotreeToggle<CR>
 
     " map F3/C-F3/M-F3 to search for word under cursor
     " in current file or files with the same extension or all files
