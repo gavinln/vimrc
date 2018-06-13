@@ -32,7 +32,10 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'tpope/vim-vinegar'
 Plugin 'tpope/vim-repeat'
 Plugin 'godlygeek/tabular'
+
 Plugin 'plasticboy/vim-markdown'
+Plugin 'reedes/vim-pencil'  " editing text & markdown files
+
 Plugin 'kshenoy/vim-signature'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
@@ -406,7 +409,7 @@ set diffexpr=
     "    let g:syntastic_check_on_open = 1
     "    let g:syntastic_check_on_wq = 0
     " }
-    "
+
     " Ale {
         let g:ale_linters = {
         \   'python': ['flake8']
@@ -424,7 +427,7 @@ set diffexpr=
 
         nnoremap <silent> <leader>aa :ALEFix<CR>
     " }
-    "
+
     " asyncrun {
 
         " Quick run via <F5>
@@ -460,6 +463,24 @@ set diffexpr=
 
     " completor {
         let g:completor_python_binary = '/C:/Users/gnoronha/AppData/Local/Continuum/miniconda3/python.exe'
+    " }
+
+    " Pencil {
+        augroup pencil
+        autocmd!
+        autocmd FileType markdown,mkd call pencil#init()
+        autocmd FileType text         call pencil#init()
+        augroup END
+
+        nnoremap <silent> Q gqap
+        xnoremap <silent> Q gq
+        nnoremap <silent> <leader>Q vapJgqap
+
+        let g:airline_section_x = '%{PencilMode()}'
+
+        noremap <F6> :PencilToggle<CR>
+        noremap <C-F6> :PencilHard<CR>
+        noremap <M-F6> :PencilSoft<CR>
     " }
 
     " Fugitive {
