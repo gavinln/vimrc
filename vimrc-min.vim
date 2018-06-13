@@ -24,6 +24,8 @@ Plugin 'gmarik/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
+Plugin 'gregsexton/gitv'  " git repository viewer
+
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-unimpaired'
@@ -70,7 +72,6 @@ Plugin 'honza/vim-snippets'
 " test the following plugins
 "Plugin 'benmills/vimux'
 "Plugin 'ervandew/supertab'
-"Plugin 'gregsexton/gitv'
 "Plugin 'janko-m/vim-test'
 "Plugin 'jeetsukumaran/vim-buffergator'
 "Plugin 'jtratner/vim-flavored-markdown'
@@ -471,11 +472,17 @@ set diffexpr=
         nnoremap <silent> <leader>gr :Gread<CR>:GitGutter<CR>
         nnoremap <silent> <leader>gw :Gwrite<CR>:GitGutter<CR>
         nnoremap <silent> <leader>ge :Gedit<CR>
-    "}
+    " }
+
+    " Gitv {
+        nmap <leader>gv :Gitv --all<cr>
+        nmap <leader>gV :Gitv! --all<cr>
+        vmap <leader>gV :Gitv! --all<cr>
+    " }
 
     " Javascript-Syntax {
         au FileType javascript call JavaScriptFold()
-    "}
+    " }
 
     " vim-session {
         let g:session_autosave = 'yes'
