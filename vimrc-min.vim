@@ -1,5 +1,6 @@
 " vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell
 
+" Install VIM for Windows from https://tuxproject.de/projects/vim/
 " cd %USERPROFILE%
 " git clone https://github.com/gmarik/Vundle.vim.git vimfiles/bundle/Vundle.vim
 " gvim _vimrc
@@ -23,42 +24,45 @@ Plugin 'gmarik/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
-Plugin 'gregsexton/gitv'  " git repository viewer
 
-Plugin 'tpope/vim-sensible'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-vinegar'
-Plugin 'tpope/vim-repeat'
-Plugin 'godlygeek/tabular'
+Plugin 'tpope/vim-fugitive' " integration with git
+Plugin 'gregsexton/gitv'    " git repository viewer
 
-Plugin 'plasticboy/vim-markdown'
-Plugin 'reedes/vim-pencil'  " editing text & markdown files
+Plugin 'tpope/vim-sensible'   " sensible defaults for vim
+Plugin 'tpope/vim-surround'   " surround with parentheses, brackets, quotes, xml
+Plugin 'tpope/vim-unimpaired' " pairs of ops: previous/next, turn on/off
+Plugin 'tpope/vim-vinegar'    " improved shortcuts for netrw
+Plugin 'tpope/vim-repeat'     " improved repeate previous operations
 
-Plugin 'kshenoy/vim-signature'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-session'
-Plugin 'mbbill/undotree'  " undo history visualizer
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'airblade/vim-gitgutter'
+Plugin 'plasticboy/vim-markdown' " better formatting for markdown
+Plugin 'reedes/vim-pencil'       " editing text & markdown files
+
+Plugin 'kshenoy/vim-signature'   " display marks
+Plugin 'xolox/vim-misc'          " works with vim session
+Plugin 'xolox/vim-session'       " session management with vim
+Plugin 'mbbill/undotree'         " undo history visualizer
+
+Plugin 'scrooloose/nerdcommenter'       " add comments in any language
+Plugin 'vim-airline/vim-airline'        " fancy status bar
+Plugin 'vim-airline/vim-airline-themes' " themes for status bar
+Plugin 'airblade/vim-gitgutter'         " display git status in gutter
+
 " VIM as Python IDE from http://liuchengxu.org/posts/use-vim-as-a-python-ide/
 " Install flake8 for Python linter: conda install flake8
-" Install yapf for Python fixer: pip install fixer
+" Install yapf for Python fixer: pip install yapf
 Plugin 'w0rp/ale'
 " Install isort to sort Python imports: conda install isort
 " Type :Isort to sort Python imports
 Plugin 'fisadev/vim-isort'
-Plugin 'skywind3000/asyncrun.vim'
 
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'yegappan/mru'
-Plugin 'Raimondi/delimitMate'
-Plugin 'jelera/vim-javascript-syntax'
+Plugin 'skywind3000/asyncrun.vim' " run processes asynchronously
+
+Plugin 'jlanzarotta/bufexplorer' " display buffers in vim
+Plugin 'yegappan/mru'            " most recently used file
+Plugin 'Raimondi/delimitMate'    " auto insert open close parens
+
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'jelera/vim-javascript-syntax'
 Plugin 'vimoutliner/vimoutliner'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'junegunn/vim-easy-align'
@@ -83,6 +87,7 @@ Plugin 'honza/vim-snippets'
 "Plugin 'reedes/vim-pencil'
 "Plugin 'tpope/vim-dispatch'
 "Plugin 'wesQ3/vim-windowswap'
+"Plugin 'junegunn/fzf.vim'
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
@@ -425,7 +430,11 @@ set diffexpr=
         let g:ale_set_loclist = 1
         let g:ale_set_quickfix = 0
 
-        nnoremap <silent> <leader>aa :ALEFix<CR>
+        nnoremap <silent> <leader>af :ALEFix<CR>
+        nnoremap <silent> <leader>at :ALEToggle<CR>
+
+        nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+        nmap <silent> <C-j> <Plug>(ale_next_wrap)
     " }
 
     " asyncrun {
@@ -459,6 +468,13 @@ set diffexpr=
     " Jedi {
         let g:jedi#auto_initialization = 1
         let g:jedi#popup_on_dot = 0
+
+        " Completion <C-Space>
+        " Goto assignments <leader>g
+        " Goto definitions <leader>d
+        " Show Documentation/Pydoc K
+        " Renaming <leader>r
+        " Usages <leader>n
     " }
 
     " completor {
@@ -495,7 +511,7 @@ set diffexpr=
         nnoremap <silent> <leader>ge :Gedit<CR>
     " }
 
-    " Gitv {
+    " gitv {
         nmap <leader>gv :Gitv --all<cr>
         nmap <leader>gV :Gitv! --all<cr>
         vmap <leader>gV :Gitv! --all<cr>
