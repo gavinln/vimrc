@@ -67,9 +67,9 @@ Plugin 'vimoutliner/vimoutliner'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'kien/ctrlp.vim'
-Plugin 'davidhalter/jedi-vim'
 
 Plugin 'maralla/completor.vim'
+Plugin 'davidhalter/jedi-vim'
 
 " Track the engine.
 Plugin 'SirVer/ultisnips'
@@ -78,13 +78,11 @@ Plugin 'honza/vim-snippets'
 
 " test the following plugins
 "Plugin 'benmills/vimux'
-"Plugin 'ervandew/supertab'
 "Plugin 'janko-m/vim-test'
 "Plugin 'jeetsukumaran/vim-buffergator'
 "Plugin 'jtratner/vim-flavored-markdown'
 "Plugin 'junegunn/fzf.vim'
 "Plugin 'majutsushi/tagbar'
-"Plugin 'reedes/vim-pencil'
 "Plugin 'tpope/vim-dispatch'
 "Plugin 'wesQ3/vim-windowswap'
 "Plugin 'junegunn/fzf.vim'
