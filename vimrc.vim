@@ -1,5 +1,6 @@
 " vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell
 
+" Install VIM for Windows from https://tuxproject.de/projects/vim/
 " cd %USERPROFILE%
 " git clone https://github.com/gmarik/Vundle.vim.git vimfiles/bundle/Vundle.vim
 " gvim _vimrc
@@ -23,28 +24,70 @@ Plugin 'gmarik/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
-Plugin 'sjl/gundo.vim'
-Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'majutsushi/tagbar'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'bling/vim-airline'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'scrooloose/syntastic'
-Plugin 'jlanzarotta/bufexplorer'
-Plugin 'yegappan/mru'
-Plugin 'vim-scripts/sessionman.vim'
-Plugin 'vim-scripts/TaskList.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'Raimondi/delimitMate'
-Plugin 'jelera/vim-javascript-syntax'
+
+Plugin 'tpope/vim-fugitive' " integration with git
+Plugin 'gregsexton/gitv'    " git repository viewer
+
+Plugin 'tpope/vim-sensible'   " sensible defaults for vim
+Plugin 'tpope/vim-surround'   " surround with parentheses, brackets, quotes, xml
+Plugin 'tpope/vim-unimpaired' " pairs of ops: previous/next, turn on/off
+Plugin 'tpope/vim-vinegar'    " improved shortcuts for netrw
+Plugin 'tpope/vim-repeat'     " improved repeate previous operations
+
+Plugin 'plasticboy/vim-markdown' " better formatting for markdown
+Plugin 'reedes/vim-pencil'       " editing text & markdown files
+
+Plugin 'kshenoy/vim-signature'   " display marks
+Plugin 'xolox/vim-misc'          " works with vim session
+Plugin 'xolox/vim-session'       " session management with vim
+Plugin 'mbbill/undotree'         " undo history visualizer
+
+Plugin 'scrooloose/nerdcommenter'       " add comments in any language
+Plugin 'vim-airline/vim-airline'        " fancy status bar
+Plugin 'vim-airline/vim-airline-themes' " themes for status bar
+Plugin 'airblade/vim-gitgutter'         " display git status in gutter
+
+" VIM as Python IDE from http://liuchengxu.org/posts/use-vim-as-a-python-ide/
+" Install flake8 for Python linter: conda install flake8
+" Install yapf for Python fixer: pip install yapf
+Plugin 'w0rp/ale'
+" Install isort to sort Python imports: conda install isort
+" Type :Isort to sort Python imports
+Plugin 'fisadev/vim-isort'
+
+Plugin 'skywind3000/asyncrun.vim' " run processes asynchronously
+
+Plugin 'jlanzarotta/bufexplorer' " display buffers in vim
+Plugin 'yegappan/mru'            " most recently used file
+Plugin 'Raimondi/delimitMate'    " auto insert open close parens
+
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'jelera/vim-javascript-syntax'
 Plugin 'vimoutliner/vimoutliner'
-"Plugin 'scrooloose/nerdtree'
-"Plugin 'editorconfig/editorconfig-vim'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'kien/ctrlp.vim'
+Plugin 'davidhalter/jedi-vim'
+
+Plugin 'maralla/completor.vim'
+
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+
+" test the following plugins
+"Plugin 'benmills/vimux'
+"Plugin 'ervandew/supertab'
+"Plugin 'janko-m/vim-test'
+"Plugin 'jeetsukumaran/vim-buffergator'
+"Plugin 'jtratner/vim-flavored-markdown'
+"Plugin 'junegunn/fzf.vim'
+"Plugin 'majutsushi/tagbar'
+"Plugin 'reedes/vim-pencil'
+"Plugin 'tpope/vim-dispatch'
+"Plugin 'wesQ3/vim-windowswap'
+"Plugin 'junegunn/fzf.vim'
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
@@ -77,8 +120,8 @@ set diffexpr=
 
 " Basics {
     set nocompatible    " Use gVim defaults
-    "source $VIMRUNTIME/vimrc_example.vim
-    source $VIMRUNTIME/mswin.vim
+    " source $VIMRUNTIME/vimrc_example.vim
+    " source $VIMRUNTIME/mswin.vim
     behave mswin
     if !(has('win16') || has('win32') || has('win64'))
         set shell=/bin/sh
@@ -105,33 +148,19 @@ set diffexpr=
     " may not be a good idea
     " set virtualedit=onemore             " Allow for cursor beyond last character
     set history=1000                    " Store a ton of history (default is 20)
-    set nospell                           " Spell checking on
+    set nospell                         " Spell checking on
     set hidden                          " Allow buffer switching without saving
 
     " Instead of reverting the cursor to the last position in the buffer, we
     " set it to the first line when editing a git commit message
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
-    " http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
-    " Restore cursor to file position in previous editing session
-    function! ResCur()
-        if line("'\"") <= line("$")
-            normal! g`"
-            return 1
-        endif
-    endfunction
-
-    "augroup resCur
-    "    autocmd!
-    "    autocmd BufWinEnter * call ResCur()
-    "augroup END
-
     " Setting up the directories {
         set backup                  " Backups are nice ...
         if has('persistent_undo')
-            set undofile                " So is persistent undo ...
-            set undolevels=1000         " Maximum number of changes that can be undone
-            set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
+            set undofile          " So is persistent undo ...
+            set undolevels=1000   " Maximum number of changes that can be undone
+            set undoreload=10000  " Maximum number lines to save for undo on a buffer reload
         endif
     " }
 " }
@@ -139,12 +168,10 @@ set diffexpr=
 " Vim UI {
     syntax enable
     set background=dark
-    colorscheme solarized
 
     set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode
 
-    set cursorline                  " Highlight current line
 
     highlight clear SignColumn      " SignColumn should match background for
                                     " things like vim-gitgutter
@@ -192,6 +219,26 @@ set diffexpr=
 
 " }
 
+" Formatting {
+
+    set nowrap                      " Do not wrap long lines
+    set autoindent                  " Indent at the same level of the previous line
+    set shiftwidth=4                " Use indents of 4 spaces
+    set expandtab                   " Tabs are spaces, not tabs
+    set tabstop=4                   " An indentation every four columns
+    set softtabstop=4               " Let backspace delete indent
+    set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
+    set splitright                  " Puts new vsplit windows to the right of the current
+    set splitbelow                  " Puts new split windows to the bottom of the current
+    " Remove trailing whitespaces and ^M chars
+    autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+    autocmd FileType go autocmd BufWritePre <buffer> Fmt
+    autocmd FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2
+    autocmd FileType python setlocal foldmethod=indent softtabstop=4 shiftwidth=4 expandtab
+    autocmd FileType python normal zR
+
+" }
+
 " GUI Settings {
 
     " GVIM- (here instead of .gvimrc)
@@ -199,7 +246,7 @@ set diffexpr=
         set guioptions-=T           " Remove the toolbar
         set lines=40                " 40 lines of text instead of 24
         if has("gui_gtk2")
-            set guifont=Inconsolata\ Medium\ 14,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
+            set guifont=Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
         elseif has("gui_mac")
             set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
         elseif has("gui_win32")
@@ -215,42 +262,24 @@ set diffexpr=
         "set term=builtin_ansi       " Make arrow and other keys work
     endif
 
-" }
-
-" Formatting {
-
-    set nowrap                      " Do not wrap long lines
-    set autoindent                  " Indent at the same level of the previous line
-    set shiftwidth=4                " Use indents of 4 spaces
-    set expandtab                   " Tabs are spaces, not tabs
-    set tabstop=4                   " An indentation every four columns
-    set softtabstop=4               " Let backspace delete indent
-    set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
-    set splitright                  " Puts new vsplit windows to the right of the current
-    set splitbelow                  " Puts new split windows to the bottom of the current
-    "set matchpairs+=<:>             " Match, to be used with %
-    set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
-    "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
-    " Remove trailing whitespaces and ^M chars
-    autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> call StripTrailingWhitespace()
-    autocmd FileType go autocmd BufWritePre <buffer> Fmt
-    autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
-    autocmd FileType haskell setlocal expandtab shiftwidth=2 softtabstop=2
-    " preceding line best in a plugin but here for now.
-
-    autocmd BufNewFile,BufRead *.coffee set filetype=coffee
-
-    " Workaround vim-commentary for Haskell
-    autocmd FileType haskell setlocal commentstring=--\ %s
-    " Workaround broken colour highlighting in Haskell
-    autocmd FileType haskell setlocal nospell
-
+    let g:airline_theme='solarized'
+    if has('gui_running')
+        colorscheme solarized
+        set cursorline                  " Highlight current line
+    else
+        colorscheme default
+        set nocursorline
+    endif
 " }
 
 " Key Mappings {
-    " The default leader is '\', but many people prefer ',' as it's in a standard
-    " location.
-    "let mapleader = ','
+
+    set winaltkeys=yes  " allows the Alt+Space menu to work on Windows
+
+    nnoremap <c-j> <c-w><c-j>
+    nnoremap <c-k> <c-w><c-k>
+    nnoremap <c-l> <c-w><c-l>
+    nnoremap <c-h> <c-w><c-h>
 
     " resize horzontal split window
     nmap <M-Up> <C-W>+
@@ -278,21 +307,6 @@ set diffexpr=
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
 
-    " not needed as using unimpaired [oh, ]oh
-    "nmap <silent> <leader>/ :set invhlsearch<CR>
-
-    " Shortcuts
-    " Change Working Directory to that of the current file
-    cmap cwd lcd %:p:h
-
-    " Visual shifting (does not exit Visual mode)
-    " vnoremap < <gv
-    " vnoremap > >gv
-
-    " Allow using the repeat operator with a visual selection (!)
-    " http://stackoverflow.com/a/8064607/127816
-    vnoremap . :normal .<CR>
-
     " Some helpers to edit mode
     " http://vimcasts.org/e/14
     cnoremap %% <C-R>=expand('%:h').'/'<cr>
@@ -305,74 +319,6 @@ set diffexpr=
     " and ask which one to jump to
     nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
-    " window movement key mappings {
-    " ; is not used much so implement window commands
-    " move to left/bottom/top/right window
-    map ;h <C-W>h
-    map ;j <C-W>j
-    map ;k <C-W>k
-    map ;l <C-W>l
-    " move window to left/bottom/top/right
-    map ;H <C-W>H
-    map ;J <C-W>J
-    map ;K <C-W>K
-    map ;L <C-W>L
-    " move to top-left and bottom-right window
-    map ;t <C-W>t
-    map ;b <C-W>b
-    " new/close/split/vsplit/tab window
-    map ;n <C-W>n
-    map ;c <C-W>c
-    map ;s <C-W>s
-    map ;v <C-W>v
-    map ;T <C-W>T
-    " move to previous window
-    map ;p <C-W>p
-    " make all windows equal height and width
-    map ;= <C-W>=
-    " close the "Preview window"
-    map ;z <C-W>z
-    " close the "Quickfix window"
-    map ;q :cclose<CR>
-    " }
-
-    " Code folding keys mappings {
-    nmap <leader>f0 :set foldlevel=0<CR>
-    nmap <leader>f1 :set foldlevel=1<CR>
-    nmap <leader>f2 :set foldlevel=2<CR>
-    nmap <leader>f3 :set foldlevel=3<CR>
-    nmap <leader>f4 :set foldlevel=4<CR>
-    nmap <leader>f5 :set foldlevel=5<CR>
-    nmap <leader>f6 :set foldlevel=6<CR>
-    nmap <leader>f7 :set foldlevel=7<CR>
-    nmap <leader>f8 :set foldlevel=8<CR>
-    nmap <leader>f9 :set foldlevel=9<CR>
-    " }
-
-    " Django related mappings {
-    let g:last_relative_dir = ''
-    nnoremap \dm :call RelatedFile ("models.py")<cr>
-    nnoremap \dv :call RelatedFile ("views.py")<cr>
-    nnoremap \du :call RelatedFile ("urls.py")<cr>
-    nnoremap \da :call RelatedFile ("admin.py")<cr>
-    nnoremap \dt :call RelatedFile ("tests.py")<cr>
-    nnoremap \dT :call RelatedFile ("templates/")<cr>
-
-    fun! RelatedFile(file)
-        if filereadable(expand("%:h"). '/models.py') || isdirectory(expand("%:h") . "/templatetags/")
-            exec "edit %:h/" . a:file
-            let g:last_relative_dir = expand("%:h") . '/'
-            return ''
-        endif
-        if g:last_relative_dir != ''
-            exec "edit " . g:last_relative_dir . a:file
-            return ''
-        endif
-        echo "Can't determine where relative file is : " . a:file
-        return ''
-    endfun
-    " }
-
     " Error window mapping {
     if has("win32")
         nnoremap <kPlus>     :cnext<CR>
@@ -384,215 +330,6 @@ set diffexpr=
         nnoremap <m-kMinus>  :colder<CR>
     endif
     " }
-
-" }
-
-" Miscellaneous Key Mappings {
-
-    " running external programs
-    "open explorer in the current file's directory
-    map \e :!start explorer "%:p:h"<CR>
-
-    "open windows command prompt in the current file's directory
-    map \c :!start cmd /k cd "%:p:h"<CR>
-
-    "open windows command prompt and run python"
-    map \p :!start cmd /k cd "%:p:h" && python "%:p" & pause<CR>
-
-    " leader mappings
-    " Change to directory of current file
-    map <leader>cd :cd %:p:h<cr>
-    " toggle spell checking
-    "map <leader>ss :setlocal spell!<cr>
-
-    " Pull word under cursor into LHS of a substitute
-    nmap <leader>z :%s#\<<c-r>=expand("<cword>")<cr>\>#
-    " Pull Visually Highlighted text into LHS of a substitute
-    vnoremap <leader>z ""y:%s/<C-R>=escape(@", '/\')<CR>//g<Left><Left>
-    " search for text
-    map <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
-
-    " copy full path of current buffer to the clipboard
-    map <leader>cp :let @* = expand("%:p")<CR>
-
-    " command to select last pasted text
-    nnoremap <expr> <leader>gp '`[' . strpart(getregtype(), 0, 1) . '`]'
-
-    " Close the current buffer without closing the window {
-        map <leader>bd :Bclose<cr>
-
-        command! Bclose call <SID>BufcloseCloseIt()
-        function! <SID>BufcloseCloseIt()
-            let l:currentBufNum = bufnr("%")
-            let l:alternateBufNum = bufnr("#")
-
-            if buflisted(l:alternateBufNum)
-                buffer #
-            else
-                bnext
-            endif
-
-           if bufnr("%") == l:currentBufNum
-             new
-           endif
-
-           if buflisted(l:currentBufNum)
-             execute("bdelete! ".l:currentBufNum)
-           endif
-        endfunction
-    " }
-
-    " Search in visual mode for current selection {
-    vnoremap <silent> * :call VisualSearch('f')<CR>
-    vnoremap <silent> # :call VisualSearch('b')<CR>
-
-    function! VisualSearch(direction) range
-        let l:saved_reg = @"
-        execute "normal! vgvy"
-
-        let l:pattern = escape(@", '\\/.*$^~[]')
-        let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-        if a:direction == 'b'
-            execute "normal ?" . l:pattern . "^M"
-        elseif a:direction == 'f'
-            execute "normal /" . l:pattern . "^M"
-        endif
-
-        let @/ = l:pattern
-        let @" = l:saved_reg
-    endfunction
-
-    " }
-
-    " Run python interpreter {
-    " start ipython console using F7
-    " :source ipy.vim
-    " :IPython
-    " F5 will automatically run the file in the IPython shell
-    " ^s will send line of visually selected text to IPython
-    " \s will display ipython input & output
-    " all this requires pyzmq to be patched
-    nnoremap <silent> <F7> :!start cmd /c "ipython console"<CR>
-    nnoremap <silent> <S-F7> :!start cmd /c "python %:p" & pause<CR>
-
-    " run program asynchronously under windows
-    command! -nargs=+ AsyncHello call SendAsyncText(<q-args>)
-
-    function! SendAsyncText(hello_text)
-      let temp_file = tempname()
-      exec 'silent !start cmd /c "echo '.a:hello_text.' > '.temp_file
-            \ ' & vim --servername '.v:servername.' --remote-expr "GetAsyncText('."'".temp_file."')\"".
-            \ ' & pause"'
-    endfunction
-
-    function! GetAsyncText(temp_file_name)
-      echomsg readfile(a:temp_file_name)[0]
-      call delete(a:temp_file_name)
-    endfunction
-
-    " }
-
-    " Plugin key mappings that may not be needed {
-
-    " use s to insert or S to append one character
-    "function! RepeatChar(char, count)
-    "    return repeat(a:char, a:count)
-    "endfunction
-    "nnoremap s :<C-U>exec "normal i".RepeatChar(nr2char(getchar()), v:count1)<CR>
-    "nnoremap S :<C-U>exec "normal a".RepeatChar(nr2char(getchar()), v:count1)<CR>
-
-
-    " Press F2 to toggle Vim revision history
-   noremap <F2> :GundoToggle<CR>
-
-    " map F3/C-F3/M-F3 to search for word under cursor in current file or files with the same extension or all files
-    map <F3> :execute "noautocmd vimgrep /" . expand("<cword>") . "/gj % " <Bar> cw<CR>
-    map <C-F3> :execute "noautocmd vimgrep /" . expand("<cword>") . "/gj **/*." .  expand("%:e") <Bar> cw<CR>
-    map <M-F3> :execute "noautocmd vimgrep /" . expand("<cword>") . "/gj **/*" <Bar> cw<CR>
-
-    " redirect output of last :g// command to new window
-    nmap <F4> :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>
-
-    " Press F6 to toggle highlighting on/off, and show current value.
-    " noremap <F6> :set hlsearch! hlsearch?<CR>
-    " better mapping
-    " not needed as using unimpaired [oh, ]oh
-    "noremap <F6> :set invhlsearch<CR>
-
-    " Press S-F6 to toggle number on/off
-    " not needed as using unimpaired [on, ]on
-    "noremap <S-F6> :set number!<cr>
-
-    " Press C-F6 to toggle relative number on/off
-    " not needed as using unimpaired [or, ]or
-    "noremap <C-F6> :set relativenumber!<cr>
-
-    " Press F8 to toggle Syntastic
-    noremap <F8> :SyntasticToggleMode<CR>
-
-    " Press S-F8 to activate syntastic check if in passive mode
-    noremap <S-F8> :SyntasticCheck<CR>
-
-    " Press C-F8 to run PyLint from pythonmode
-    noremap <C-F8> :PyLint<CR>
-
-    " Key mapping to switch windows quickly (<C-Tab> is already mapped)
-    " nnoremap <C-S-Tab> <C-W>W
-    " inoremap <C-S-Tab> <C-O><C-W>W
-
-    " Next and previous errors in quickfix
-    " not needed as using unimpaired [q
-    "nmap <C-J> :cnext<CR>
-    " not needed as using unimpaired ]q
-    "nmap <C-K> :cprevious<CR>
-
-    set winaltkeys=yes  " allows the Alt+Space menu to work on Windows
-
-    " Press F9 to open ctrlp in most recently used mode
-    noremap <F9> :CtrlPMRU<CR>
-
-    " Press S-F9 to open ctrlp in buffer mode
-    noremap <S-F9> :CtrlPBuffer<CR>
-
-    " Press C-F9 to open ctrlp in file mode
-    noremap <C-F9> :CtrlP<CR>
-
-    " clear all signs placed by pymode checker, syntastic
-    map <F12> :sign unplace *<cr>
-
-    " }
-
-" }
-
-" May not be needed {
-    set modeline
-    set modelines=5
-    set shiftwidth=4
-    set encoding=utf-8
-    set smartindent
-    "set visualbell
-    set ttyfast
-    set nonumber
-
-    "buffer prompts
-    " set wildchar=<Tab> wildmenu wildmode=full
-
-    " handle long lines
-    set wrap
-    set textwidth=79
-    set formatoptions=qrn1
-    " highlight column 80 to display long lines
-    set colorcolumn=80
-    " remember window size and position
-    set sessionoptions+=resize,winpos
-
-    "make regex default
-    nnoremap / /\v
-    vnoremap / /\v
-
-    " apply substitutions globally
-    set gdefault
 " }
 
 " Functions {
@@ -631,20 +368,6 @@ set diffexpr=
     call InitializeDirectories()
     " }
 
-    " Initialize NERDTree as needed {
-    function! NERDTreeInitAsNeeded()
-        redir => bufoutput
-        buffers!
-        redir END
-        let idx = stridx(bufoutput, "NERD_tree")
-        if idx > -1
-            NERDTreeMirror
-            NERDTreeFind
-            wincmd l
-        endif
-    endfunction
-    " }
-
     " Strip whitespace {
     function! StripTrailingWhitespace()
         " Preparation: save last search, and cursor position.
@@ -681,16 +404,99 @@ set diffexpr=
     command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
     " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
     " }
-
 " }
 
 " Plugins {
     " Syntastic {
-        let g:syntastic_python_checkers = ['pep8']
-        let g:syntastic_javascript_checkers = ['jshint']
-        let g:syntastic_always_populate_loc_list = 1
-        let g:syntastic_check_on_open = 1
-        let g:syntastic_check_on_wq = 0
+    "    let g:syntastic_python_checkers = ['pep8']
+    "    let g:syntastic_javascript_checkers = ['jshint']
+    "    let g:syntastic_always_populate_loc_list = 1
+    "    let g:syntastic_check_on_open = 1
+    "    let g:syntastic_check_on_wq = 0
+    " }
+
+    " Ale {
+        let g:ale_linters = {
+        \   'python': ['flake8']
+        \}
+        let g:ale_fixers = {
+        \   'python': ['yapf']
+        \}
+        " fix files on save
+        let g:ale_fix_on_save = 0
+        " integrate with vim-airline
+        let g:airline#extensions#ale#enabled = 1
+        " use locallist instead of quickfix
+        let g:ale_set_loclist = 1
+        let g:ale_set_quickfix = 0
+
+        nnoremap <silent> <leader>af :ALEFix<CR>
+        nnoremap <silent> <leader>at :ALEToggle<CR>
+
+        nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+        nmap <silent> <C-j> <Plug>(ale_next_wrap)
+    " }
+
+    " asyncrun {
+
+        " Quick run via <F5>
+        nnoremap <F5> :call <SID>compile_and_run()<CR>
+
+        augroup SPACEVIM_ASYNCRUN
+            autocmd!
+            " Automatically open the quickfix window
+            autocmd User AsyncRunStart call asyncrun#quickfix_toggle(15, 1)
+        augroup END
+
+        function! s:compile_and_run()
+            exec 'w'
+            if &filetype == 'c'
+                exec "AsyncRun! gcc % -o %<; time ./%<"
+            elseif &filetype == 'cpp'
+               exec "AsyncRun! g++ -std=c++11 % -o %<; time ./%<"
+            elseif &filetype == 'java'
+               exec "AsyncRun! javac %; time java %<"
+            elseif &filetype == 'sh'
+               exec "AsyncRun! bash %"
+            elseif &filetype == 'python'
+               exec "AsyncRun! python %"
+            endif
+        endfunction
+
+    " }
+
+    " Jedi {
+        let g:jedi#auto_initialization = 1
+        let g:jedi#popup_on_dot = 0
+
+        " Completion <C-Space>
+        " Goto assignments <leader>g
+        " Goto definitions <leader>d
+        " Show Documentation/Pydoc K
+        " Renaming <leader>r
+        " Usages <leader>n
+    " }
+
+    " completor {
+        let g:completor_python_binary = '/C:/Users/gnoronha/AppData/Local/Continuum/miniconda3/python.exe'
+    " }
+
+    " Pencil {
+        augroup pencil
+        autocmd!
+        autocmd FileType markdown,mkd call pencil#init()
+        autocmd FileType text         call pencil#init()
+        augroup END
+
+        nnoremap <silent> Q gqap
+        xnoremap <silent> Q gq
+        nnoremap <silent> <leader>Q vapJgqap
+
+        let g:airline_section_x = '%{PencilMode()}'
+
+        noremap <F6> :PencilToggle<CR>
+        noremap <C-F6> :PencilHard<CR>
+        noremap <M-F6> :PencilSoft<CR>
     " }
 
     " Fugitive {
@@ -703,20 +509,149 @@ set diffexpr=
         nnoremap <silent> <leader>gr :Gread<CR>:GitGutter<CR>
         nnoremap <silent> <leader>gw :Gwrite<CR>:GitGutter<CR>
         nnoremap <silent> <leader>ge :Gedit<CR>
-    "}
+    " }
+
+    " gitv {
+        nmap <leader>gv :Gitv --all<cr>
+        nmap <leader>gV :Gitv! --all<cr>
+        vmap <leader>gV :Gitv! --all<cr>
+    " }
 
     " Javascript-Syntax {
         au FileType javascript call JavaScriptFold()
-    "}
+    " }
 
-    " Session List {
-        set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
-        nmap <leader>sl :SessionList<CR>
-        nmap <leader>ss :SessionSave<CR>
+    " vim-session {
+        let g:session_autosave = 'yes'
+        let g:session_autoload = 'no'
+    " }
 
-        " may not need this
-        map <F11> :SessionList<cr>
-        map <S-F11> :SessionSave<cr>
+    " YouCompleteMe {
+        let g:ycm_python_binary_path = '/usr/bin/python3'
+    " }
+
+    " Markdown {
+        let g:vim_markdown_folding_style_pythonic = 1
+    " }
+
+    " vim-easy-align {
+        " Start interactive EasyAlign in visual mode (e.g. vipga)
+        xmap ga <Plug>(EasyAlign)
+
+        " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+        nmap ga <Plug>(EasyAlign)
     " }
 " }
 
+" Miscellaneous Key Mappings {
+    " running external programs
+    "open explorer in the current file's directory
+    map <leader>oe :!start explorer "%:p:h"<CR>
+
+    "open windows command prompt in the current file's directory
+    map <leader>oc :!start cmd /k cd "%:p:h"<CR>
+
+    " Change to directory of current file
+    map <leader>cd :cd %:p:h<cr>
+
+    " Pull word under cursor into LHS of a substitute
+    nmap <leader>z :%s#\<<c-r>=expand("<cword>")<cr>\>#
+    " Pull Visually Highlighted text into LHS of a substitute
+    vnoremap <leader>z ""y:%s/<C-R>=escape(@", '/\')<CR>//g<Left><Left>
+    " search for text
+    map <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
+
+    " copy full path of current buffer to the clipboard
+    map <leader>cp :let @* = expand("%:p")<CR>
+
+    " command to select last pasted text
+    nnoremap <expr> <leader>gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+    " Close the current buffer without closing the window {
+        map <leader>bd :Bclose<cr>
+
+        command! Bclose call <SID>BufcloseCloseIt()
+        function! <SID>BufcloseCloseIt()
+            let l:currentBufNum = bufnr("%")
+            let l:alternateBufNum = bufnr("#")
+
+            if buflisted(l:alternateBufNum)
+                buffer #
+            else
+                bnext
+            endif
+
+           if bufnr("%") == l:currentBufNum
+             new
+           endif
+
+           if buflisted(l:currentBufNum)
+             execute("bdelete! ".l:currentBufNum)
+           endif
+        endfunction
+    " }
+
+    " Plugin key mappings
+
+    " Press F2 to toggle Vim revision history
+   noremap <F2> :UndotreeToggle<CR>
+
+    " map F3/C-F3/M-F3 to search for word under cursor
+    " in current file or files with the same extension or all files
+    map <F3> :execute "noautocmd vimgrep /" . expand("<cword>") . "/gj % " <Bar> cw<CR>
+    map <C-F3> :execute "noautocmd vimgrep /" . expand("<cword>") . "/gj **/*." .  expand("%:e") <Bar> cw<CR>
+    map <M-F3> :execute "noautocmd vimgrep /" . expand("<cword>") . "/gj **/*" <Bar> cw<CR>
+
+    " redirect output of last :g// command to new window
+    nmap <F4> :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>
+
+    " clear all signs placed by pymode checker, syntastic
+    map <F12> :sign unplace *<cr>
+
+    " Search in visual mode for current selection {
+    vnoremap <silent> * :call VisualSearch('f')<CR>
+    vnoremap <silent> # :call VisualSearch('b')<CR>
+
+    function! VisualSearch(direction) range
+        let l:saved_reg = @"
+        execute "normal! vgvy"
+
+        let l:pattern = escape(@", '\\/.*$^~[]')
+        let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+        if a:direction == 'b'
+            execute "normal ?" . l:pattern . "^M"
+        elseif a:direction == 'f'
+            execute "normal /" . l:pattern . "^M"
+        endif
+
+        let @/ = l:pattern
+        let @" = l:saved_reg
+    endfunction
+    " }
+" }
+
+" May not be needed {
+    set modeline
+    set modelines=5
+    set encoding=utf-8
+    set smartindent
+    "set visualbell
+    set ttyfast
+    set nonumber
+
+    " handle long lines
+    set textwidth=79
+    set formatoptions=qrn1
+    " highlight column 80 to display long lines
+    set colorcolumn=80
+    " remember window size and position
+    set sessionoptions+=resize,winpos
+
+    "make regex default
+    nnoremap / /\v
+    vnoremap / /\v
+
+    " apply substitutions globally
+    set gdefault
+" }
