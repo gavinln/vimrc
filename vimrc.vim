@@ -86,6 +86,7 @@ Plugin 'honza/vim-snippets'
 "Plugin 'tpope/vim-dispatch'
 "Plugin 'wesQ3/vim-windowswap'
 "Plugin 'junegunn/fzf.vim'
+"Plugin 'tpope/vim-commentary'
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
