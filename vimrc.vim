@@ -61,7 +61,9 @@ Plugin 'jlanzarotta/bufexplorer' " display buffers in vim
 Plugin 'yegappan/mru'            " most recently used file
 Plugin 'Raimondi/delimitMate'    " auto insert open close parens
 
-Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'Yggdroot/indentLine'     " display vertical lines at indentation
+Plugin 'bronson/vim-trailing-whitespace' " hightlight trailing whitespace
+"
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'vimoutliner/vimoutliner'
 Plugin 'flazz/vim-colorschemes'
@@ -86,6 +88,10 @@ Plugin 'honza/vim-snippets'
 "Plugin 'tpope/vim-dispatch'
 "Plugin 'wesQ3/vim-windowswap'
 "Plugin 'junegunn/fzf.vim'
+"Plugin 'tpope/vim-commentary'
+"Plugin 'vim-scripts/grep.vim'
+"Plugin 'vim-scripts/CSApprox'  # gvim colorschemes in a terminal vim
+"Plugin 'sheerun/vim-polyglot'
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
@@ -475,6 +481,10 @@ set diffexpr=
         " Usages <leader>n
     " }
 
+    " indentLine {
+        noremap <F7> :IndentLinesToggle<CR>
+    " }
+
     " completor {
         let g:completor_python_binary = '/C:/Users/gnoronha/AppData/Local/Continuum/miniconda3/python.exe'
     " }
@@ -627,6 +637,67 @@ set diffexpr=
         let @" = l:saved_reg
     endfunction
     " }
+" }
+
+" Terminal map for Windows {
+    " active when running terminal in Vim
+
+    " https://www.howtogeek.com/254401/34-useful-keyboard-shortcuts-for-the-windows-command-prompt/
+    " https://gist.github.com/P7h/d5631d640ab91ed4a8e2e4732ff691d9
+
+    " Command editing shortcuts
+    " go to the start of the command line
+    tnoremap <silent> <C-A> <Home>
+
+    " go to the end of the command line
+    tnoremap <silent> <C-E> <End>
+
+    " delete from cursor to the end of the command line
+    tnoremap <silent> <C-K> <C-End>
+
+    " delete from cursor to the start of the command line
+    tnoremap <silent> <C-U> <C-Home>
+
+    " delete from cursor to start of word (does not work)
+    " tnoremap <silent> <C-W> <C-BS>
+
+    " move backward one word (does not work)
+    " tnoremap <silent> <M-B> <C-Left>
+
+    " move forward one word (does not work)
+    " tnoremap <silent> <M-F> <C-Right>
+
+    " delete to end of word starting at cursor (not supported)
+    " tnoremap <silent> <A-D>
+
+    " move forward one character
+    tnoremap <silent> <C-F> <Right>
+
+    " move backward one character
+    tnoremap <silent> <C-B> <Left>
+
+    " delete character under the cursor
+    tnoremap <silent> <C-D> <Del>
+
+    " delete character before the cursor
+    tnoremap <silent> <C-H> <BS>
+
+    " Command Recall Shortcuts
+    " previous command in history
+    tnoremap <silent> <C-P> <Up>
+    " command in history
+    tnoremap <silent> <C-N> <Down>
+
+    " Command Control Shortcuts
+    " clear the screen
+    tnoremap <silent> <C-L> cls<Enter>
+
+    " Command Recall Shortcuts
+    " previous command in history
+    tnoremap <silent> <C-P> <Up>
+
+    " next command in history
+    tnoremap <silent> <C-N> <Down>
 " }
 
 " May not be needed {
