@@ -1,123 +1,94 @@
 " vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell
 
 " Install VIM for Windows from https://tuxproject.de/projects/vim/
-" cd %USERPROFILE%
-" git clone https://github.com/gmarik/Vundle.vim.git vimfiles/bundle/Vundle.vim
-" gvim _vimrc
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" Uses vim-plug
+" On Windows (PowerShell)
+" md ~\AppData\Local\nvim\autoload
+" $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+" (New-Object Net.WebClient).DownloadFile(
+"   $uri,
+"   $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
+"     "~\AppData\Local\nvim\autoload\plug.vim"
+"   )
+" )
 
-" set the runtime path to include Vundle and initialize
-if !(has('win16') || has('win32') || has('win64'))
-    set rtp+=~/.vim/bundle/Vundle.vim
-    call vundle#begin()
-else
-    set rtp+=~/vimfiles/bundle/Vundle.vim/
-    let path='~/vimfiles/bundle'
-    call vundle#begin(path)
-endif
+call plug#begin('~/.vim/plugged')
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Plug 'tpope/vim-fugitive' " integration with git
+Plug 'gregsexton/gitv'    " git repository viewer
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
+Plug 'tpope/vim-sensible'   " sensible defaults for vim
+Plug 'tpope/vim-surround'   " surround with parentheses, brackets, quotes, xml
+Plug 'tpope/vim-unimpaired' " pairs of ops: previous/next, turn on/off
+Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
+Plug 'tpope/vim-repeat'     " improved repeate previous operations
 
-Plugin 'tpope/vim-fugitive' " integration with git
-Plugin 'gregsexton/gitv'    " git repository viewer
+Plug 'plasticboy/vim-markdown' " better formatting for markdown
+Plug 'reedes/vim-pencil'       " editing text & markdown files
 
-Plugin 'tpope/vim-sensible'   " sensible defaults for vim
-Plugin 'tpope/vim-surround'   " surround with parentheses, brackets, quotes, xml
-Plugin 'tpope/vim-unimpaired' " pairs of ops: previous/next, turn on/off
-Plugin 'tpope/vim-vinegar'    " improved shortcuts for netrw
-Plugin 'tpope/vim-repeat'     " improved repeate previous operations
+Plug 'kshenoy/vim-signature'   " display marks
+Plug 'xolox/vim-misc'          " works with vim session
+Plug 'xolox/vim-session'       " session management with vim
+Plug 'mbbill/undotree'         " undo history visualizer
 
-Plugin 'plasticboy/vim-markdown' " better formatting for markdown
-Plugin 'reedes/vim-pencil'       " editing text & markdown files
-
-Plugin 'kshenoy/vim-signature'   " display marks
-Plugin 'xolox/vim-misc'          " works with vim session
-Plugin 'xolox/vim-session'       " session management with vim
-Plugin 'mbbill/undotree'         " undo history visualizer
-
-Plugin 'scrooloose/nerdcommenter'       " add comments in any language
-Plugin 'vim-airline/vim-airline'        " fancy status bar
-Plugin 'vim-airline/vim-airline-themes' " themes for status bar
-Plugin 'airblade/vim-gitgutter'         " display git status in gutter
+Plug 'scrooloose/nerdcommenter'       " add comments in any language
+Plug 'vim-airline/vim-airline'        " fancy status bar
+Plug 'vim-airline/vim-airline-themes' " themes for status bar
+Plug 'airblade/vim-gitgutter'         " display git status in gutter
 
 " VIM as Python IDE from http://liuchengxu.org/posts/use-vim-as-a-python-ide/
 " Install flake8 for Python linter: conda install flake8
 " Install yapf for Python fixer: pip install yapf
-Plugin 'w0rp/ale'
+Plug 'w0rp/ale'
 " Install isort to sort Python imports: conda install isort
 " Type :Isort to sort Python imports
-Plugin 'fisadev/vim-isort'
+Plug 'fisadev/vim-isort'
 
-Plugin 'skywind3000/asyncrun.vim' " run processes asynchronously
+Plug 'skywind3000/asyncrun.vim' " run processes asynchronously
 
-Plugin 'jlanzarotta/bufexplorer' " display buffers in vim
-Plugin 'yegappan/mru'            " most recently used file
-Plugin 'Raimondi/delimitMate'    " auto insert open close parens
+Plug 'jlanzarotta/bufexplorer' " display buffers in vim
+Plug 'yegappan/mru'            " most recently used file
+Plug 'Raimondi/delimitMate'    " auto insert open close parens
 
-Plugin 'Yggdroot/indentLine'     " display vertical lines at indentation
-Plugin 'bronson/vim-trailing-whitespace' " hightlight trailing whitespace
+Plug 'Yggdroot/indentLine'     " display vertical lines at indentation
+Plug 'bronson/vim-trailing-whitespace' " hightlight trailing whitespace
 "
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'vimoutliner/vimoutliner'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'kien/ctrlp.vim'
+Plug 'jelera/vim-javascript-syntax'
+Plug 'vimoutliner/vimoutliner'
+Plug 'flazz/vim-colorschemes'
+Plug 'junegunn/vim-easy-align'
+Plug 'kien/ctrlp.vim'
 
-Plugin 'maralla/completor.vim'
-Plugin 'davidhalter/jedi-vim'
+Plug 'maralla/completor.vim'
+Plug 'davidhalter/jedi-vim'
 
 " Track the engine.
-Plugin 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
-Plugin 'honza/vim-snippets'
+Plug 'honza/vim-snippets'
 
 " test the following plugins
-"Plugin 'benmills/vimux'
-"Plugin 'janko-m/vim-test'
-"Plugin 'jeetsukumaran/vim-buffergator'
-"Plugin 'jtratner/vim-flavored-markdown'
-"Plugin 'junegunn/fzf.vim'
-"Plugin 'majutsushi/tagbar'
-"Plugin 'tpope/vim-dispatch'
-"Plugin 'wesQ3/vim-windowswap'
-"Plugin 'junegunn/fzf.vim'
-"Plugin 'tpope/vim-commentary'
-"Plugin 'vim-scripts/grep.vim'
-"Plugin 'vim-scripts/CSApprox'  # gvim colorschemes in a terminal vim
-"Plugin 'sheerun/vim-polyglot'
+"Plug 'benmills/vimux'
+"Plug 'janko-m/vim-test'
+"Plug 'jeetsukumaran/vim-buffergator'
+"Plug 'jtratner/vim-flavored-markdown'
+"Plug 'junegunn/fzf.vim'
+"Plug 'majutsushi/tagbar'
+"Plug 'tpope/vim-dispatch'
+"Plug 'wesQ3/vim-windowswap'
+"Plug 'junegunn/fzf.vim'
+"Plug 'tpope/vim-commentary'
+"Plug 'vim-scripts/grep.vim'
+"Plug 'vim-scripts/CSApprox'  # gvim colorschemes in a terminal vim
+"Plug 'sheerun/vim-polyglot'
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
 " let maplocalleader = ',,'
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-" Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
-" Plugin 'user/L9', {'name': 'newL9'}
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
+" Initialize plugin system
+call plug#end()
 
 " use internal diff program
 set diffexpr=
