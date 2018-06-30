@@ -68,14 +68,24 @@ Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 
+" text object for indent levels; useful for Python
+Plug 'michaeljsmith/vim-indent-object'
+
+" display tags of current buffer
+" Needs ctags from https://github.com/universal-ctags/ctags
+Plug 'majutsushi/tagbar'
+
+Plug 'tpope/vim-dispatch'
+
+" testing in any language
+" Python - nose, nose2, pytest, pyunit
+Plug 'janko-m/vim-test'
+
 " test the following plugins
 "Plug 'benmills/vimux'
-"Plug 'janko-m/vim-test'
 "Plug 'jeetsukumaran/vim-buffergator'
 "Plug 'jtratner/vim-flavored-markdown'
 "Plug 'junegunn/fzf.vim'
-"Plug 'majutsushi/tagbar'
-"Plug 'tpope/vim-dispatch'
 "Plug 'wesQ3/vim-windowswap'
 "Plug 'junegunn/fzf.vim'
 "Plug 'tpope/vim-commentary'
@@ -407,9 +417,6 @@ set diffexpr=
 
         nnoremap <silent> <leader>af :ALEFix<CR>
         nnoremap <silent> <leader>at :ALEToggle<CR>
-
-        nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-        nmap <silent> <C-j> <Plug>(ale_next_wrap)
     " }
 
     " asyncrun {
@@ -496,6 +503,18 @@ set diffexpr=
         vmap <leader>gV :Gitv! --all<cr>
     " }
 
+    " vim-test {
+        " let test#strategy = "dispatch"
+        let test#strategy = "make"
+        let g:test#python#pytest#options = '--quiet'
+
+        nnoremap <silent> <leader>tn :TestNearest<CR>
+        nnoremap <silent> <leader>tf :TestFile<CR>
+        nnoremap <silent> <leader>ts :TestSuite<CR>
+        nnoremap <silent> <leader>tl :TestLast<CR>
+        nnoremap <silent> <leader>tg :TestVisit<CR>
+    " }
+
     " Javascript-Syntax {
         au FileType javascript call JavaScriptFold()
     " }
@@ -511,6 +530,10 @@ set diffexpr=
 
     " Markdown {
         let g:vim_markdown_folding_style_pythonic = 1
+    " }
+
+    " tagbar {
+        nmap <F8> :TagbarToggle<CR>
     " }
 
     " vim-easy-align {
