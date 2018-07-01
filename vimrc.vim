@@ -81,13 +81,16 @@ Plug 'tpope/vim-dispatch'
 " Python - nose, nose2, pytest, pyunit
 Plug 'janko-m/vim-test'
 
+" requires fzf to be installed
+" Plug 'C:/ProgramData/chocolatey/bin/fzf.exe'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
 " test the following plugins
 "Plug 'benmills/vimux'
 "Plug 'jeetsukumaran/vim-buffergator'
 "Plug 'jtratner/vim-flavored-markdown'
-"Plug 'junegunn/fzf.vim'
 "Plug 'wesQ3/vim-windowswap'
-"Plug 'junegunn/fzf.vim'
 "Plug 'tpope/vim-commentary'
 "Plug 'vim-scripts/grep.vim'
 "Plug 'vim-scripts/CSApprox'  # gvim colorschemes in a terminal vim
