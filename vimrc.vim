@@ -4,12 +4,12 @@
 
 " Uses vim-plug
 " On Windows (PowerShell)
-" md ~\AppData\Local\nvim\autoload
+" md ~\vimfiles\autoload
 " $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 " (New-Object Net.WebClient).DownloadFile(
 "   $uri,
 "   $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
-"     "~\AppData\Local\nvim\autoload\plug.vim"
+"     "~\vimfiles\autoload\plug.vim"
 "   )
 " )
 
@@ -98,7 +98,7 @@ Plug 'junegunn/fzf.vim'
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
-" let maplocalleader = ',,'
+let maplocalleader = ',,'
 
 " Initialize plugin system
 call plug#end()
@@ -527,9 +527,6 @@ set diffexpr=
         let g:session_autoload = 'no'
     " }
 
-    " YouCompleteMe {
-        let g:ycm_python_binary_path = '/usr/bin/python3'
-    " }
 
     " Markdown {
         let g:vim_markdown_folding_style_pythonic = 1
