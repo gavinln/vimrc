@@ -562,7 +562,7 @@ set diffexpr=
     " Pull Visually Highlighted text into LHS of a substitute
     vnoremap <leader>z ""y:%s/<C-R>=escape(@", '/\')<CR>//g<Left><Left>
     " search for text
-    map <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
+    map <leader>vg :vimgrep /\<<c-r>=expand("<cword>")<cr>\>/ **/*.<left><left><left><left><left><left><left>
 
     " copy full path of current buffer to the clipboard
     map <leader>cp :let @* = expand("%:p")<CR>
