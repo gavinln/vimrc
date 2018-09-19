@@ -96,6 +96,8 @@ Plug 'junegunn/fzf.vim'
 "Plug 'vim-scripts/CSApprox'  # gvim colorschemes in a terminal vim
 "Plug 'sheerun/vim-polyglot'
 "Plug 'ConradIrwin/vim-bracketed-paste'
+"Plug 'markonm/traces.vim'
+"Plug 'wellle/targets.vim'
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
