@@ -98,6 +98,7 @@ Plug 'junegunn/fzf.vim'
 "Plug 'ConradIrwin/vim-bracketed-paste'
 "Plug 'markonm/traces.vim'
 "Plug 'wellle/targets.vim'
+"Plug 'dbeniamine/cheat.sh-vim'  # cheatsheet: https://github.com/chubin/cheat.sh
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
