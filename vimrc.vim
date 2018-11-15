@@ -25,7 +25,7 @@ Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
 Plug 'tpope/vim-repeat'     " improved repeate previous operations
 
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
-Plug 'reedes/vim-pencil'       " editing text & markdown files
+"Plug 'reedes/vim-pencil'       " editing text & markdown files
 
 Plug 'kshenoy/vim-signature'   " display marks
 Plug 'xolox/vim-misc'          " works with vim session
@@ -85,6 +85,12 @@ Plug 'janko-m/vim-test'
 " Plug 'C:/ProgramData/chocolatey/bin/fzf.exe'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
+" highlights patterns and ranges for ex commands
+Plug 'markonm/traces.vim'
+
+" New text objects: pairs, quotes, separator, arguments
+"Plug 'wellle/targets.vim'
 
 " test the following plugins
 "Plug 'benmills/vimux'
@@ -457,6 +463,7 @@ set diffexpr=
     " Jedi {
         let g:jedi#auto_initialization = 1
         let g:jedi#popup_on_dot = 0
+        " let g:completor_auto_trigger = 0
 
         " Completion <C-Space>
         " Goto assignments <leader>g
@@ -475,19 +482,20 @@ set diffexpr=
     " }
 
     " Pencil {
-        augroup pencil
-        autocmd!
-        autocmd FileType markdown,mkd call pencil#init()
-        autocmd FileType text         call pencil#init()
-        augroup END
+        "augroup pencil
+        "autocmd!
+        "autocmd FileType markdown,mkd call pencil#init()
+        "autocmd FileType text         call pencil#init()
+        "augroup END
+
+        "let g:airline_section_x = '%{PencilMode()}'
 
         nnoremap <silent> Q gqap
         xnoremap <silent> Q gq
         nnoremap <silent> <leader>Q vapJgqap
 
-        let g:airline_section_x = '%{PencilMode()}'
-
         noremap <F6> :PencilToggle<CR>
+        noremap <S-F6> :PencilOff<CR>
         noremap <C-F6> :PencilHard<CR>
         noremap <M-F6> :PencilSoft<CR>
     " }
