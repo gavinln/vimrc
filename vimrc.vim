@@ -536,6 +536,26 @@ set diffexpr=
         let g:session_autoload = 'no'
     " }
 
+    " FZF {
+        " list files
+        nnoremap <silent> <leader>ff :Files<CR>
+        " git status
+        nnoremap <silent> <leader>fg :GFiles?<CR>
+        " lines in loaded buffers
+        nnoremap <silent> <leader>fl :Lines<CR>
+        " tags in the project
+        nnoremap <silent> <leader>ft :Tags<CR>
+        " marks
+        nnoremap <silent> <leader>fm :Marks<CR>
+        " oldfiles and open buffers
+        nnoremap <silent> <leader>fh :History<CR>
+        " snippets from Ultisnips
+        nnoremap <silent> <leader>fs :Snippets<CR>
+        " color schemes
+        nnoremap <silent> <leader>fc :Colors<CR>
+        " buffers
+        nnoremap <silent> <leader>fb :Buffers<CR>
+    " }
 
     " Markdown {
         let g:vim_markdown_folding_style_pythonic = 1
