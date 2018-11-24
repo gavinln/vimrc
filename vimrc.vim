@@ -1,4 +1,4 @@
-" vim: set sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell
+" vim: sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell
 
 " Install VIM for Windows from https://tuxproject.de/projects/vim/
 
@@ -25,7 +25,6 @@ Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
 Plug 'tpope/vim-repeat'     " improved repeate previous operations
 
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
-"Plug 'reedes/vim-pencil'       " editing text & markdown files
 
 Plug 'kshenoy/vim-signature'   " display marks
 Plug 'xolox/vim-misc'          " works with vim session
@@ -89,9 +88,6 @@ Plug 'junegunn/fzf.vim'
 " highlights patterns and ranges for ex commands
 Plug 'markonm/traces.vim'
 
-" New text objects: pairs, quotes, separator, arguments
-"Plug 'wellle/targets.vim'
-
 " test the following plugins
 "Plug 'benmills/vimux'
 "Plug 'jeetsukumaran/vim-buffergator'
@@ -102,16 +98,16 @@ Plug 'markonm/traces.vim'
 "Plug 'vim-scripts/CSApprox'  # gvim colorschemes in a terminal vim
 "Plug 'sheerun/vim-polyglot'
 "Plug 'ConradIrwin/vim-bracketed-paste'
-"Plug 'markonm/traces.vim'
-"Plug 'wellle/targets.vim'
-"Plug 'dbeniamine/cheat.sh-vim'  # cheatsheet: https://github.com/chubin/cheat.sh
+"Plug 'reedes/vim-pencil'       " editing text & markdown files
+"Plug 'wellle/targets.vim'  " text objects: pairs, quotes, separator, arguments
+"Plug 'dbeniamine/cheat.sh-vim'  " cheatsheet: https://github.com/chubin/cheat.sh
+
+" Initialize plugin system
+call plug#end()
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
 let maplocalleader = ',,'
-
-" Initialize plugin system
-call plug#end()
 
 " use internal diff program
 set diffexpr=
@@ -313,9 +309,9 @@ set diffexpr=
     map <leader>ev :vsp %%
     map <leader>et :tabe %%
 
-    " Map <Leader>ff to display all lines with keyword under cursor
+    " Map <Leader>tt to display all lines with keyword under cursor
     " and ask which one to jump to
-    nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+    nmap <Leader>tt [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
     " Error window mapping {
     if has("win32")
@@ -482,13 +478,14 @@ set diffexpr=
     " }
 
     " Pencil {
-        "augroup pencil
-        "autocmd!
-        "autocmd FileType markdown,mkd call pencil#init()
-        "autocmd FileType text         call pencil#init()
-        "augroup END
+        " Pencil disabled
+        " augroup pencil
+        " autocmd!
+        " autocmd FileType markdown,mkd call pencil#init()
+        " autocmd FileType text         call pencil#init()
+        " augroup END
 
-        "let g:airline_section_x = '%{PencilMode()}'
+        " let g:airline_section_x = '%{PencilMode()}'
 
         nnoremap <silent> Q gqap
         xnoremap <silent> Q gq
