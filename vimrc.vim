@@ -42,7 +42,7 @@ Plug 'airblade/vim-gitgutter'         " display git status in gutter
 Plug 'w0rp/ale'
 " Install isort to sort Python imports: conda install isort
 " Type :Isort to sort Python imports
-Plug 'fisadev/vim-isort'
+" Plug 'fisadev/vim-isort'
 
 Plug 'skywind3000/asyncrun.vim' " run processes asynchronously
 
@@ -61,6 +61,9 @@ Plug 'kien/ctrlp.vim'
 
 Plug 'maralla/completor.vim'
 Plug 'davidhalter/jedi-vim'
+
+" See this https://wrotenwrites.com/a_modern_terminal_workflow_1/
+" Plug 'szymonmaszke/vimpyter' " edit Jupyter notebooks in vim
 
 " Track the engine.
 Plug 'SirVer/ultisnips'
@@ -459,7 +462,7 @@ set diffexpr=
     " Jedi {
         let g:jedi#auto_initialization = 1
         let g:jedi#popup_on_dot = 0
-        " let g:completor_auto_trigger = 0
+        let g:completor_auto_trigger = 0
 
         " Completion <C-Space>
         " Goto assignments <leader>g
@@ -474,7 +477,9 @@ set diffexpr=
     " }
 
     " completor {
-        let g:completor_python_binary = '/C:/Users/gnoronha/AppData/Local/Continuum/miniconda3/python.exe'
+        " let g:completor_python_binary = '/C:/Users/gnoronha/AppData/Local/Continuum/miniconda3/python.exe'
+        let g:completor_python_binary = '/C:/Users/gavin/Miniconda3/python.exe'
+
     " }
 
     " Pencil {
@@ -559,6 +564,7 @@ set diffexpr=
 
     " Markdown {
         let g:vim_markdown_folding_style_pythonic = 1
+        let g:vim_markdown_conceal = 0
     " }
 
     " tagbar {
