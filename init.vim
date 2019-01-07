@@ -30,7 +30,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'tpope/vim-fugitive' " integration with git
 Plug 'gregsexton/gitv'    " git repository viewer
-Plug 'airblade/vim-gitgutter'         " display git status in gutter
 
 Plug 'junegunn/vim-easy-align'  " vim alignment: start with ga
 
@@ -40,14 +39,41 @@ Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
 
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
 
+Plug 'kshenoy/vim-signature'   " display marks
+Plug 'xolox/vim-misc'          " works with vim session
+Plug 'xolox/vim-session'       " session management with vim
+Plug 'mbbill/undotree'         " undo history visualizer
+
+
+Plug 'vim-airline/vim-airline'        " fancy status bar
+Plug 'vim-airline/vim-airline-themes' " themes for status bar
+Plug 'airblade/vim-gitgutter'         " display git status in gutter
+
 " Install flake8 for Python linter: conda install flake8
 " Install yapf for Python fixer: pip install yapf
 Plug 'w0rp/ale'  " linter and formatter
 
+
+
+Plug 'jlanzarotta/bufexplorer' " display buffers in vim
+Plug 'yegappan/mru'            " most recently used file
+Plug 'Raimondi/delimitMate'    " auto insert open close parenthesis
+
+Plug 'Yggdroot/indentLine'     " display vertical lines at indentation
+Plug 'bronson/vim-trailing-whitespace' " highlight trailing white-space
+
+" display tags of current buffer
+" Needs ctags from https://github.com/universal-ctags/ctags
+ Plug 'majutsushi/tagbar'
+
+" requires fzf to be installed
+" Plug 'C:/ProgramData/chocolatey/bin/fzf.exe'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
 Plug 'lifepillar/vim-solarized8'  " Optimized Solarized colorschemes
 
-Plug 'vim-airline/vim-airline'        " fancy status bar
-Plug 'vim-airline/vim-airline-themes' " themes for status bar
+Plug 'kassio/neoterm'  " send code to terminal REPL
 
 " Initialize plugin system
 call plug#end()
@@ -73,6 +99,7 @@ call plug#end()
 
         " SHIFT-Insert is Paste
         map <S-Insert>  "+gP
+        imap <S-Insert>  "+gP
         cmap <S-Insert> <C-R>+
     endif
 
@@ -110,6 +137,114 @@ call plug#end()
     " Markdown {
         let g:vim_markdown_folding_style_pythonic = 1
         let g:vim_markdown_conceal = 0
+    " }
+
+    " neoterm {
+        " Use gx{text-object} in normal mode
+        nmap gx <Plug>(neoterm-repl-send)
+
+        " Send selected contents in visual mode.
+        xmap gx <Plug>(neoterm-repl-send)
+
+        " Send current line in normal mode
+        nmap gxx <Plug>(neoterm-repl-send-line)
+    " }
+
+    " vim-session {
+        let g:session_autosave = 'yes'
+        let g:session_autoload = 'no'
+        let g:session_menu = 0
+    " }
+
+    " MRU settings {
+        let MRU_Add_Menu = 0
+    " }
+
+    " Miscellaneous Key Mappings {
+        " running external programs
+        "open explorer in the current file's directory
+        map <leader>oe :!start explorer "%:p:h"<CR>
+
+        "open windows command prompt in the current file's directory
+        map <leader>oc :!start cmd /k cd "%:p:h"<CR>
+
+        " Change to directory of current file
+        map <leader>cd :cd %:p:h<cr>
+
+        " command to select last pasted text
+        nnoremap <expr> <leader>gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+        " Press F2 to toggle Vim revision history
+        noremap <F2> :UndotreeToggle<CR>
+
+        " toggle visibility of indent lines
+        noremap <F7> :IndentLinesToggle<CR>
+
+        nmap <F8> :TagbarToggle<CR>
+
+        " Close the current buffer without closing the window {
+        map <leader>bd :Bclose<cr>
+
+        command! Bclose call <SID>BufcloseCloseIt()
+        function! <SID>BufcloseCloseIt()
+            let l:currentBufNum = bufnr("%")
+            let l:alternateBufNum = bufnr("#")
+
+            if buflisted(l:alternateBufNum)
+                buffer #
+            else
+                bnext
+            endif
+
+           if bufnr("%") == l:currentBufNum
+             new
+           endif
+
+           if buflisted(l:currentBufNum)
+             execute("bdelete! ".l:currentBufNum)
+           endif
+        endfunction
+        " }
+
+    " }
+
+    " FZF {
+        " list files
+        nnoremap <silent> <leader>ff :Files<CR>
+        " git status
+        nnoremap <silent> <leader>fg :GFiles?<CR>
+        " lines in loaded buffers
+        nnoremap <silent> <leader>fl :Lines<CR>
+        " tags in the project
+        nnoremap <silent> <leader>ft :Tags<CR>
+        " marks
+        nnoremap <silent> <leader>fm :Marks<CR>
+        " oldfiles and open buffers
+        nnoremap <silent> <leader>fh :History<CR>
+        " snippets from Ultisnips
+        nnoremap <silent> <leader>fs :Snippets<CR>
+        " color schemes
+        nnoremap <silent> <leader>fc :Colors<CR>
+        " buffers
+        nnoremap <silent> <leader>fb :Buffers<CR>
+    " }
+
+    " gitv {
+        nmap <leader>gv :Gitv --all<cr>
+        nmap <leader>gV :Gitv! --all<cr>
+        vmap <leader>gV :Gitv! --all<cr>
+    " }
+    "
+    " Fugitive {
+        nnoremap <silent> <leader>gs :Gstatus<CR>
+        nnoremap <silent> <leader>gd :Gdiff<CR>
+        nnoremap <silent> <leader>gc :Gcommit<CR>
+        nnoremap <silent> <leader>gb :Gblame<CR>
+        nnoremap <silent> <leader>gl :Glog<CR>
+        nnoremap <silent> <leader>gp :Git push<CR>
+        nnoremap <silent> <leader>gr :Gread<CR>:GitGutter<CR>
+        nnoremap <silent> <leader>gw :Gwrite<CR>:GitGutter<CR>
+        nnoremap <silent> <leader>ge :Gedit<CR>
     " }
 
 " }
