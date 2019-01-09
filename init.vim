@@ -99,9 +99,21 @@ call plug#end()
 
         " SHIFT-Insert is Paste
         map <S-Insert>  "+gP
-        imap <S-Insert>  "+gP
-        cmap <S-Insert> <C-R>+
+        cmap <S-Insert>  <C-R>+
+        imap <S-Insert>  <C-R>+
+        vmap <S-Insert>  "_x"+gP
     endif
+
+" }
+
+" Window navigation mappings {
+
+    noremap ;l  <C-W>l
+    noremap ;h  <C-W>h
+    noremap ;j  <C-W>j
+    noremap ;k  <C-W>k
+
+    noremap ;;  :
 
 " }
 
