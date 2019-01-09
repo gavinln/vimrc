@@ -62,6 +62,8 @@ Plug 'Raimondi/delimitMate'    " auto insert open close parenthesis
 Plug 'Yggdroot/indentLine'     " display vertical lines at indentation
 Plug 'bronson/vim-trailing-whitespace' " highlight trailing white-space
 
+Plug 'vimoutliner/vimoutliner'
+
 " display tags of current buffer
 " Needs ctags from https://github.com/universal-ctags/ctags
  Plug 'majutsushi/tagbar'
@@ -77,6 +79,10 @@ Plug 'kassio/neoterm'  " send code to terminal REPL
 
 " Initialize plugin system
 call plug#end()
+
+" In the file vimfiles\bundle\vimoutliner\vimoutlinerc
+" uncomment the following line for the comma comma keyboard mappings to work
+let maplocalleader = ',,'
 
 
 " GUI settings {
