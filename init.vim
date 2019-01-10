@@ -64,9 +64,14 @@ Plug 'bronson/vim-trailing-whitespace' " highlight trailing white-space
 
 Plug 'vimoutliner/vimoutliner'
 
+" pip install neovim
+" pip install jedi
+Plug 'davidhalter/jedi-vim'  " Python auto-completion
+Plug 'maralla/completor.vim'  " Async completion framework
+
 " display tags of current buffer
 " Needs ctags from https://github.com/universal-ctags/ctags
- Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 
 " requires fzf to be installed
 " Plug 'C:/ProgramData/chocolatey/bin/fzf.exe'
@@ -84,6 +89,16 @@ call plug#end()
 " uncomment the following line for the comma comma keyboard mappings to work
 let maplocalleader = ',,'
 
+" General settings {
+
+
+    set background=dark
+    colorscheme solarized8
+
+    set hidden  " Allow buffer switching without saving
+    set clipboard+=unnamedplus  " use system clipboard
+
+" }
 
 " GUI settings {
 
@@ -118,6 +133,8 @@ let maplocalleader = ',,'
     noremap ;h  <C-W>h
     noremap ;j  <C-W>j
     noremap ;k  <C-W>k
+    noremap ;v  <C-W>v
+    noremap ;s  <C-W>s
 
     noremap ;;  :
 
@@ -167,6 +184,24 @@ let maplocalleader = ',,'
         " Send current line in normal mode
         nmap gxx <Plug>(neoterm-repl-send-line)
     " }
+
+    " Jedi and completor {
+        let g:jedi#auto_initialization = 1
+        let g:jedi#popup_on_dot = 0
+
+        " Completion <C-Space>
+        " Goto assignments <leader>g
+        " Goto definitions <leader>d
+        " Show Documentation/Pydoc K
+        " Renaming <leader>r
+        " Usages <leader>n
+    " }
+    "
+    " completor {
+        let g:completor_python_binary = '/C:/Users/gavin/Miniconda3/python.exe'
+        let g:completor_auto_trigger = 0
+    " }
+
 
     " vim-session {
         let g:session_autosave = 'yes'
