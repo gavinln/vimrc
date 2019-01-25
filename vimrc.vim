@@ -52,6 +52,8 @@ Plug 'Raimondi/delimitMate'    " auto insert open close parenthesis
 
 Plug 'Yggdroot/indentLine'     " display vertical lines at indentation
 Plug 'bronson/vim-trailing-whitespace' " highlight trailing white-space
+
+Plug 'KabbAmine/zeavim.vim'  " Zeal offline documentation, choco install zeal
 "
 Plug 'jelera/vim-javascript-syntax'
 Plug 'vimoutliner/vimoutliner'
@@ -593,9 +595,9 @@ set diffexpr=
     map <leader>cd :cd %:p:h<cr>
 
     " Pull word under cursor into LHS of a substitute
-    nmap <leader>z :%s#\<<c-r>=expand("<cword>")<cr>\>#
+    nmap <leader>vz :%s#\<<c-r>=expand("<cword>")<cr>\>#
     " Pull Visually Highlighted text into LHS of a substitute
-    vnoremap <leader>z ""y:%s/<C-R>=escape(@", '/\')<CR>//g<Left><Left>
+    vnoremap <leader>vz ""y:%s/<C-R>=escape(@", '/\')<CR>//g<Left><Left>
     " search for text
     map <leader>vg :vimgrep /\<<c-r>=expand("<cword>")<cr>\>/ **/*.<left><left><left><left><left><left><left>
 
