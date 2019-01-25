@@ -464,8 +464,19 @@ set diffexpr=
 
     " Jedi {
         let g:jedi#auto_initialization = 1
-        let g:jedi#popup_on_dot = 0
-        let g:completor_auto_trigger = 0
+        let g:jedi#popup_on_dot = 1
+        let g:completor_auto_trigger = 1
+
+        " toggle completor auto trigger
+        nnoremap <F6> :call CompletorAutoTriggerToggle()<cr>
+
+        function! CompletorAutoTriggerToggle()
+            if g:completor_auto_trigger
+                let g:completor_auto_trigger = 0
+            else
+                let g:completor_auto_trigger = 1
+            endif
+        endfunction
 
         " Completion <C-Space>
         " Goto assignments <leader>g
