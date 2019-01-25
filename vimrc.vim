@@ -23,6 +23,9 @@ Plug 'tpope/vim-surround'   " surround with parentheses, brackets, quotes, xml
 Plug 'tpope/vim-unimpaired' " pairs of ops: previous/next, turn on/off
 Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
 Plug 'tpope/vim-repeat'     " improved repeate previous operations
+Plug 'tpope/vim-rsi'        " readline keys in insert mode ctrl-a start of line
+
+Plug 'justinmk/vim-sneak'  " jump to location specified by 2 chars, sab
 
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
 
@@ -40,24 +43,20 @@ Plug 'airblade/vim-gitgutter'         " display git status in gutter
 " Install flake8 for Python linter: conda install flake8
 " Install yapf for Python fixer: pip install yapf
 Plug 'w0rp/ale'
-" Install isort to sort Python imports: conda install isort
-" Type :Isort to sort Python imports
-" Plug 'fisadev/vim-isort'
 
 Plug 'skywind3000/asyncrun.vim' " run processes asynchronously
 
 Plug 'jlanzarotta/bufexplorer' " display buffers in vim
 Plug 'yegappan/mru'            " most recently used file
-Plug 'Raimondi/delimitMate'    " auto insert open close parens
+Plug 'Raimondi/delimitMate'    " auto insert open close parenthesis
 
 Plug 'Yggdroot/indentLine'     " display vertical lines at indentation
-Plug 'bronson/vim-trailing-whitespace' " hightlight trailing whitespace
+Plug 'bronson/vim-trailing-whitespace' " highlight trailing white-space
 "
 Plug 'jelera/vim-javascript-syntax'
 Plug 'vimoutliner/vimoutliner'
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/vim-easy-align'
-Plug 'kien/ctrlp.vim'
 
 Plug 'maralla/completor.vim'
 Plug 'davidhalter/jedi-vim'
@@ -90,6 +89,8 @@ Plug 'junegunn/fzf.vim'
 
 " highlights patterns and ranges for ex commands
 Plug 'markonm/traces.vim'
+
+" Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 
 " test the following plugins
 "Plug 'benmills/vimux'
