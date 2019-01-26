@@ -104,7 +104,7 @@ Plug 'markonm/traces.vim'
 "Plug 'vim-scripts/CSApprox'  # gvim colorschemes in a terminal vim
 "Plug 'sheerun/vim-polyglot'
 "Plug 'ConradIrwin/vim-bracketed-paste'
-"Plug 'reedes/vim-pencil'       " editing text & markdown files
+Plug 'reedes/vim-pencil'       " editing text & markdown files
 "Plug 'wellle/targets.vim'  " text objects: pairs, quotes, separator, arguments
 "Plug 'dbeniamine/cheat.sh-vim'  " cheatsheet: https://github.com/chubin/cheat.sh
 
@@ -468,7 +468,7 @@ set diffexpr=
         let g:completor_auto_trigger = 1
 
         " toggle completor auto trigger
-        nnoremap <F6> :call CompletorAutoTriggerToggle()<cr>
+        nnoremap <F9> :call CompletorAutoTriggerToggle()<cr>
 
         function! CompletorAutoTriggerToggle()
             if g:completor_auto_trigger
@@ -497,23 +497,21 @@ set diffexpr=
     " }
 
     " Pencil {
-        " Pencil disabled
-        " augroup pencil
-        " autocmd!
-        " autocmd FileType markdown,mkd call pencil#init()
-        " autocmd FileType text         call pencil#init()
-        " augroup END
+        augroup pencil
+        autocmd!
+        autocmd FileType markdown,mkd call pencil#init()
+        autocmd FileType text         call pencil#init()
+        augroup END
 
-        " let g:airline_section_x = '%{PencilMode()}'
+        let g:airline_section_x = '%{PencilMode()}'
 
         nnoremap <silent> Q gqap
         xnoremap <silent> Q gq
         nnoremap <silent> <leader>Q vapJgqap
 
         noremap <F6> :PencilToggle<CR>
-        noremap <S-F6> :PencilOff<CR>
+        noremap <S-F6> :PencilSoft<CR>
         noremap <C-F6> :PencilHard<CR>
-        noremap <M-F6> :PencilSoft<CR>
     " }
 
     " Fugitive {
