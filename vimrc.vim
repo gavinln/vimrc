@@ -501,7 +501,7 @@ set diffexpr=
     " Pencil {
         augroup pencil
         autocmd!
-        autocmd FileType markdown,mkd call pencil#init()
+        " autocmd FileType markdown,mkd call pencil#init()
         autocmd FileType text         call pencil#init()
         augroup END
 
@@ -512,8 +512,9 @@ set diffexpr=
         nnoremap <silent> <leader>Q vapJgqap
 
         noremap <F6> :PencilToggle<CR>
-        noremap <S-F6> :PencilSoft<CR>
+        noremap <S-F6> :PencilOff<CR>
         noremap <C-F6> :PencilHard<CR>
+        noremap <M-F6> :PencilSoft<CR>
     " }
 
     " Fugitive {
