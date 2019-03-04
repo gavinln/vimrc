@@ -39,6 +39,8 @@ Plug 'vim-airline/vim-airline'        " fancy status bar
 Plug 'vim-airline/vim-airline-themes' " themes for status bar
 Plug 'airblade/vim-gitgutter'         " display git status in gutter
 
+Plug 'will133/vim-dirdiff'      " difference between two directories
+
 " VIM as Python IDE from http://liuchengxu.org/posts/use-vim-as-a-python-ide/
 " Install flake8 for Python linter: conda install flake8
 " Install yapf for Python fixer: pip install yapf
@@ -214,7 +216,7 @@ set diffexpr=
     set scrolljump=5                " Lines to scroll when cursor leaves screen
     set scrolloff=3                 " Minimum lines to keep above and below cursor
     set foldenable                  " Auto fold code
-    set list
+    set nolist
     set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 
 " }
@@ -463,12 +465,12 @@ set diffexpr=
     " }
 
     " Jedi {
-        let g:jedi#auto_initialization = 1
-        let g:jedi#popup_on_dot = 1
-        let g:completor_auto_trigger = 1
+        let g:jedi#auto_initialization = 0
+        let g:jedi#popup_on_dot = 0
+        let g:completor_auto_trigger = 0
 
         " toggle completor auto trigger
-        nnoremap <F6> :call CompletorAutoTriggerToggle()<cr>
+        nnoremap <F9> :call CompletorAutoTriggerToggle()<cr>
 
         function! CompletorAutoTriggerToggle()
             if g:completor_auto_trigger
