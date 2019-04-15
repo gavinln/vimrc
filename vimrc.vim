@@ -419,7 +419,8 @@ set diffexpr=
 
     " Ale {
         let g:ale_linters = {
-        \   'python': ['flake8']
+        \   'python': ['flake8'],
+        \   'markdown': ['proselint']
         \}
         let g:ale_fixers = {
         \   'python': ['yapf']
