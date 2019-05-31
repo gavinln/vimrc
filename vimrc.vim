@@ -94,6 +94,10 @@ Plug 'junegunn/fzf.vim'
 " highlights patterns and ranges for ex commands
 Plug 'markonm/traces.vim'
 
+" a personal wiki for Vim
+" to organize notes, manage to-do lists, write doc, maintain a diary
+Plug 'vimwiki/vimwiki'
+
 " Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 
 " test the following plugins
@@ -418,6 +422,13 @@ set diffexpr=
     " }
 
     " Ale {
+        " to customize proselint see https://github.com/amperser/proselint
+        " Modify file ~/.config/proselint/config with settings such as:
+        " {
+        "   "checks": {
+        "     "typography.diacritical_marks": false
+        "   }
+        " }
         let g:ale_linters = {
         \   'python': ['flake8'],
         \   'markdown': ['proselint']
@@ -593,6 +604,17 @@ set diffexpr=
 
         " Start interactive EasyAlign for a motion/text object (e.g. gaip)
         nmap ga <Plug>(EasyAlign)
+    " }
+
+    " vim-sneak {
+        " do not use vim-sneak in file manager buggers
+        let g:sneak#map_netrw = 0
+    " }
+
+    " vim wiki {
+        let g:vimwiki_list = [{'path': '~/vimwiki/',
+                              \ 'syntax': 'markdown', 'ext': '.mdv'}]
+        let g:vimwiki_folding='list'
     " }
 " }
 
