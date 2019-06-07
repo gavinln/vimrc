@@ -507,7 +507,6 @@ set diffexpr=
     " completor {
         " let g:completor_python_binary = '/C:/Users/gnoronha/AppData/Local/Continuum/miniconda3/python.exe'
         let g:completor_python_binary = '/C:/Users/gavin/Miniconda3/python.exe'
-
     " }
 
     " Pencil {
@@ -614,7 +613,7 @@ set diffexpr=
     " vim wiki {
         let g:vimwiki_list = [{'path': '~/vimwiki/',
                               \ 'syntax': 'markdown', 'ext': '.mdv'}]
-        let g:vimwiki_folding='list'
+        let g:vimwiki_folding='expr:quick'
     " }
 " }
 
