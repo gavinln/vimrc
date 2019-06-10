@@ -25,9 +25,17 @@ Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
 Plug 'tpope/vim-repeat'     " improved repeate previous operations
 Plug 'tpope/vim-rsi'        " readline keys in insert mode ctrl-a start of line
 
+" Uses https://github.com/palantir/python-language-server
+" pip install 'python-language-server[all]'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'powershell -executionpolicy bypass -File install.ps1',
+    \ }
+
 Plug 'justinmk/vim-sneak'  " jump to location specified by 2 chars, sab
 
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
+Plug 'reedes/vim-pencil'       " editing text & markdown files
 
 Plug 'kshenoy/vim-signature'   " display marks
 Plug 'xolox/vim-misc'          " works with vim session
@@ -43,7 +51,8 @@ Plug 'will133/vim-dirdiff'      " difference between two directories
 
 " VIM as Python IDE from http://liuchengxu.org/posts/use-vim-as-a-python-ide/
 " Install flake8 for Python linter: conda install flake8
-" Install yapf for Python fixer: pip install yapf
+" Install yapf for Python fixer: conda install yapf
+" Install proselint for Markdown linter: pip install proselint
 Plug 'w0rp/ale'
 
 Plug 'skywind3000/asyncrun.vim' " run processes asynchronously
@@ -56,20 +65,21 @@ Plug 'Yggdroot/indentLine'     " display vertical lines at indentation
 Plug 'bronson/vim-trailing-whitespace' " highlight trailing white-space
 
 Plug 'KabbAmine/zeavim.vim'  " Zeal offline documentation, choco install zeal
-"
-Plug 'jelera/vim-javascript-syntax'
+
+" Plug 'jelera/vim-javascript-syntax'
+
 Plug 'vimoutliner/vimoutliner'
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/vim-easy-align'
 
-Plug 'maralla/completor.vim'
-Plug 'davidhalter/jedi-vim'
+" Plug 'maralla/completor.vim'
+" Plug 'davidhalter/jedi-vim'
 
 " See this https://wrotenwrites.com/a_modern_terminal_workflow_1/
 " Plug 'szymonmaszke/vimpyter' " edit Jupyter notebooks in vim
 
 " Track the engine.
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 
@@ -110,7 +120,6 @@ Plug 'vimwiki/vimwiki'
 "Plug 'vim-scripts/CSApprox'  # gvim colorschemes in a terminal vim
 "Plug 'sheerun/vim-polyglot'
 "Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'reedes/vim-pencil'       " editing text & markdown files
 "Plug 'wellle/targets.vim'  " text objects: pairs, quotes, separator, arguments
 "Plug 'dbeniamine/cheat.sh-vim'  " cheatsheet: https://github.com/chubin/cheat.sh
 
@@ -430,7 +439,7 @@ set diffexpr=
         "   }
         " }
         let g:ale_linters = {
-        \   'python': ['flake8'],
+        \   'python': ['pyls'],
         \   'markdown': ['proselint']
         \}
         let g:ale_fixers = {
@@ -588,7 +597,7 @@ set diffexpr=
         nnoremap <silent> <leader>fb :Buffers<CR>
     " }
 
-    " Markdown {
+    " plasticboy/vim-markdown {
         let g:vim_markdown_folding_style_pythonic = 1
         let g:vim_markdown_conceal = 0
     " }
@@ -615,6 +624,15 @@ set diffexpr=
                               \ 'syntax': 'markdown', 'ext': '.mdv'}]
         let g:vimwiki_folding='expr:quick'
     " }
+
+    " vim language client {
+        let g:LanguageClient_serverCommands = {
+        \ 'python': ['c:/Users/gavin/Miniconda3/envs/pyls/Scripts/pyls.exe'],
+        \ }
+        let g:LanguageClient_useVirtualText = 1
+        let g:LanguageClient_useFloatingHover = 1
+    " }
+
 " }
 
 " Miscellaneous Key Mappings {
