@@ -25,13 +25,6 @@ Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
 Plug 'tpope/vim-repeat'     " improved repeate previous operations
 Plug 'tpope/vim-rsi'        " readline keys in insert mode ctrl-a start of line
 
-" Uses https://github.com/palantir/python-language-server
-" pip install 'python-language-server[all]'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'powershell -executionpolicy bypass -File install.ps1',
-    \ }
-
 Plug 'justinmk/vim-sneak'  " jump to location specified by 2 chars, sab
 
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
@@ -49,9 +42,9 @@ Plug 'airblade/vim-gitgutter'         " display git status in gutter
 
 Plug 'will133/vim-dirdiff'      " difference between two directories
 
-" VIM as Python IDE from http://liuchengxu.org/posts/use-vim-as-a-python-ide/
-" Install flake8 for Python linter: conda install flake8
-" Install yapf for Python fixer: conda install yapf
+" Uses https://github.com/palantir/python-language-server
+" Create environment: conda create -n pyls python=3.7
+" conda install -y 'python-language-server[all]'
 " Install proselint for Markdown linter: pip install proselint
 Plug 'w0rp/ale'
 
@@ -62,26 +55,15 @@ Plug 'yegappan/mru'            " most recently used file
 Plug 'Raimondi/delimitMate'    " auto insert open close parenthesis
 
 Plug 'Yggdroot/indentLine'     " display vertical lines at indentation
-Plug 'bronson/vim-trailing-whitespace' " highlight trailing white-space
 
 Plug 'KabbAmine/zeavim.vim'  " Zeal offline documentation, choco install zeal
-
-" Plug 'jelera/vim-javascript-syntax'
 
 Plug 'vimoutliner/vimoutliner'
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/vim-easy-align'
 
-" Plug 'maralla/completor.vim'
-" Plug 'davidhalter/jedi-vim'
-
 " See this https://wrotenwrites.com/a_modern_terminal_workflow_1/
 " Plug 'szymonmaszke/vimpyter' " edit Jupyter notebooks in vim
-
-" Track the engine.
-" Plug 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
 
 " text object for indent levels; useful for Python
 Plug 'michaeljsmith/vim-indent-object'
@@ -277,14 +259,6 @@ set diffexpr=
         "set term=builtin_ansi       " Make arrow and other keys work
     endif
 
-    let g:airline_theme='solarized'
-    if has('gui_running')
-        colorscheme solarized
-        set cursorline                  " Highlight current line
-    else
-        colorscheme default
-        set nocursorline
-    endif
 " }
 
 " Key Mappings {
@@ -452,6 +426,7 @@ set diffexpr=
         " use locallist instead of quickfix
         let g:ale_set_loclist = 1
         let g:ale_set_quickfix = 0
+        let g:ale_completion_enabled = 1
 
         nnoremap <silent> <leader>af :ALEFix<CR>
         nnoremap <silent> <leader>at :ALEToggle<CR>
@@ -589,8 +564,6 @@ set diffexpr=
         nnoremap <silent> <leader>fm :Marks<CR>
         " oldfiles and open buffers
         nnoremap <silent> <leader>fh :History<CR>
-        " snippets from Ultisnips
-        nnoremap <silent> <leader>fs :Snippets<CR>
         " color schemes
         nnoremap <silent> <leader>fc :Colors<CR>
         " buffers
@@ -623,14 +596,6 @@ set diffexpr=
         let g:vimwiki_list = [{'path': '~/vimwiki/',
                               \ 'syntax': 'markdown', 'ext': '.mdv'}]
         let g:vimwiki_folding='expr:quick'
-    " }
-
-    " vim language client {
-        let g:LanguageClient_serverCommands = {
-        \ 'python': ['c:/Users/gavin/Miniconda3/envs/pyls/Scripts/pyls.exe'],
-        \ }
-        let g:LanguageClient_useVirtualText = 1
-        let g:LanguageClient_useFloatingHover = 1
     " }
 
 " }
@@ -728,60 +693,6 @@ set diffexpr=
 
     " https://www.howtogeek.com/254401/34-useful-keyboard-shortcuts-for-the-windows-command-prompt/
     " https://gist.github.com/P7h/d5631d640ab91ed4a8e2e4732ff691d9
-
-    " Command editing shortcuts
-    " go to the start of the command line
-    tnoremap <silent> <C-A> <Home>
-
-    " go to the end of the command line
-    tnoremap <silent> <C-E> <End>
-
-    " delete from cursor to the end of the command line
-    tnoremap <silent> <C-K> <C-End>
-
-    " delete from cursor to the start of the command line
-    tnoremap <silent> <C-U> <C-Home>
-
-    " delete from cursor to start of word (does not work)
-    " tnoremap <silent> <C-W> <C-BS>
-
-    " move backward one word (does not work)
-    " tnoremap <silent> <M-B> <C-Left>
-
-    " move forward one word (does not work)
-    " tnoremap <silent> <M-F> <C-Right>
-
-    " delete to end of word starting at cursor (not supported)
-    " tnoremap <silent> <A-D>
-
-    " move forward one character
-    tnoremap <silent> <C-F> <Right>
-
-    " move backward one character
-    tnoremap <silent> <C-B> <Left>
-
-    " delete character under the cursor
-    tnoremap <silent> <C-D> <Del>
-
-    " delete character before the cursor
-    tnoremap <silent> <C-H> <BS>
-
-    " Command Recall Shortcuts
-    " previous command in history
-    tnoremap <silent> <C-P> <Up>
-    " command in history
-    tnoremap <silent> <C-N> <Down>
-
-    " Command Control Shortcuts
-    " clear the screen
-    tnoremap <silent> <C-L> cls<Enter>
-
-    " Command Recall Shortcuts
-    " previous command in history
-    tnoremap <silent> <C-P> <Up>
-
-    " next command in history
-    tnoremap <silent> <C-N> <Down>
 " }
 
 " May not be needed {
@@ -811,5 +722,14 @@ set diffexpr=
     if executable("rg")
         set grepprg=rg\ --vimgrep\ --no-heading
         set grepformat=%f:%l:%c:%m,%f:%l:%m
+    endif
+
+    let g:airline_theme='solarized'
+    if has('gui_running')
+        colorscheme solarized
+        set cursorline                  " Highlight current line
+    else
+        colorscheme default
+        set nocursorline
     endif
 " }
