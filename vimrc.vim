@@ -90,6 +90,9 @@ Plug 'markonm/traces.vim'
 " to organize notes, manage to-do lists, write doc, maintain a diary
 Plug 'vimwiki/vimwiki'
 
+" create Python docstring
+Plug 'heavenshell/vim-pydocstring'
+
 " Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 
 " test the following plugins
@@ -427,7 +430,9 @@ set diffexpr=
         let g:ale_set_loclist = 1
         let g:ale_set_quickfix = 0
         let g:ale_completion_enabled = 1
+        set omnifunc=ale#completion#OmniFunc
 
+        let g:ale_set_balloons = 1
         nnoremap <silent> <leader>af :ALEFix<CR>
         nnoremap <silent> <leader>at :ALEToggle<CR>
     " }
@@ -460,37 +465,8 @@ set diffexpr=
 
     " }
 
-    " Jedi {
-        let g:jedi#auto_initialization = 0
-        let g:jedi#popup_on_dot = 0
-        let g:completor_auto_trigger = 0
-
-        " toggle completor auto trigger
-        nnoremap <F9> :call CompletorAutoTriggerToggle()<cr>
-
-        function! CompletorAutoTriggerToggle()
-            if g:completor_auto_trigger
-                let g:completor_auto_trigger = 0
-            else
-                let g:completor_auto_trigger = 1
-            endif
-        endfunction
-
-        " Completion <C-Space>
-        " Goto assignments <leader>g
-        " Goto definitions <leader>d
-        " Show Documentation/Pydoc K
-        " Renaming <leader>r
-        " Usages <leader>n
-    " }
-
     " indentLine {
         noremap <F7> :IndentLinesToggle<CR>
-    " }
-
-    " completor {
-        " let g:completor_python_binary = '/C:/Users/gnoronha/AppData/Local/Continuum/miniconda3/python.exe'
-        let g:completor_python_binary = '/C:/Users/gavin/Miniconda3/python.exe'
     " }
 
     " Pencil {
@@ -596,6 +572,11 @@ set diffexpr=
         let g:vimwiki_list = [{'path': '~/vimwiki/',
                               \ 'syntax': 'markdown', 'ext': '.mdv'}]
         let g:vimwiki_folding='expr:quick'
+    " }
+
+    " heavenshell/vim-pydocstring {
+        " instead of <C-l>
+        nmap <silent> <C-S> <Plug>(pydocstring)
     " }
 
 " }
