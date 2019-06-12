@@ -8,6 +8,8 @@
 " or
 " ~/.config/nvim
 "
+" $XDG_CONFIG_HOME/nvim/init.vim
+"
 " Install neovim on Windows using Chocolatey
 " https://github.com/neovim/neovim/wiki/Installing-Neovim
 "
