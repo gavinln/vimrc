@@ -137,15 +137,6 @@ let maplocalleader = ',,'
 
 " }
 
-" GUI settings {
-
-    set background=dark
-    colorscheme solarized8
-
-    set clipboard+=unnamedplus  " use system clipboard
-
-" }
-
 " Windows copy/cut/paste mappings {
 
     if has("clipboard")
