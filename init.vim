@@ -128,13 +128,15 @@ let maplocalleader = ',,'
 
 " General settings {
 
-
     set background=dark
     colorscheme solarized8
 
     set hidden  " Allow buffer switching without saving
     set clipboard+=unnamedplus  " use system clipboard
 
+    set guifont=Consolas:h11
+    " does not work use: nvim-qt --no-ext-tabline
+    " set guitabline=0
 " }
 
 " Windows copy/cut/paste mappings {
@@ -404,6 +406,10 @@ let maplocalleader = ',,'
 
     " redirect output of last :g// command to new window
     nmap <F4> :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>
+
+    " See  src/gui/runtime/doc/nvim_gui_shim.txt in project https://github.com/equalsraf/neovim-qt
+    " Toggle display of files in a tree view
+    nmap <F5> :GuiTreeviewToggle<CR>
 
     " clear all signs placed by pymode checker, syntastic
     map <F12> :sign unplace *<cr>
