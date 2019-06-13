@@ -56,7 +56,16 @@ Plug 'xolox/vim-misc'          " works with vim session
 Plug 'xolox/vim-session'       " session management with vim
 Plug 'mbbill/undotree'         " undo history visualizer
 
-Plug 'scrooloose/nerdcommenter'       " add comments in any language
+" gcc - comment out a line
+" gcap - comment out a paragraph)
+" gc in visual mode to comment out the selection
+" :7,17Commentary - command a range
+" :g/TODO/Commentary - comment using a global invocation
+Plug 'tpope/vim-commentary'  " comment/uncomment stuff
+
+" replaced by 'tpope/vim-commentary'
+" Plug 'scrooloose/nerdcommenter'       " add comments in any language
+
 Plug 'vim-airline/vim-airline'        " fancy status bar
 Plug 'vim-airline/vim-airline-themes' " themes for status bar
 Plug 'airblade/vim-gitgutter'         " display git status in gutter
@@ -111,7 +120,6 @@ Plug 'heavenshell/vim-pydocstring'
 "Plug 'jeetsukumaran/vim-buffergator'
 "Plug 'jtratner/vim-flavored-markdown'
 "Plug 'wesQ3/vim-windowswap'
-"Plug 'tpope/vim-commentary'
 "Plug 'vim-scripts/grep.vim'
 "Plug 'vim-scripts/CSApprox'  # gvim colorschemes in a terminal vim
 "Plug 'sheerun/vim-polyglot'
