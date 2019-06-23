@@ -409,10 +409,12 @@ set diffexpr=
 
     " Ale {
         " to customize proselint see https://github.com/amperser/proselint
+        " On Windows/Linux/Mac
         " Modify file ~/.config/proselint/config with settings such as:
         " {
         "   "checks": {
-        "     "typography.diacritical_marks": false
+        "     "typography.diacritical_marks": false,
+        "     "typography.symbols": false
         "   }
         " }
         let g:ale_linters = {

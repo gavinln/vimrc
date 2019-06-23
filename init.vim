@@ -200,10 +200,12 @@ let maplocalleader = ',,'
 
     " Ale {
         " to customize proselint see https://github.com/amperser/proselint
-        " Modify file ~/.config/proselint/config with settings such as:
+        " On Windows/Mac/Linux
+        " Modify file ~/.config/proselint/config and add settings
         " {
         "   "checks": {
-        "     "typography.diacritical_marks": false
+        "     "typography.diacritical_marks": false,
+        "     "typography.symbols": false
         "   }
         " }
         let g:ale_linters = {
