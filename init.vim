@@ -49,7 +49,7 @@ Plug 'tpope/vim-rsi'        " readline keys in insert mode ctrl-a start of line
 Plug 'justinmk/vim-sneak'  " jump to location specified by 2 chars, sab
 
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
-Plug 'reedes/vim-pencil'       " editing text & markdown files
+" Plug 'reedes/vim-pencil'       " editing text & markdown files
 
 Plug 'kshenoy/vim-signature'   " display marks
 Plug 'xolox/vim-misc'          " works with vim session
@@ -230,27 +230,32 @@ let maplocalleader = ',,'
         nnoremap <silent> <leader>at :ALEToggle<CR>
     " }
 
+    " mbbill/undotree  {
+        " Toggle Vim revision history
+        nnoremap <silent> <leader>ut :UndotreeToggle<CR>
+    " }
+
     " indentLine {
-        noremap <F7> :IndentLinesToggle<CR>
+        nnoremap <silent> <leader>it :IndentLinesToggle<CR>
     " }
 
     " Pencil {
-        augroup pencil
-        autocmd!
-        " autocmd FileType markdown,mkd call pencil#init()
-        autocmd FileType text         call pencil#init()
-        augroup END
+        " augroup pencil
+        " autocmd!
+        "   autocmd FileType markdown,mkd call pencil#init()
+        "   autocmd FileType text         call pencil#init()
+        " augroup END
 
-        let g:airline_section_x = '%{PencilMode()}'
+        " let g:airline_section_x = '%{PencilMode()}'
 
         nnoremap <silent> Q gqap
         xnoremap <silent> Q gq
         nnoremap <silent> <leader>Q vapJgqap
 
-        noremap <F6> :PencilToggle<CR>
-        noremap <S-F6> :PencilOff<CR>
-        noremap <C-F6> :PencilHard<CR>
-        noremap <M-F6> :PencilSoft<CR>
+        " noremap <F6> :PencilToggle<CR>
+        " noremap <S-F6> :PencilOff<CR>
+        " noremap <C-F6> :PencilHard<CR>
+        " noremap <M-F6> :PencilSoft<CR>
     " }
 
     " Fugitive {
@@ -317,7 +322,7 @@ let maplocalleader = ',,'
     " }
 
     " tagbar {
-        nmap <F8> :TagbarToggle<CR>
+        nnoremap <silent> <leader>tt :TagbarToggle<CR>
     " }
 
     " vim-easy-align {
@@ -345,14 +350,14 @@ let maplocalleader = ',,'
     " }
 
     " neoterm {
-        " Use gx{text-object} in normal mode
-        nmap gx <Plug>(neoterm-repl-send)
+        " Use gy{text-object} in normal mode
+        nmap gy <Plug>(neoterm-repl-send)
 
         " Send selected contents in visual mode.
-        xmap gx <Plug>(neoterm-repl-send)
+        xmap gy <Plug>(neoterm-repl-send)
 
         " Send current line in normal mode
-        nmap gxx <Plug>(neoterm-repl-send-line)
+        nmap gyy <Plug>(neoterm-repl-send-line)
     " }
 
 " Miscellaneous Key Mappings {
@@ -362,6 +367,9 @@ let maplocalleader = ',,'
 
     "open windows command prompt in the current file's directory
     map <leader>oc :!start cmd /k cd "%:p:h"<CR>
+
+    " open vifm file manager in a terminal window
+    map <leader>ov :term vifm<CR>
 
     " Change to directory of current file
     map <leader>cd :cd %:p:h<cr>
@@ -404,9 +412,6 @@ let maplocalleader = ',,'
     " }
 
     " Plugin key mappings
-
-    " Press F2 to toggle Vim revision history
-   noremap <F2> :UndotreeToggle<CR>
 
     " map F3/C-F3/M-F3 to search for word under cursor
     " in current file or files with the same extension or all files
