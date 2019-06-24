@@ -36,7 +36,7 @@ Plug 'xolox/vim-session'       " session management with vim
 Plug 'mbbill/undotree'         " undo history visualizer
 
 Plug 'tpope/vim-commentary'    " comment code gc in any language
-Plug 'scrooloose/nerdcommenter'       " add comments in any language
+" Plug 'scrooloose/nerdcommenter'       " add comments in any language
 Plug 'vim-airline/vim-airline'        " fancy status bar
 Plug 'vim-airline/vim-airline-themes' " themes for status bar
 Plug 'airblade/vim-gitgutter'         " display git status in gutter
@@ -94,7 +94,7 @@ Plug 'vimwiki/vimwiki'
 " create Python docstring
 Plug 'heavenshell/vim-pydocstring'
 
-" Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
+Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 
 " test the following plugins
 "Plug 'benmills/vimux'
@@ -581,6 +581,17 @@ set diffexpr=
     " heavenshell/vim-pydocstring {
         " instead of <C-l>
         nmap <silent> <C-S> <Plug>(pydocstring)
+    " }
+
+    " neoterm {
+        " Use gy{text-object} in normal mode
+        nmap gy <Plug>(neoterm-repl-send)
+
+        " Send selected contents in visual mode.
+        xmap gy <Plug>(neoterm-repl-send)
+
+        " Send current line in normal mode
+        nmap gyy <Plug>(neoterm-repl-send-line)
     " }
 
 " }
