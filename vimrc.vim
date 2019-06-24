@@ -28,13 +28,14 @@ Plug 'tpope/vim-rsi'        " readline keys in insert mode ctrl-a start of line
 Plug 'justinmk/vim-sneak'  " jump to location specified by 2 chars, sab
 
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
-Plug 'reedes/vim-pencil'       " editing text & markdown files
+" Plug 'reedes/vim-pencil'       " editing text & markdown files
 
 Plug 'kshenoy/vim-signature'   " display marks
 Plug 'xolox/vim-misc'          " works with vim session
 Plug 'xolox/vim-session'       " session management with vim
 Plug 'mbbill/undotree'         " undo history visualizer
 
+Plug 'tpope/vim-commentary'    " comment code gc in any language
 Plug 'scrooloose/nerdcommenter'       " add comments in any language
 Plug 'vim-airline/vim-airline'        " fancy status bar
 Plug 'vim-airline/vim-airline-themes' " themes for status bar
@@ -100,7 +101,6 @@ Plug 'heavenshell/vim-pydocstring'
 "Plug 'jeetsukumaran/vim-buffergator'
 "Plug 'jtratner/vim-flavored-markdown'
 "Plug 'wesQ3/vim-windowswap'
-"Plug 'tpope/vim-commentary'
 "Plug 'vim-scripts/grep.vim'
 "Plug 'vim-scripts/CSApprox'  # gvim colorschemes in a terminal vim
 "Plug 'sheerun/vim-polyglot'
@@ -472,22 +472,23 @@ set diffexpr=
     " }
 
     " Pencil {
-        augroup pencil
-        autocmd!
-        " autocmd FileType markdown,mkd call pencil#init()
-        autocmd FileType text         call pencil#init()
-        augroup END
+        " let g:pencil#conceallevel = 3  " 0=disable, 1=one char, 2=hide char, 3=hide all (def)
+        " augroup pencil
+        " autocmd!
+        "     autocmd FileType markdown,mkd call pencil#init()
+        "     autocmd FileType text         call pencil#init()
+        " augroup END
 
-        let g:airline_section_x = '%{PencilMode()}'
+        " let g:airline_section_x = '%{PencilMode()}'
 
         nnoremap <silent> Q gqap
         xnoremap <silent> Q gq
         nnoremap <silent> <leader>Q vapJgqap
 
-        noremap <F6> :PencilToggle<CR>
-        noremap <S-F6> :PencilOff<CR>
-        noremap <C-F6> :PencilHard<CR>
-        noremap <M-F6> :PencilSoft<CR>
+        " noremap <F6> :PencilToggle<CR>
+        " noremap <S-F6> :PencilOff<CR>
+        " noremap <C-F6> :PencilHard<CR>
+        " noremap <M-F6> :PencilSoft<CR>
     " }
 
     " Fugitive {
@@ -551,6 +552,7 @@ set diffexpr=
     " plasticboy/vim-markdown {
         let g:vim_markdown_folding_style_pythonic = 1
         let g:vim_markdown_conceal = 0
+        let g:vim_markdown_conceal_code_blocks = 0
     " }
 
     " tagbar {
