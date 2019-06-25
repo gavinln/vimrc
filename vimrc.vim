@@ -169,9 +169,18 @@ set diffexpr=
     syntax enable
     set background=dark
 
+    let g:airline_theme='solarized'
+    if has('gui_running')
+        colorscheme solarized
+        set cursorline                  " Highlight current line
+        autocmd VimEnter * colorscheme solarized | highlight clear SignColumn
+    else
+        colorscheme default
+        set nocursorline
+    endif
+
     set tabpagemax=15               " Only show 15 tabs
     set showmode                    " Display the current mode
-
 
     highlight clear SignColumn      " SignColumn should match background for
                                     " things like vim-gitgutter
@@ -720,12 +729,4 @@ set diffexpr=
         set grepformat=%f:%l:%c:%m,%f:%l:%m
     endif
 
-    let g:airline_theme='solarized'
-    if has('gui_running')
-        colorscheme solarized
-        set cursorline                  " Highlight current line
-    else
-        colorscheme default
-        set nocursorline
-    endif
 " }
