@@ -24,3 +24,5 @@ The following list describes the plugins.
 ## Included color schemes
 
 * [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
+
+## Miscellaneous changes
