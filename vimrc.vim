@@ -94,6 +94,8 @@ Plug 'vimwiki/vimwiki'
 " create Python docstring
 Plug 'heavenshell/vim-pydocstring'
 
+" :Tmap python temp.py
+" ,tt will then run the mapped command in the previous line
 Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 
 " test the following plugins
