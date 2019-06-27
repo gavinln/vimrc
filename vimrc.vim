@@ -338,6 +338,7 @@ set diffexpr=
 " Functions {
 
     " Initialize directories {
+
     function! InitializeDirectories()
         let parent = $HOME
         let prefix = 'vim'
@@ -503,11 +504,37 @@ set diffexpr=
     " }
 
     " Fugitive {
+
+        function! GitLogCurrentFile()
+            silent !clear
+            execute "!git log -p " . bufname("%")
+        endfunction
+
+        function! GitLogShowCurrentFile()
+            " Get the bytecode.
+            let bytecode = system("git log -- " . bufname("%") . " 2>&1")
+
+            " Open a new split and set it up.
+            vsplit __Git_Log__
+            normal! ggdG
+            setlocal filetype=gitlogoutput
+            setlocal buftype=nofile
+
+            " Insert the bytecode.
+            call append(0, split(bytecode, '\v\n'))
+        endfunction
+
+        " run :Gvdiff commit after running gl to get commit affecting file
+        nnoremap <buffer> <leader>gl :call GitLogShowCurrentFile()<cr>
+
         nnoremap <silent> <leader>gs :Gstatus<CR>
         nnoremap <silent> <leader>gd :Gdiff<CR>
         nnoremap <silent> <leader>gc :Gcommit<CR>
         nnoremap <silent> <leader>gb :Gblame<CR>
-        nnoremap <silent> <leader>gl :Glog<CR>
+
+        " very slow
+        " nnoremap <silent> <leader>gl :0Glog<CR>
+
         nnoremap <silent> <leader>gp :Git push<CR>
         nnoremap <silent> <leader>gr :Gread<CR>:GitGutter<CR>
         nnoremap <silent> <leader>gw :Gwrite<CR>:GitGutter<CR>
