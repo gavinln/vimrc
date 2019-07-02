@@ -423,7 +423,8 @@ set diffexpr=
         endfunction
 
         " run :Gvdiff commit after running gl to get commit affecting file
-        nnoremap <buffer> <leader>gl :call GitLogShowCurrentFile()<cr>
+        " use Ctrl+R " to paste from clipboard register in vim command mode
+        nnoremap <silent> <leader>gl :call GitLogShowCurrentFile()<cr>
 
         nnoremap <silent> <leader>gs :Gstatus<CR>
         nnoremap <silent> <leader>gd :Gdiff<CR>
