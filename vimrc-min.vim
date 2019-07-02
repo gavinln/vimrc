@@ -67,48 +67,6 @@ Plug 'markonm/traces.vim'
 " ,tt will then run the mapped command in the previous line
 Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 
-Plug 'gregsexton/gitv'    " git repository viewer
-Plug 'justinmk/vim-sneak'  " jump to location specified by 2 chars, sab
-" Plug 'reedes/vim-pencil'       " editing text & markdown files
-Plug 'xolox/vim-misc'          " works with vim session
-Plug 'xolox/vim-session'       " session management with vim
-" Plug 'scrooloose/nerdcommenter'       " add comments in any language
-Plug 'will133/vim-dirdiff'      " difference between two directories
-Plug 'skywind3000/asyncrun.vim' " run processes asynchronously
-Plug 'yegappan/mru'            " most recently used file
-Plug 'Raimondi/delimitMate'    " auto insert open close parenthesis
-Plug 'KabbAmine/zeavim.vim'  " Zeal offline documentation, choco install zeal
-
-" See this https://wrotenwrites.com/a_modern_terminal_workflow_1/
-" Plug 'szymonmaszke/vimpyter' " edit Jupyter notebooks in vim
-
-" text object for indent levels; useful for Python
-Plug 'michaeljsmith/vim-indent-object'
-
-Plug 'tpope/vim-dispatch'
-
-" testing in any language
-" Python - nose, nose2, pytest, pyunit
-Plug 'janko-m/vim-test'
-
-" a personal wiki for Vim
-" to organize notes, manage to-do lists, write doc, maintain a diary
-Plug 'vimwiki/vimwiki'
-
-" create Python docstring
-Plug 'heavenshell/vim-pydocstring'
-
-" test the following plugins
-"Plug 'benmills/vimux'
-"Plug 'jeetsukumaran/vim-buffergator'
-"Plug 'jtratner/vim-flavored-markdown'
-"Plug 'wesQ3/vim-windowswap'
-"Plug 'vim-scripts/grep.vim'
-"Plug 'vim-scripts/CSApprox'  # gvim colorschemes in a terminal vim
-"Plug 'sheerun/vim-polyglot'
-"Plug 'ConradIrwin/vim-bracketed-paste'
-"Plug 'wellle/targets.vim'  " text objects: pairs, quotes, separator, arguments
-"Plug 'dbeniamine/cheat.sh-vim'  " cheatsheet: https://github.com/chubin/cheat.sh
 
 " Initialize plugin system
 call plug#end()
@@ -422,7 +380,7 @@ set diffexpr=
         "   }
         " }
         let g:ale_linters = {
-        \   'python': ['pyls'],
+        \   'python': ['flake8'],
         \   'markdown': ['proselint']
         \}
         let g:ale_fixers = {
@@ -543,97 +501,6 @@ set diffexpr=
         nnoremap <silent> <leader>tm :SignatureToggleSigns<CR>
     " }
 
-    " vim-test {
-        " let test#strategy = "dispatch"
-        let test#strategy = "make"
-        let g:test#python#pytest#options = '--quiet'
-
-        nnoremap <silent> <leader>tn :TestNearest<CR>
-        nnoremap <silent> <leader>tf :TestFile<CR>
-        nnoremap <silent> <leader>ts :TestSuite<CR>
-        nnoremap <silent> <leader>tl :TestLast<CR>
-        nnoremap <silent> <leader>tg :TestVisit<CR>
-    " }
-
-    " asyncrun {
-
-        " Quick run via <F5>
-        nnoremap <F5> :call <SID>compile_and_run()<CR>
-
-        augroup SPACEVIM_ASYNCRUN
-            autocmd!
-            " Automatically open the quickfix window
-            autocmd User AsyncRunStart call asyncrun#quickfix_toggle(15, 1)
-        augroup END
-
-        function! s:compile_and_run()
-            exec 'w'
-            if &filetype == 'c'
-                exec "AsyncRun! gcc % -o %<; time ./%<"
-            elseif &filetype == 'cpp'
-               exec "AsyncRun! g++ -std=c++11 % -o %<; time ./%<"
-            elseif &filetype == 'java'
-               exec "AsyncRun! javac %; time java %<"
-            elseif &filetype == 'sh'
-               exec "AsyncRun! bash %"
-            elseif &filetype == 'python'
-               exec "AsyncRun! python %"
-            endif
-        endfunction
-
-    " }
-
-    " Pencil {
-        " let g:pencil#conceallevel = 3  " 0=disable, 1=one char, 2=hide char, 3=hide all (def)
-        " augroup pencil
-        " autocmd!
-        "     autocmd FileType markdown,mkd call pencil#init()
-        "     autocmd FileType text         call pencil#init()
-        " augroup END
-
-        " let g:airline_section_x = '%{PencilMode()}'
-
-        " noremap <F6> :PencilToggle<CR>
-        " noremap <S-F6> :PencilOff<CR>
-        " noremap <C-F6> :PencilHard<CR>
-        " noremap <M-F6> :PencilSoft<CR>
-
-        nnoremap <silent> Q gqap
-        xnoremap <silent> Q gq
-        nnoremap <silent> <leader>Q vapJgqap
-    " }
-
-    " gitv {
-        nmap <leader>gv :Gitv --all<cr>
-        nmap <leader>gV :Gitv! --all<cr>
-        vmap <leader>gV :Gitv! --all<cr>
-    " }
-
-    " Javascript-Syntax {
-        au FileType javascript call JavaScriptFold()
-    " }
-
-    " vim-session {
-        let g:session_autosave = 'yes'
-        let g:session_autoload = 'no'
-    " }
-
-    " vim-sneak {
-        " do not use vim-sneak in file manager buggers
-        let g:sneak#map_netrw = 0
-    " }
-
-    " vim wiki {
-        let g:vimwiki_list = [{'path': '~/vimwiki/',
-                              \ 'syntax': 'markdown', 'ext': '.mdv'}]
-        let g:vimwiki_folding='expr:quick'
-    " }
-
-    " heavenshell/vim-pydocstring {
-        " instead of <C-l>
-        nmap <silent> <C-S> <Plug>(pydocstring)
-    " }
-
 " }
 
 " Miscellaneous Key Mappings {
@@ -741,7 +608,7 @@ set diffexpr=
     set textwidth=79
     set formatoptions=qrn1
     " highlight column 80 to display long lines
-    set colorcolumn=80
+    "set colorcolumn=80
     " remember window size and position
     set sessionoptions+=resize,winpos
 
