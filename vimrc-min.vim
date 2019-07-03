@@ -84,7 +84,7 @@ set diffexpr=
     " source $VIMRUNTIME/mswin.vim
     behave mswin
     if !(has('win16') || has('win32') || has('win64'))
-        set shell=/bin/sh
+        set shell=/bin/bash
     endif
 " }
 
@@ -226,7 +226,8 @@ set diffexpr=
         endif
     else
         if &term == 'xterm' || &term == 'screen' || &term == 'ansi'
-            set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+            " set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+            set t_Co=16              " Use only 16 colors to make it easier to see
         endif
         "set term=builtin_ansi       " Make arrow and other keys work
     endif
@@ -237,12 +238,14 @@ set diffexpr=
 
     set winaltkeys=yes  " allows the Alt+Space menu to work on Windows
 
+    " map to left/down/top/right window
+    nnoremap <c-h> <c-w><c-h>
     nnoremap <c-j> <c-w><c-j>
     nnoremap <c-k> <c-w><c-k>
     nnoremap <c-l> <c-w><c-l>
     nnoremap <c-h> <c-w><c-h>
 
-    " resize horzontal split window
+    " resize horizontal split window
     nmap <M-Up> <C-W>+
     nmap <M-Down> <C-W>-
 
@@ -267,6 +270,8 @@ set diffexpr=
 
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
+
+    map <leader>r :redraw!<cr>
 
     " Some helpers to edit mode
     " http://vimcasts.org/e/14
