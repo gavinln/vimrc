@@ -61,6 +61,9 @@ Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+" use \cs to find word under cursor; in insert mode type ctrl+x,u after word
+Plug 'ron89/thesaurus_query.vim'
+
 " highlights patterns and ranges for ex commands
 Plug 'markonm/traces.vim'
 
