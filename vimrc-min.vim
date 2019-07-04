@@ -139,7 +139,7 @@ set diffexpr=
         set cursorline                  " Highlight current line
         autocmd VimEnter * colorscheme solarized | highlight clear SignColumn
     else
-        colorscheme default
+        colorscheme solarized8_dark
         set nocursorline
     endif
 
@@ -533,6 +533,11 @@ set diffexpr=
 
     "open windows command prompt in the current file's directory
     map <leader>oc :!start cmd /k cd "%:p:h"<CR>
+
+    " mappings to format a paragraph in text format
+    nnoremap <silent> Q gqap
+    xnoremap <silent> Q gq
+    nnoremap <silent> <leader>Q vapJgqap
 
     " Change to directory of current file
     map <leader>cd :cd %:p:h<cr>

@@ -46,9 +46,10 @@ Plug 'jlanzarotta/bufexplorer' " display buffers in vim
 
 Plug 'Yggdroot/indentLine'     " display vertical lines at indentation
 
-
 Plug 'vimoutliner/vimoutliner'
 Plug 'flazz/vim-colorschemes'
+Plug 'junegunn/goyo.vim'
+
 Plug 'junegunn/vim-easy-align'
 
 " display tags of current buffer
@@ -59,6 +60,9 @@ Plug 'majutsushi/tagbar'
 " Plug 'C:/ProgramData/chocolatey/bin/fzf.exe'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
+" use \cs to find word under cursor; in insert mode type ctrl+x,u after word
+Plug 'ron89/thesaurus_query.vim'
 
 " highlights patterns and ranges for ex commands
 Plug 'markonm/traces.vim'
@@ -126,7 +130,7 @@ set diffexpr=
     " source $VIMRUNTIME/mswin.vim
     behave mswin
     if !(has('win16') || has('win32') || has('win64'))
-        set shell=/bin/sh
+        set shell=/bin/bash
     endif
 " }
 
@@ -177,7 +181,7 @@ set diffexpr=
         set cursorline                  " Highlight current line
         autocmd VimEnter * colorscheme solarized | highlight clear SignColumn
     else
-        colorscheme default
+        colorscheme solarized8_dark
         set nocursorline
     endif
 
@@ -268,7 +272,8 @@ set diffexpr=
         endif
     else
         if &term == 'xterm' || &term == 'screen' || &term == 'ansi'
-            set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+            " set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+            set t_Co=16              " Use only 16 colors to make it easier to see
         endif
         "set term=builtin_ansi       " Make arrow and other keys work
     endif
@@ -279,12 +284,14 @@ set diffexpr=
 
     set winaltkeys=yes  " allows the Alt+Space menu to work on Windows
 
+    " map to left/down/top/right window
+    nnoremap <c-h> <c-w><c-h>
     nnoremap <c-j> <c-w><c-j>
     nnoremap <c-k> <c-w><c-k>
     nnoremap <c-l> <c-w><c-l>
     nnoremap <c-h> <c-w><c-h>
 
-    " resize horzontal split window
+    " resize horizontal split window
     nmap <M-Up> <C-W>+
     nmap <M-Down> <C-W>-
 
@@ -309,6 +316,8 @@ set diffexpr=
 
     " Yank from the cursor to the end of the line, to be consistent with C and D.
     nnoremap Y y$
+
+    map <leader>r :redraw!<cr>
 
     " Some helpers to edit mode
     " http://vimcasts.org/e/14
@@ -422,7 +431,7 @@ set diffexpr=
         "   }
         " }
         let g:ale_linters = {
-        \   'python': ['pyls'],
+        \   'python': ['flake8'],
         \   'markdown': ['proselint']
         \}
         let g:ale_fixers = {
@@ -525,8 +534,21 @@ set diffexpr=
         " Send current line in normal mode
         nmap gyy <Plug>(neoterm-repl-send-line)
     " }
-    "
+
     " compare mappings starting with <leader>t with vim-test below
+
+    " airblade/vim-gitgutter {
+        " toggle gitgutter display
+        nnoremap <silent> <leader>tg :GitGutterToggle<CR>
+        nmap ]h <Plug>GitGutterNextHunk
+        nmap [h <Plug>GitGutterPrevHunk
+    " }
+
+    " junegunn/goyo.vim {
+        " toggle Goyo for distraction free writing
+        nnoremap <silent> <leader>ty :Goyo<CR>
+    " }
+
     " Yggdroot/indentLine {
         nnoremap <silent> <leader>ti :IndentLinesToggle<CR>
     " }
@@ -598,10 +620,6 @@ set diffexpr=
         " noremap <S-F6> :PencilOff<CR>
         " noremap <C-F6> :PencilHard<CR>
         " noremap <M-F6> :PencilSoft<CR>
-
-        nnoremap <silent> Q gqap
-        xnoremap <silent> Q gq
-        nnoremap <silent> <leader>Q vapJgqap
     " }
 
     " gitv {
@@ -644,6 +662,11 @@ set diffexpr=
 
     "open windows command prompt in the current file's directory
     map <leader>oc :!start cmd /k cd "%:p:h"<CR>
+
+    " mappings to format a paragraph in text format
+    nnoremap <silent> Q gqap
+    xnoremap <silent> Q gq
+    nnoremap <silent> <leader>Q vapJgqap
 
     " Change to directory of current file
     map <leader>cd :cd %:p:h<cr>
