@@ -30,8 +30,8 @@ Plug 'kshenoy/vim-signature'   " display marks
 Plug 'mbbill/undotree'         " undo history visualizer
 
 Plug 'tpope/vim-commentary'    " comment code gc in any language
-Plug 'vim-airline/vim-airline'        " fancy status bar
-Plug 'vim-airline/vim-airline-themes' " themes for status bar
+" Plug 'vim-airline/vim-airline'        " fancy status bar
+" Plug 'vim-airline/vim-airline-themes' " themes for status bar
 Plug 'airblade/vim-gitgutter'         " display git status in gutter
 
 
@@ -46,9 +46,10 @@ Plug 'jlanzarotta/bufexplorer' " display buffers in vim
 
 Plug 'Yggdroot/indentLine'     " display vertical lines at indentation
 
-
 Plug 'vimoutliner/vimoutliner'
 Plug 'flazz/vim-colorschemes'
+Plug 'junegunn/goyo.vim'
+
 Plug 'junegunn/vim-easy-align'
 
 " display tags of current buffer
@@ -488,8 +489,21 @@ set diffexpr=
         " Send current line in normal mode
         nmap gyy <Plug>(neoterm-repl-send-line)
     " }
-    "
+
     " compare mappings starting with <leader>t with vim-test below
+
+    " airblade/vim-gitgutter {
+        " toggle gitgutter display
+        nnoremap <silent> <leader>tg :GitGutterToggle<CR>
+        nmap ]h <Plug>GitGutterNextHunk
+        nmap [h <Plug>GitGutterPrevHunk
+    " }
+
+    " junegunn/goyo.vim {
+        " toggle Goyo for distraction free writing
+        nnoremap <silent> <leader>ty :Goyo<CR>
+    " }
+
     " Yggdroot/indentLine {
         nnoremap <silent> <leader>ti :IndentLinesToggle<CR>
     " }
