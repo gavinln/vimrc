@@ -67,6 +67,12 @@ Plug 'ron89/thesaurus_query.vim'
 " highlights patterns and ranges for ex commands
 Plug 'markonm/traces.vim'
 
+" Track the engine.
+Plug 'SirVer/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+
 " :Tmap python temp.py
 " ,tt will then run the mapped command in the previous line
 Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
@@ -425,13 +431,17 @@ set diffexpr=
         nnoremap <silent> <leader>ge :Gedit<CR>
     " }
 
+    " ultisnips {
+        let g:UltiSnipsExpandTrigger="<tab>"
+    "
+
     " FZF {
         let g:fzf_command_prefix = 'Fzf'
 
         " list files
         nnoremap <silent> <leader>ff :FzfFiles<CR>
         " git status
-        nnoremap <silent> <leader>fg :GFiles?<CR>
+        nnoremap <silent> <leader>fg :FzfGFiles?<CR>
         " lines in loaded buffers
         nnoremap <silent> <leader>fl :FzfLines<CR>
         " tags in the project
@@ -440,6 +450,8 @@ set diffexpr=
         nnoremap <silent> <leader>fm :FzfMarks<CR>
         " oldfiles and open buffers
         nnoremap <silent> <leader>fh :FzfHistory<CR>
+        " snippets works with Ultisnips
+        nnoremap <silent> <leader>fs :FzfSnippets<CR>
         " git status
         nnoremap <silent> <leader>fg :FzfGFiles?<CR>
         " git commits
