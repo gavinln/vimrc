@@ -411,30 +411,6 @@ set diffexpr=
     " }
 
     " Fugitive {
-
-        function! GitLogCurrentFile()
-            silent !clear
-            execute "!git log -p " . bufname("%")
-        endfunction
-
-        function! GitLogShowCurrentFile()
-            " Get the bytecode.
-            let bytecode = system("git log -- " . bufname("%") . " 2>&1")
-
-            " Open a new split and set it up.
-            vsplit __Git_Log__
-            normal! ggdG
-            setlocal filetype=gitlogoutput
-            setlocal buftype=nofile
-
-            " Insert the bytecode.
-            call append(0, split(bytecode, '\v\n'))
-        endfunction
-
-        " run :Gvdiff commit after running gl to get commit affecting file
-        " use Ctrl+R " to paste from clipboard register in vim command mode
-        nnoremap <silent> <leader>gl :call GitLogShowCurrentFile()<cr>
-
         nnoremap <silent> <leader>gs :Gstatus<CR>
         nnoremap <silent> <leader>gd :Gdiff<CR>
         nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -450,22 +426,30 @@ set diffexpr=
     " }
 
     " FZF {
+        let g:fzf_command_prefix = 'Fzf'
+
         " list files
-        nnoremap <silent> <leader>ff :Files<CR>
+        nnoremap <silent> <leader>ff :FzfFiles<CR>
         " git status
         nnoremap <silent> <leader>fg :GFiles?<CR>
         " lines in loaded buffers
-        nnoremap <silent> <leader>fl :Lines<CR>
+        nnoremap <silent> <leader>fl :FzfLines<CR>
         " tags in the project
-        nnoremap <silent> <leader>ft :Tags<CR>
+        nnoremap <silent> <leader>ft :FzfTags<CR>
         " marks
-        nnoremap <silent> <leader>fm :Marks<CR>
+        nnoremap <silent> <leader>fm :FzfMarks<CR>
         " oldfiles and open buffers
-        nnoremap <silent> <leader>fh :History<CR>
+        nnoremap <silent> <leader>fh :FzfHistory<CR>
+        " git status
+        nnoremap <silent> <leader>fg :FzfGFiles?<CR>
+        " git commits
+        nnoremap <silent> <leader>fc :FzfCommits<CR>
+        " git commits for current buffer
+        nnoremap <silent> <leader>fb :FzfBCommits<CR>
         " color schemes
-        nnoremap <silent> <leader>fc :Colors<CR>
+        " nnoremap <silent> <leader>fc :Colors<CR>
         " buffers
-        nnoremap <silent> <leader>fb :Buffers<CR>
+        " nnoremap <silent> <leader>fb :Buffers<CR>
     " }
 
     " plasticboy/vim-markdown {
