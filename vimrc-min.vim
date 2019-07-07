@@ -379,7 +379,7 @@ set diffexpr=
         1
     endfunction
 
-    " functions for python:percent format
+    " functions for python jupyter format
     " From 'plasticboy/vim-markdown' plugin
     "
     " Matches any header level of any type.
@@ -441,11 +441,52 @@ set diffexpr=
         endif
     endfunction
 
-    function! SetPyPercentOptions()
-        setlocal foldmethod=expr
-        setlocal foldexpr=GetPyPercentFold(v:lnum)
+    function! GetPyMarkdownFold(lnum)
+        let l1 = getline(a:lnum)
+        let l2 = getline(a:lnum+1)
+
+        "if we're on a non-code line starting with a pound sign
+        if l1 =~ '^# #'
+            " set the fold level to the number of hashes -1
+            " return '>'.(matchend(l1, '^#\+') - 1)
+            " set the fold level to the number of hashes
+            return '>'.(matchend(l1, '^# #\+') - 3)
+        else
+            " keep previous foldlevel
+            return '='
+        endif
     endfunction
 
+    function! GetPyMarkdownFoldText()
+        let line = getline(v:foldstart)
+        let has_numbers = &number || &relativenumber
+        let nucolwidth = &fdc + has_numbers * &numberwidth
+        let windowwidth = winwidth(0) - nucolwidth - 6
+        let foldedlinecount = v:foldend - v:foldstart
+        let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+        let line = substitute(line, '\%("""\|''''''\)', '', '')
+        let fillcharcount = windowwidth - len(line) - len(foldedlinecount) + 1
+        return line . ' ' . repeat("-", fillcharcount) . ' ' . foldedlinecount
+    endfunction
+
+	function! HighlightMarkdownHeadings()
+        " set highlighting for markdown cell headings in python files
+        autocmd FileType python highlight link markdownHeadings pythonTodo
+        autocmd FileType python match markdownHeadings /\v# #+ .*/
+	endfunction
+
+    function! SetPyPercentOptions()
+        setlocal foldmethod=expr
+        setlocal foldexpr=GetPyMarkdownFold(v:lnum)
+        setlocal foldtext=GetPyMarkdownFoldText()
+
+        nmap ]d :call MoveToNextHeader()<CR>
+        nmap [d :call MoveToPreviousHeader()<CR>
+
+        call HighlightMarkdownHeadings()
+    endfunction
+
+    " function is not used
     function! GetPyPercentFold(lnum)
         " folding for the py:percent format for jupyter notebooks
         if getline(a:lnum) =~? '\m^# %%'  " cell line
@@ -456,17 +497,6 @@ set diffexpr=
             return indent(a:lnum) / &shiftwidth + 1
         endif
     endfunction
-
-	function! HighlightMarkdownHeadings()
-        " set highlighting for markdown cell headings in python files
-        autocmd FileType python highlight link markdownHeadings pythonTodo
-        autocmd FileType python match markdownHeadings /\v# #+ .*/
-	endfunction
-
-    call HighlightMarkdownHeadings()
-
-    nnoremap ]# :call MoveToNextHeader()<CR>
-    nnoremap [# :call MoveToPreviousHeader()<CR>
 
     command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
     " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
@@ -568,8 +598,6 @@ set diffexpr=
 
     " plasticboy/vim-markdown {
         let g:vim_markdown_folding_style_pythonic = 1
-        let g:vim_markdown_conceal = 0
-        let g:vim_markdown_conceal_code_blocks = 0
         let g:vim_markdown_frontmatter = 1
         let g:vim_markdown_conceal = 1
         nnoremap [oe :setlocal conceallevel=<c-r>=&conceallevel > 0 ? &conceallevel - 1 : 0<cr><cr>
