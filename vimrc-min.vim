@@ -378,6 +378,95 @@ set diffexpr=
         1
     endfunction
 
+    " functions for python:percent format
+    " From 'plasticboy/vim-markdown' plugin
+    "
+    " Matches any header level of any type.
+    "
+    let s:headersRegexp = '\v^# (#|.+\n(\=+|-+)$)'
+
+    " Returns the line number of the first header before `line`, called the
+    " current header.
+    "
+    " If there is no current header, return `0`.
+    "
+    " @param a:1 The line to look the header of. Default value: `getpos('.')`.
+    "
+    function! s:GetHeaderLineNum(...)
+        if a:0 == 0
+            let l:l = line('.')
+        else
+            let l:l = a:1
+        endif
+        while(l:l > 0)
+            if join(getline(l:l, l:l + 1), "\n") =~ s:headersRegexp
+                return l:l
+            endif
+            let l:l -= 1
+        endwhile
+        return 0
+    endfunction
+
+    " Move cursor to next header of any level.
+    "
+    " If there are no more headers, print a warning.
+    "
+    function! MoveToNextHeader()
+        if search(s:headersRegexp, 'W') == 0
+            "normal! G
+            echo 'no next header'
+        endif
+    endfunction
+
+    " Move cursor to previous header (before current) of any level.
+    "
+    " If it does not exist, print a warning.
+    "
+    function! MoveToPreviousHeader()
+        let l:curHeaderLineNumber = s:GetHeaderLineNum()
+        let l:noPreviousHeader = 0
+        if l:curHeaderLineNumber <= 1
+            let l:noPreviousHeader = 1
+        else
+            let l:previousHeaderLineNumber = s:GetHeaderLineNum(l:curHeaderLineNumber - 1)
+            if l:previousHeaderLineNumber == 0
+                let l:noPreviousHeader = 1
+            else
+                call cursor(l:previousHeaderLineNumber, 1)
+            endif
+        endif
+        if l:noPreviousHeader
+            echo 'no previous header'
+        endif
+    endfunction
+
+    function! SetPyPercentOptions()
+        setlocal foldmethod=expr
+        setlocal foldexpr=GetPyPercentFold(v:lnum)
+    endfunction
+
+    function! GetPyPercentFold(lnum)
+        " folding for the py:percent format for jupyter notebooks
+        if getline(a:lnum) =~? '\m^# %%'  " cell line
+            return '0'
+        elseif getline(a:lnum) =~? '\v^\s*$'  " blank line
+            return '-1'
+        else
+            return indent(a:lnum) / &shiftwidth + 1
+        endif
+    endfunction
+
+	function! HighlightMarkdownHeadings()
+        " set highlighting for markdown cell headings in python files
+        autocmd FileType python highlight link markdownHeadings pythonTodo
+        autocmd FileType python match markdownHeadings /\v# #+ .*/
+	endfunction
+
+    call HighlightMarkdownHeadings()
+
+    nnoremap ]# :call MoveToNextHeader()<CR>
+    nnoremap [# :call MoveToPreviousHeader()<CR>
+
     command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
     " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
     " }
@@ -414,6 +503,10 @@ set diffexpr=
         let g:ale_set_balloons = 1
         nnoremap <silent> <leader>af :ALEFix<CR>
         nnoremap <silent> <leader>at :ALEToggle<CR>
+    " }
+
+    " jupytext {
+        nnoremap <silent> <leader>jp :call SetPyPercentOptions()<CR>
     " }
 
     " Fugitive {
