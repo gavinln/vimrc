@@ -34,6 +34,7 @@ Plug 'tpope/vim-commentary'    " comment code gc in any language
 " Plug 'vim-airline/vim-airline-themes' " themes for status bar
 Plug 'airblade/vim-gitgutter'         " display git status in gutter
 
+Plug 'reedes/vim-pencil'       " format for prose
 
 " Uses https://github.com/palantir/python-language-server
 " Create environment: conda create -n pyls python=3.7
@@ -68,7 +69,7 @@ Plug 'ron89/thesaurus_query.vim'
 Plug 'markonm/traces.vim'
 
 " Track the engine.
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'  " sometime crashed when editing .vimrc
 
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
@@ -497,14 +498,22 @@ set diffexpr=
         " use locallist instead of quickfix
         let g:ale_set_loclist = 1
         let g:ale_set_quickfix = 0
-        let g:ale_completion_enabled = 1
-        set omnifunc=ale#completion#OmniFunc
+        let g:ale_completion_enabled = 0
+        " set omnifunc=ale#completion#OmniFunc
 
         let g:ale_set_balloons = 1
         nnoremap <silent> <leader>af :ALEFix<CR>
         nnoremap <silent> <leader>at :ALEToggle<CR>
+        nnoremap <silent> <leader>an :ALENext<cr>
+        nnoremap <silent> <leader>ap :ALEPrevious<cr>
     " }
 
+    " reedes/vim-pencil {
+        nnoremap <silent> <leader>pt :PencilToggle<CR>
+        nnoremap <silent> <leader>ph :PencilHard<CR>
+        nnoremap <silent> <leader>ps :PencilSoft<CR>
+    " }
+    "
     " jupytext {
         nnoremap <silent> <leader>jp :call SetPyPercentOptions()<CR>
     " }

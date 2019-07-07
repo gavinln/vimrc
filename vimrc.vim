@@ -30,10 +30,11 @@ Plug 'kshenoy/vim-signature'   " display marks
 Plug 'mbbill/undotree'         " undo history visualizer
 
 Plug 'tpope/vim-commentary'    " comment code gc in any language
-Plug 'vim-airline/vim-airline'        " fancy status bar
-Plug 'vim-airline/vim-airline-themes' " themes for status bar
+" Plug 'vim-airline/vim-airline'        " fancy status bar
+" Plug 'vim-airline/vim-airline-themes' " themes for status bar
 Plug 'airblade/vim-gitgutter'         " display git status in gutter
 
+Plug 'reedes/vim-pencil'       " format for prose
 
 " Uses https://github.com/palantir/python-language-server
 " Create environment: conda create -n pyls python=3.7
@@ -67,24 +68,25 @@ Plug 'ron89/thesaurus_query.vim'
 " highlights patterns and ranges for ex commands
 Plug 'markonm/traces.vim'
 
+" Track the engine.
+" Plug 'SirVer/ultisnips'  " sometime crashed when editing .vimrc
+
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+
 " :Tmap python temp.py
 " ,tt will then run the mapped command in the previous line
 Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 
 Plug 'gregsexton/gitv'    " git repository viewer
 Plug 'justinmk/vim-sneak'  " jump to location specified by 2 chars, sab
-" Plug 'reedes/vim-pencil'       " editing text & markdown files
 Plug 'xolox/vim-misc'          " works with vim session
 Plug 'xolox/vim-session'       " session management with vim
-" Plug 'scrooloose/nerdcommenter'       " add comments in any language
 Plug 'will133/vim-dirdiff'      " difference between two directories
 Plug 'skywind3000/asyncrun.vim' " run processes asynchronously
 Plug 'yegappan/mru'            " most recently used file
 Plug 'Raimondi/delimitMate'    " auto insert open close parenthesis
 Plug 'KabbAmine/zeavim.vim'  " Zeal offline documentation, choco install zeal
-
-" See this https://wrotenwrites.com/a_modern_terminal_workflow_1/
-" Plug 'szymonmaszke/vimpyter' " edit Jupyter notebooks in vim
 
 " text object for indent levels; useful for Python
 Plug 'michaeljsmith/vim-indent-object'
@@ -105,7 +107,6 @@ Plug 'heavenshell/vim-pydocstring'
 " test the following plugins
 "Plug 'benmills/vimux'
 "Plug 'jeetsukumaran/vim-buffergator'
-"Plug 'jtratner/vim-flavored-markdown'
 "Plug 'wesQ3/vim-windowswap'
 "Plug 'vim-scripts/grep.vim'
 "Plug 'vim-scripts/CSApprox'  # gvim colorschemes in a terminal vim
@@ -191,9 +192,9 @@ set diffexpr=
     highlight clear SignColumn      " SignColumn should match background for
                                     " things like vim-gitgutter
 
-    highlight clear LineNr          " Current line number row will have same background color in relative mode.
+    " highlight clear LineNr          " Current line number row will have same background color in relative mode.
                                     " Things like vim-gitgutter will match LineNr highlight
-    highlight clear CursorLineNr    " Remove highlight color from current line number
+    " highlight clear CursorLineNr    " Remove highlight color from current line number
 
     if has('cmdline_info')
         set ruler                   " Show the ruler
@@ -414,6 +415,95 @@ set diffexpr=
         1
     endfunction
 
+    " functions for python:percent format
+    " From 'plasticboy/vim-markdown' plugin
+    "
+    " Matches any header level of any type.
+    "
+    let s:headersRegexp = '\v^# (#|.+\n(\=+|-+)$)'
+
+    " Returns the line number of the first header before `line`, called the
+    " current header.
+    "
+    " If there is no current header, return `0`.
+    "
+    " @param a:1 The line to look the header of. Default value: `getpos('.')`.
+    "
+    function! s:GetHeaderLineNum(...)
+        if a:0 == 0
+            let l:l = line('.')
+        else
+            let l:l = a:1
+        endif
+        while(l:l > 0)
+            if join(getline(l:l, l:l + 1), "\n") =~ s:headersRegexp
+                return l:l
+            endif
+            let l:l -= 1
+        endwhile
+        return 0
+    endfunction
+
+    " Move cursor to next header of any level.
+    "
+    " If there are no more headers, print a warning.
+    "
+    function! MoveToNextHeader()
+        if search(s:headersRegexp, 'W') == 0
+            "normal! G
+            echo 'no next header'
+        endif
+    endfunction
+
+    " Move cursor to previous header (before current) of any level.
+    "
+    " If it does not exist, print a warning.
+    "
+    function! MoveToPreviousHeader()
+        let l:curHeaderLineNumber = s:GetHeaderLineNum()
+        let l:noPreviousHeader = 0
+        if l:curHeaderLineNumber <= 1
+            let l:noPreviousHeader = 1
+        else
+            let l:previousHeaderLineNumber = s:GetHeaderLineNum(l:curHeaderLineNumber - 1)
+            if l:previousHeaderLineNumber == 0
+                let l:noPreviousHeader = 1
+            else
+                call cursor(l:previousHeaderLineNumber, 1)
+            endif
+        endif
+        if l:noPreviousHeader
+            echo 'no previous header'
+        endif
+    endfunction
+
+    function! SetPyPercentOptions()
+        setlocal foldmethod=expr
+        setlocal foldexpr=GetPyPercentFold(v:lnum)
+    endfunction
+
+    function! GetPyPercentFold(lnum)
+        " folding for the py:percent format for jupyter notebooks
+        if getline(a:lnum) =~? '\m^# %%'  " cell line
+            return '0'
+        elseif getline(a:lnum) =~? '\v^\s*$'  " blank line
+            return '-1'
+        else
+            return indent(a:lnum) / &shiftwidth + 1
+        endif
+    endfunction
+
+	function! HighlightMarkdownHeadings()
+        " set highlighting for markdown cell headings in python files
+        autocmd FileType python highlight link markdownHeadings pythonTodo
+        autocmd FileType python match markdownHeadings /\v# #+ .*/
+	endfunction
+
+    call HighlightMarkdownHeadings()
+
+    nnoremap ]# :call MoveToNextHeader()<CR>
+    nnoremap [# :call MoveToPreviousHeader()<CR>
+
     command! -complete=file -nargs=+ Shell call s:RunShellCommand(<q-args>)
     " e.g. Grep current file for <search_term>: Shell grep -Hn <search_term> %
     " }
@@ -444,12 +534,24 @@ set diffexpr=
         " use locallist instead of quickfix
         let g:ale_set_loclist = 1
         let g:ale_set_quickfix = 0
-        let g:ale_completion_enabled = 1
-        set omnifunc=ale#completion#OmniFunc
+        let g:ale_completion_enabled = 0
+        " set omnifunc=ale#completion#OmniFunc
 
         let g:ale_set_balloons = 1
         nnoremap <silent> <leader>af :ALEFix<CR>
         nnoremap <silent> <leader>at :ALEToggle<CR>
+        nnoremap <silent> <leader>an :ALENext<cr>
+        nnoremap <silent> <leader>ap :ALEPrevious<cr>
+    " }
+
+    " reedes/vim-pencil {
+        nnoremap <silent> <leader>pt :PencilToggle<CR>
+        nnoremap <silent> <leader>ph :PencilHard<CR>
+        nnoremap <silent> <leader>ps :PencilSoft<CR>
+    " }
+    "
+    " jupytext {
+        nnoremap <silent> <leader>jp :call SetPyPercentOptions()<CR>
     " }
 
     " Fugitive {
@@ -467,13 +569,17 @@ set diffexpr=
         nnoremap <silent> <leader>ge :Gedit<CR>
     " }
 
+    " ultisnips {
+        let g:UltiSnipsExpandTrigger="<tab>"
+    "
+
     " FZF {
         let g:fzf_command_prefix = 'Fzf'
 
         " list files
         nnoremap <silent> <leader>ff :FzfFiles<CR>
         " git status
-        nnoremap <silent> <leader>fg :GFiles?<CR>
+        nnoremap <silent> <leader>fg :FzfGFiles?<CR>
         " lines in loaded buffers
         nnoremap <silent> <leader>fl :FzfLines<CR>
         " tags in the project
@@ -482,6 +588,8 @@ set diffexpr=
         nnoremap <silent> <leader>fm :FzfMarks<CR>
         " oldfiles and open buffers
         nnoremap <silent> <leader>fh :FzfHistory<CR>
+        " snippets works with Ultisnips
+        nnoremap <silent> <leader>fs :FzfSnippets<CR>
         " git status
         nnoremap <silent> <leader>fg :FzfGFiles?<CR>
         " git commits
@@ -498,6 +606,10 @@ set diffexpr=
         let g:vim_markdown_folding_style_pythonic = 1
         let g:vim_markdown_conceal = 0
         let g:vim_markdown_conceal_code_blocks = 0
+        let g:vim_markdown_frontmatter = 1
+        let g:vim_markdown_conceal = 1
+        nnoremap [oe :setlocal conceallevel=<c-r>=&conceallevel > 0 ? &conceallevel - 1 : 0<cr><cr>
+        nnoremap ]oe :setlocal conceallevel=<c-r>=&conceallevel < 2 ? &conceallevel + 1 : 2<cr><cr>
     " }
 
     " vim-easy-align {
@@ -588,22 +700,6 @@ set diffexpr=
             endif
         endfunction
 
-    " }
-
-    " Pencil {
-        " let g:pencil#conceallevel = 3  " 0=disable, 1=one char, 2=hide char, 3=hide all (def)
-        " augroup pencil
-        " autocmd!
-        "     autocmd FileType markdown,mkd call pencil#init()
-        "     autocmd FileType text         call pencil#init()
-        " augroup END
-
-        " let g:airline_section_x = '%{PencilMode()}'
-
-        " noremap <F6> :PencilToggle<CR>
-        " noremap <S-F6> :PencilOff<CR>
-        " noremap <C-F6> :PencilHard<CR>
-        " noremap <M-F6> :PencilSoft<CR>
     " }
 
     " gitv {
