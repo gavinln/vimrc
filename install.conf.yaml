@@ -7,3 +7,5 @@
 - link:
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc
+    ~/.config/vifm/vifmrc: vifmrc
+

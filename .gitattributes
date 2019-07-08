@@ -11,5 +11,7 @@
 *.erb text eol=lf
 *.py text eol=lf
 *.md text eol=lf
+
 vimrc text eol=lf
 tmux.conf text eol=lf
+vifmrc text eol=lf
