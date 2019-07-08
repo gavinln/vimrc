@@ -26,3 +26,23 @@ The following list describes the plugins.
 * [vim-colors-solarized](https://github.com/altercation/vim-colors-solarized)
 
 ## Miscellaneous changes
+
+## Using dotbot
+
+The Python utility [dotbot](https://github.com/anishathalye/dotbot) can be used
+to install dotfiles to your home directory
+
+### Running dotbot
+
+1. Install dotbot
+
+```bash
+pip install dotbot
+```
+
+2. Install the dotfiles using the install.conf.yaml configuration file
+
+```bash
+dotbot -c install.conf.yaml
+```
+
