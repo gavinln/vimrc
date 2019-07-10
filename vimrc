@@ -53,6 +53,8 @@ Plug 'junegunn/goyo.vim'
 
 Plug 'junegunn/vim-easy-align'
 
+Plug 'vim-tmux-navigator'      " vim tmux navigator
+
 " display tags of current buffer
 " Needs ctags from https://github.com/universal-ctags/ctags
 Plug 'majutsushi/tagbar'
