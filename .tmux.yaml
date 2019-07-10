@@ -1,0 +1,10 @@
+session_name: vimrc
+start_directory: "."
+windows:
+- window_name: vim_bash
+  layout: even-horizontal
+  focus: true
+  panes:
+    - shell_command: vim
+      focus: true
+    - ls -l
