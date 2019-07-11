@@ -43,15 +43,17 @@ Plug 'reedes/vim-pencil'       " format for prose
 Plug 'w0rp/ale'
 
 
-Plug 'jlanzarotta/bufexplorer' " display buffers in vim
+Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
 
-Plug 'Yggdroot/indentLine'     " display vertical lines at indentation
+Plug 'Yggdroot/indentLine'            " display vertical lines at indentation
 
 Plug 'vimoutliner/vimoutliner'
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/goyo.vim'
 
 Plug 'junegunn/vim-easy-align'
+
+Plug 'christoomey/vim-tmux-navigator' " vim tmux navigator
 
 " display tags of current buffer
 " Needs ctags from https://github.com/universal-ctags/ctags
