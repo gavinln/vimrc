@@ -252,11 +252,10 @@ set diffexpr=
     set winaltkeys=yes  " allows the Alt+Space menu to work on Windows
 
     " map to left/down/top/right window
-    nnoremap <c-h> <c-w><c-h>
-    nnoremap <c-j> <c-w><c-j>
-    nnoremap <c-k> <c-w><c-k>
-    nnoremap <c-l> <c-w><c-l>
-    nnoremap <c-h> <c-w><c-h>
+    nnoremap <c-h> <c-w>h
+    nnoremap <c-j> <c-w>j
+    nnoremap <c-k> <c-w>k
+    nnoremap <c-l> <c-w>l
 
     " resize horizontal split window
     nmap <M-Up> <C-W>+
