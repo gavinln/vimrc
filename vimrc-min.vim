@@ -29,12 +29,13 @@ Plug 'plasticboy/vim-markdown' " better formatting for markdown
 Plug 'kshenoy/vim-signature'   " display marks
 Plug 'mbbill/undotree'         " undo history visualizer
 
-Plug 'tpope/vim-commentary'    " comment code gc in any language
+Plug 'tpope/vim-commentary'             " comment code gc in any language
 " Plug 'vim-airline/vim-airline'        " fancy status bar
 " Plug 'vim-airline/vim-airline-themes' " themes for status bar
-Plug 'airblade/vim-gitgutter'         " display git status in gutter
+Plug 'airblade/vim-gitgutter'           " display git status in gutter
 
 Plug 'reedes/vim-pencil'       " format for prose
+Plug 'kkoomen/vim-doge'        " comment code using \d
 
 " Uses https://github.com/palantir/python-language-server
 " Create environment: conda create -n pyls python=3.7
@@ -43,15 +44,17 @@ Plug 'reedes/vim-pencil'       " format for prose
 Plug 'w0rp/ale'
 
 
-Plug 'jlanzarotta/bufexplorer' " display buffers in vim
+Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
 
-Plug 'Yggdroot/indentLine'     " display vertical lines at indentation
+Plug 'Yggdroot/indentLine'            " display vertical lines at indentation
 
 Plug 'vimoutliner/vimoutliner'
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/goyo.vim'
 
 Plug 'junegunn/vim-easy-align'
+
+Plug 'christoomey/vim-tmux-navigator' " vim tmux navigator
 
 " display tags of current buffer
 " Needs ctags from https://github.com/universal-ctags/ctags
@@ -146,7 +149,7 @@ set diffexpr=
         set cursorline                  " Highlight current line
         autocmd VimEnter * colorscheme solarized | highlight clear SignColumn
     else
-        colorscheme solarized8_dark
+        colorscheme xterm16
         set nocursorline
     endif
 
@@ -250,11 +253,10 @@ set diffexpr=
     set winaltkeys=yes  " allows the Alt+Space menu to work on Windows
 
     " map to left/down/top/right window
-    nnoremap <c-h> <c-w><c-h>
-    nnoremap <c-j> <c-w><c-j>
-    nnoremap <c-k> <c-w><c-k>
-    nnoremap <c-l> <c-w><c-l>
-    nnoremap <c-h> <c-w><c-h>
+    nnoremap <c-h> <c-w>h
+    nnoremap <c-j> <c-w>j
+    nnoremap <c-k> <c-w>k
+    nnoremap <c-l> <c-w>l
 
     " resize horizontal split window
     nmap <M-Up> <C-W>+
@@ -359,6 +361,8 @@ set diffexpr=
         call cursor(l, c)
     endfunction
     " }
+
+    command! StripTrailingWhitespace call StripTrailingWhitespace()
 
     " Shell command {
     function! s:RunShellCommand(cmdline)
