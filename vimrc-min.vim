@@ -602,6 +602,8 @@ set diffexpr=
 
     " plasticboy/vim-markdown {
         let g:vim_markdown_folding_style_pythonic = 1
+        " let g:vim_markdown_conceal = 0
+        " let g:vim_markdown_conceal_code_blocks = 0
         let g:vim_markdown_frontmatter = 1
         let g:vim_markdown_conceal = 1
         nnoremap [oe :setlocal conceallevel=<c-r>=&conceallevel > 0 ? &conceallevel - 1 : 0<cr><cr>
