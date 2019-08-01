@@ -35,7 +35,7 @@ Plug 'tpope/vim-commentary'             " comment code gc in any language
 Plug 'airblade/vim-gitgutter'           " display git status in gutter
 
 Plug 'reedes/vim-pencil'       " format for prose
-Plug 'kkoomen/vim-doge'        " comment code using \d
+Plug 'kkoomen/vim-doge'        " document code using \d
 
 " Uses https://github.com/palantir/python-language-server
 " Create environment: conda create -n pyls python=3.7

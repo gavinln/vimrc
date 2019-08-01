@@ -29,12 +29,13 @@ Plug 'plasticboy/vim-markdown' " better formatting for markdown
 Plug 'kshenoy/vim-signature'   " display marks
 Plug 'mbbill/undotree'         " undo history visualizer
 
-Plug 'tpope/vim-commentary'    " comment code gc in any language
+Plug 'tpope/vim-commentary'             " comment code gc in any language
 " Plug 'vim-airline/vim-airline'        " fancy status bar
 " Plug 'vim-airline/vim-airline-themes' " themes for status bar
-Plug 'airblade/vim-gitgutter'         " display git status in gutter
+Plug 'airblade/vim-gitgutter'           " display git status in gutter
 
 Plug 'reedes/vim-pencil'       " format for prose
+Plug 'kkoomen/vim-doge'        " document code using \d
 
 " Uses https://github.com/palantir/python-language-server
 " Create environment: conda create -n pyls python=3.7
@@ -148,7 +149,7 @@ set diffexpr=
         set cursorline                  " Highlight current line
         autocmd VimEnter * colorscheme solarized | highlight clear SignColumn
     else
-        colorscheme sol
+        colorscheme xterm16
         set nocursorline
     endif
 
@@ -360,6 +361,8 @@ set diffexpr=
         call cursor(l, c)
     endfunction
     " }
+
+    command! StripTrailingWhitespace call StripTrailingWhitespace()
 
     " Shell command {
     function! s:RunShellCommand(cmdline)
@@ -599,6 +602,8 @@ set diffexpr=
 
     " plasticboy/vim-markdown {
         let g:vim_markdown_folding_style_pythonic = 1
+        " let g:vim_markdown_conceal = 0
+        " let g:vim_markdown_conceal_code_blocks = 0
         let g:vim_markdown_frontmatter = 1
         let g:vim_markdown_conceal = 1
         nnoremap [oe :setlocal conceallevel=<c-r>=&conceallevel > 0 ? &conceallevel - 1 : 0<cr><cr>
