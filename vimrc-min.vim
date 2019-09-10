@@ -81,6 +81,8 @@ Plug 'honza/vim-snippets'
 " ,tt will then run the mapped command in the previous line
 Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 
+Plug 'xolox/vim-misc'          " works with vim session
+Plug 'xolox/vim-session'       " session management with vim
 
 " Initialize plugin system
 call plug#end()
@@ -230,13 +232,10 @@ set diffexpr=
         set lines=40                " 40 lines of text instead of 24
         if has("gui_gtk2")
             set guifont=Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
-        elseif has("gui_mac")
-            set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
+        elseif has("gui_macvim")
+            set guifont=Andale\ Mono\ Regular:h15,Menlo\ Regular:h14,Consolas\ Regular:h16,Courier\ New\ Regular:h18
         elseif has("gui_win32")
             set guifont=Consolas:h11,Courier_New:h11
-        endif
-        if has('gui_macvim')
-            set transparency=5      " Make the window slightly transparent
         endif
     else
         if &term == 'xterm' || &term == 'screen' || &term == 'ansi'
@@ -346,6 +345,23 @@ set diffexpr=
         endfor
     endfunction
     call InitializeDirectories()
+    " }
+
+    " Open URI in browser {
+    " https://stackoverflow.com/questions/9458294/open-url-under-cursor-in-vim-with-browser
+    function! HandleURL()
+      let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;()]*')
+      let s:uri = shellescape(s:uri, 1)
+      echom s:uri
+      if s:uri != ""
+        silent exec "!open '".s:uri."'"
+        :redraw!
+      else
+        echo "No URI found in line."
+      endif
+    endfunction
+
+    nnoremap <leader>gx :call HandleURL()<CR>
     " }
 
     " Strip whitespace {
@@ -543,6 +559,7 @@ set diffexpr=
     " }
 
     " reedes/vim-pencil {
+        nnoremap <silent> <leader>po :PencilOff<CR>
         nnoremap <silent> <leader>pt :PencilToggle<CR>
         nnoremap <silent> <leader>ph :PencilHard<CR>
         nnoremap <silent> <leader>ps :PencilSoft<CR>
@@ -568,7 +585,7 @@ set diffexpr=
     " }
 
     " ultisnips {
-        let g:UltiSnipsExpandTrigger="<tab>"
+        let g:UltiSnipsExpandTrigger='<tab>'
     "
 
     " FZF {
@@ -619,6 +636,10 @@ set diffexpr=
     " }
 
     " neoterm {
+
+        let g:neoterm_repl_command="/bin/bash"
+        let g:neoterm_repl_python="ipython"
+        let g:neoterm_direct_open_repl=1
         " Use gy{text-object} in normal mode
         nmap gy <Plug>(neoterm-repl-send)
 
@@ -658,6 +679,11 @@ set diffexpr=
     " kshenoy/vim-signature {
         " toggle marks
         nnoremap <silent> <leader>tm :SignatureToggleSigns<CR>
+    " }
+
+    " xolox/vim-session {
+        let g:session_autoload = 'no'
+        let g:session_autosave = 'yes'
     " }
 
 " }
