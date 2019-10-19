@@ -87,6 +87,9 @@ Plug 'xolox/vim-session'       " session management with vim
 " Initialize plugin system
 call plug#end()
 
+" makes it easier to use mappings that use :map <leader>
+let mapleader = "\<Space>"
+
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
 let maplocalleader = ',,'
@@ -591,6 +594,14 @@ set diffexpr=
     " FZF {
         let g:fzf_command_prefix = 'Fzf'
 
+        " type Rg pattern to search (will be replaced by command FzfRg)
+        fun! SetupCommandAlias(from, to)
+            exec 'cnoreabbrev <expr> '.a:from
+                \ .' ((getcmdtype() is# ":" && getcmdline() is# "'.a:from.'")'
+                \ .'? ("'.a:to.'") : ("'.a:from.'"))'
+        endfun
+        call SetupCommandAlias("Rg", "FzfRg")
+
         " list files
         nnoremap <silent> <leader>ff :FzfFiles<CR>
         " git status
@@ -615,6 +626,7 @@ set diffexpr=
         " nnoremap <silent> <leader>fc :Colors<CR>
         " buffers
         " nnoremap <silent> <leader>fb :Buffers<CR>
+
     " }
 
     " plasticboy/vim-markdown {
