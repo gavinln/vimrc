@@ -7,8 +7,13 @@ Active
 	[_] Combine regular vimrc and vimrc-min.vim and only use one 2019-10-19
 	[_] Try Jupyter notebook recommendations 2019-10-19
 		https://florianwilhelm.info/2018/11/working_efficiently_with_jupyter_lab/
-	[_] Change vim mappings
+	[_] Change vim mappings 2019-10-19
 		Type :FzfMaps
 		Type Space>t
 		[_] Change tm, ti, tg, tu, tt, ty mappings to mt, it, gt, ut, tt, yt
 		[_] Check for clashes with other mappings
+	[_] Try python-dotenv 2019-10-19
+		https://github.com/theskumar/python-dotenv
+	[_] Try omniduct 2019-10-19
+		Connect to multi datasources from Jupyter notebooks
+		: https://github.com/airbnb/omniduct
