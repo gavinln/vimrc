@@ -13,6 +13,9 @@
 "   )
 " )
 
+" TODO: add comments for each plugin
+" TODO: group related plugins
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-fugitive' " integration with git
@@ -42,7 +45,6 @@ Plug 'kkoomen/vim-doge'        " document code using \d
 " conda install -y 'python-language-server[all]'
 " Install proselint for Markdown linter: pip install proselint
 Plug 'w0rp/ale'
-
 
 Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
 " Explore https://github.com/jeetsukumaran/vim-buffergator instead of bufexplorer
@@ -89,6 +91,8 @@ Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 Plug 'xolox/vim-misc'          " works with vim session
 Plug 'xolox/vim-session'       " session management with vim
 
+Plug 'zerowidth/vim-copy-as-rtf'  " command CopyRTF to copy as syntax highlighted RTF on Macs
+
 " Initialize plugin system
 call plug#end()
 
@@ -101,6 +105,17 @@ let maplocalleader = ',,'
 
 " use internal diff program
 set diffexpr=
+
+" convert Jupyter notebooks to Python files
+" pip install jupytext flake8 autopep8 yapf  # Install libraries
+" jupytext --to py data-analysis.ipynb  # Jupyter notebook to a python file
+" flake8 data-analysis.py  " Check the python file for pep8 issues
+" autopep8 -i -a data-analysis.py  # Fix the python file
+" Use \jp in vim for Jupytext mode and ]d/[d to go to the next/previous header
+" set makeprg=flake8\ %  # Setup flake8 to go to the quickfix list
+" type :make  to run the flake8 program
+" type :clast to go to the last issue
+" type :cpr to go the previous issue
 
 " Basics {
     set nocompatible    " Use gVim defaults
@@ -240,8 +255,9 @@ set diffexpr=
         set lines=40                " 40 lines of text instead of 24
         if has("gui_gtk2")
             set guifont=Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
+        " brew install homebrew/cask-fonts/font-hack
         elseif has("gui_macvim")
-            set guifont=Andale\ Mono\ Regular:h15,Menlo\ Regular:h14,Consolas\ Regular:h16,Courier\ New\ Regular:h18
+            set guifont=Hack\ Regular:h14,Menlo\ Regular:h14,Consolas\ Regular:h16,Courier\ New\ Regular:h18
         elseif has("gui_win32")
             set guifont=Consolas:h11,Courier_New:h11
         endif
