@@ -49,10 +49,7 @@ Plug 'w0rp/ale'
 Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
 " Explore https://github.com/jeetsukumaran/vim-buffergator instead of bufexplorer
 
-" text objects and motions for Python classes, methods, functions, and doc strings
-" ]]/][ forward to the beginning of next/end of this class
-Plug 'jeetsukumaran/vim-pythonsense'
-
+Plug 'michaeljsmith/vim-indent-object'  " indent text obj with ii, iI, ai, aI
 Plug 'Yggdroot/indentLine'            " display vertical lines at indentation
 
 Plug 'vimoutliner/vimoutliner'
