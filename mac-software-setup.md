@@ -223,6 +223,12 @@ brew install jq
 brew install spectacle
 ```
 
+### Install rclone to sync files to and from remote systems
+
+```
+brew install rclone
+```
+
 ## Python software setup
 
 ### Install pipenv
