@@ -46,3 +46,7 @@ pip install dotbot
 dotbot -c install.conf.yaml
 ```
 
+## Links
+
+[Command line tools: new vs old](https://hacker-tools.github.io/command-line/)
+[Useful shell aliases](https://news.ycombinator.com/item?id=18898523)
