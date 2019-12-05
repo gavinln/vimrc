@@ -40,14 +40,17 @@ Plug 'airblade/vim-gitgutter'           " display git status in gutter
 Plug 'reedes/vim-pencil'       " format for prose
 Plug 'kkoomen/vim-doge'        " document code using \d
 
+Plug 'vifm/vifm.vim'            " use vifm as a file picker
+
 " Uses https://github.com/palantir/python-language-server
 " Create environment: conda create -n pyls python=3.7
 " conda install -y 'python-language-server[all]'
 " Install proselint for Markdown linter: pip install proselint
 Plug 'w0rp/ale'
 
-Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
+" Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
 " Explore https://github.com/jeetsukumaran/vim-buffergator instead of bufexplorer
+Plug 'jeetsukumaran/vim-buffergator'    " display buffers in a new window
 
 Plug 'michaeljsmith/vim-indent-object'  " indent text obj with ii, iI, ai, aI
 Plug 'Yggdroot/indentLine'            " display vertical lines at indentation
@@ -272,11 +275,12 @@ set diffexpr=
 
     set winaltkeys=yes  " allows the Alt+Space menu to work on Windows
 
+    " no longer needed as 'christoomey/vim-tmux-navigator' does the same
     " map to left/down/top/right window
-    nnoremap <c-h> <c-w>h
-    nnoremap <c-j> <c-w>j
-    nnoremap <c-k> <c-w>k
-    nnoremap <c-l> <c-w>l
+    " nnoremap <c-h> <c-w>h
+    " nnoremap <c-j> <c-w>j
+    " nnoremap <c-k> <c-w>k
+    " nnoremap <c-l> <c-w>l
 
     " resize horizontal split window
     nmap <M-Up> <C-W>+
@@ -647,6 +651,22 @@ set diffexpr=
 
     " }
 
+    " jeetsukumaran/vim-buffergator {
+
+        let g:buffergator_suppress_keymaps = 1
+        " <Leader>b                 Invokes ":BuffergatorOpen": open the buffer catalog,
+        " <Leader>B                 Invokes ":BuffergatorClose": close the buffer catalog.
+        " <Leader>t, <Leader>to     Invokes ":BuffergatorTabsOpen": open the tab page
+        " <Leader>T, <Leader>tc     Invokes ":BuffergatorTabsClose": close the tab page
+        " gb, <M-B>                 Invokes ":BuffergatorMruCyclePrev": cycle to an older buffer in the MRU
+        " gB, <M-S-B>               Invokes ":BuffergatorMruCycleNext": cycle to a newer buffer in the MRU
+        " ]b                        cycles to next buffer by index/number
+        " [b                        cycles to preceding buffer by index/number
+        " toggle Buffergator window
+        nnoremap <silent> <leader>bg :BuffergatorToggle<CR>
+        "
+    " }
+
     " plasticboy/vim-markdown {
         let g:vim_markdown_folding_style_pythonic = 1
         " let g:vim_markdown_conceal = 0
@@ -748,6 +768,8 @@ set diffexpr=
     nnoremap <expr> <leader>gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
     " Close the current buffer without closing the window {
+        " may be able to do this without a function
+        " https://stackoverflow.com/questions/4465095/vim-delete-buffer-without-losing-the-split-window
         map <leader>bd :Bclose<cr>
 
         command! Bclose call <SID>BufcloseCloseIt()
