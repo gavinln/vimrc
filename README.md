@@ -46,9 +46,3 @@ pip install dotbot
 dotbot -c install.conf.yaml
 ```
 
-## Links
-
-[Command line tools: new vs old](https://hacker-tools.github.io/command-line/)
-[Useful shell aliases](https://news.ycombinator.com/item?id=18898523)
-[fselect to use sql on file system](https://github.com/jhspetersson/fselect)
-[10 modern CLI tools](https://medium.com/p/d214bc73d856/responses/show)
