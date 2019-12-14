@@ -46,6 +46,10 @@ Plug 'kkoomen/vim-doge'        " document code using \d
 " Install proselint for Markdown linter: pip install proselint
 Plug 'w0rp/ale'
 
+" Alternatives to ALE using language server protocol
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
+
 Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
 " Explore https://github.com/jeetsukumaran/vim-buffergator instead of bufexplorer
 
@@ -717,6 +721,17 @@ set diffexpr=
     " xolox/vim-session {
         let g:session_autoload = 'no'
         let g:session_autosave = 'yes'
+    " }
+    
+    " prabirshrestha/vim-lsp {
+        if executable('pyls')
+            " pip install python-language-server
+            au User lsp_setup call lsp#register_server({
+                \ 'name': 'pyls',
+                \ 'cmd': {server_info->['pyls']},
+                \ 'whitelist': ['python'],
+                \ })
+        endif
     " }
 
 " }

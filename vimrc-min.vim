@@ -13,6 +13,9 @@
 "   )
 " )
 
+" TODO: add comments for each plugin
+" TODO: group related plugins
+
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-fugitive' " integration with git
@@ -43,6 +46,9 @@ Plug 'kkoomen/vim-doge'        " document code using \d
 " Install proselint for Markdown linter: pip install proselint
 Plug 'w0rp/ale'
 
+" Alternatives to ALE using language server protocol
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
 
 Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
 " Explore https://github.com/jeetsukumaran/vim-buffergator instead of bufexplorer
@@ -89,6 +95,8 @@ Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 Plug 'xolox/vim-misc'          " works with vim session
 Plug 'xolox/vim-session'       " session management with vim
 
+Plug 'zerowidth/vim-copy-as-rtf'  " command CopyRTF to copy as syntax highlighted RTF on Macs
+
 " Initialize plugin system
 call plug#end()
 
@@ -101,6 +109,17 @@ let maplocalleader = ',,'
 
 " use internal diff program
 set diffexpr=
+
+" convert Jupyter notebooks to Python files
+" pip install jupytext flake8 autopep8 yapf  # Install libraries
+" jupytext --to py data-analysis.ipynb  # Jupyter notebook to a python file
+" flake8 data-analysis.py  " Check the python file for pep8 issues
+" autopep8 -i -a data-analysis.py  # Fix the python file
+" Use \jp in vim for Jupytext mode and ]d/[d to go to the next/previous header
+" set makeprg=flake8\ %  # Setup flake8 to go to the quickfix list
+" type :make  to run the flake8 program
+" type :clast to go to the last issue
+" type :cpr to go the previous issue
 
 " Basics {
     set nocompatible    " Use gVim defaults
@@ -240,8 +259,9 @@ set diffexpr=
         set lines=40                " 40 lines of text instead of 24
         if has("gui_gtk2")
             set guifont=Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
+        " brew install homebrew/cask-fonts/font-hack
         elseif has("gui_macvim")
-            set guifont=Andale\ Mono\ Regular:h15,Menlo\ Regular:h14,Consolas\ Regular:h16,Courier\ New\ Regular:h18
+            set guifont=Hack\ Regular:h14,Menlo\ Regular:h14,Consolas\ Regular:h16,Courier\ New\ Regular:h18
         elseif has("gui_win32")
             set guifont=Consolas:h11,Courier_New:h11
         endif
@@ -655,7 +675,8 @@ set diffexpr=
     " neoterm {
 
         let g:neoterm_repl_command="/bin/bash"
-        let g:neoterm_repl_python="ipython"
+        " let g:neoterm_repl_command="C:/Program Files/Git/usr/bin/bash.exe"
+        " let g:neoterm_repl_python="ipython"
         let g:neoterm_direct_open_repl=1
         " Use gy{text-object} in normal mode
         nmap gy <Plug>(neoterm-repl-send)
@@ -701,6 +722,17 @@ set diffexpr=
     " xolox/vim-session {
         let g:session_autoload = 'no'
         let g:session_autosave = 'yes'
+    " }
+    
+    " prabirshrestha/vim-lsp {
+        if executable('pyls')
+            " pip install python-language-server
+            au User lsp_setup call lsp#register_server({
+                \ 'name': 'pyls',
+                \ 'cmd': {server_info->['pyls']},
+                \ 'whitelist': ['python'],
+                \ })
+        endif
     " }
 
 " }
