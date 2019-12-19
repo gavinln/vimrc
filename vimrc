@@ -95,7 +95,7 @@ Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 Plug 'xolox/vim-misc'          " works with vim session
 Plug 'xolox/vim-session'       " session management with vim
 
-Plug 'zerowidth/vim-copy-as-rtf'  " command CopyRTF to copy as syntax highlighted RTF on Macs
+" Plug 'zerowidth/vim-copy-as-rtf'  " command CopyRTF to copy as syntax highlighted RTF on Macs
 
 " Initialize plugin system
 call plug#end()
