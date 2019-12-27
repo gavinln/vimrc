@@ -8,7 +8,7 @@ fe() {
 
 # preview files using bat
 fzfp() {
-    fzf --preview 'bat --style=numbers --color=always {} | head -500'
+    fzf -m --preview 'bat --style=numbers --color=always {} | head -500'
 }
 
 # find in file using ripgrep
