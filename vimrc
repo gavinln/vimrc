@@ -13,6 +13,7 @@
 "   )
 " )
 
+" TODO: document chezmoi to setup vifmrc and tmux.conf: chezmoi cd; tree
 " TODO: add comments for each plugin
 " TODO: group related plugins
 
@@ -39,6 +40,8 @@ Plug 'airblade/vim-gitgutter'           " display git status in gutter
 
 Plug 'reedes/vim-pencil'       " format for prose
 Plug 'kkoomen/vim-doge'        " document code using \d
+
+Plug 'LnL7/vim-nix'  " nix package manager
 
 " Uses https://github.com/palantir/python-language-server
 " Create environment: conda create -n pyls python=3.7
@@ -125,7 +128,7 @@ set diffexpr=
     set nocompatible    " Use gVim defaults
     " source $VIMRUNTIME/vimrc_example.vim
     " source $VIMRUNTIME/mswin.vim
-    behave mswin
+    " behave mswin
     if !(has('win16') || has('win32') || has('win64'))
         set shell=/bin/bash
     endif
@@ -263,7 +266,7 @@ set diffexpr=
         elseif has("gui_macvim")
             set guifont=Hack\ Regular:h14,Menlo\ Regular:h14,Consolas\ Regular:h16,Courier\ New\ Regular:h18
         elseif has("gui_win32")
-            set guifont=Consolas:h11,Courier_New:h11
+            set guifont=Hack\ Regular:h10,Consolas:h11,Courier_New:h11
         endif
     else
         if &term == 'xterm' || &term == 'screen' || &term == 'ansi'
@@ -737,6 +740,9 @@ set diffexpr=
 " }
 
 " Miscellaneous Key Mappings {
+    " paste in terminal mode
+    tmap <S-Insert> <C-W>"+
+
     " running external programs
     "open explorer in the current file's directory
     map <leader>oe :!start explorer "%:p:h"<CR>
