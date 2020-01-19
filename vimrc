@@ -20,6 +20,7 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-fugitive' " integration with git
+Plug 'junegunn/gv.vim'    " Git browser, :GV
 
 Plug 'tpope/vim-sensible'   " sensible defaults for vim
 Plug 'tpope/vim-surround'   " surround with parentheses, brackets, quotes, xml
@@ -52,6 +53,8 @@ Plug 'w0rp/ale'
 " Alternatives to ALE using language server protocol
 " Plug 'prabirshrestha/async.vim'
 " Plug 'prabirshrestha/vim-lsp'
+" Alternative language server protocol plugin for vim and neovim
+" https://github.com/autozimu/LanguageClient-neovim
 
 Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
 " Explore https://github.com/jeetsukumaran/vim-buffergator instead of bufexplorer
@@ -663,6 +666,7 @@ set diffexpr=
         " let g:vim_markdown_conceal_code_blocks = 0
         let g:vim_markdown_frontmatter = 1
         let g:vim_markdown_conceal = 1
+        let g:vim_markdown_no_default_key_mappings = 1
         nnoremap [oe :setlocal conceallevel=<c-r>=&conceallevel > 0 ? &conceallevel - 1 : 0<cr><cr>
         nnoremap ]oe :setlocal conceallevel=<c-r>=&conceallevel < 2 ? &conceallevel + 1 : 2<cr><cr>
     " }
