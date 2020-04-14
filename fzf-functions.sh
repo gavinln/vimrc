@@ -31,5 +31,9 @@ j() {
         cd $(autojump $@)
         return
     fi
-    cd "$(autojump -s | sort -k1gr | awk '$1 ~ /[0-9]:/ && $2 ~ /^\// { for (i=2; i<=NF; i++) { print $(i) } }' |  fzf --height 40% --reverse --inline-info)" 
+    cd "$(autojump -s | sort -k1gr | awk '$1 ~ /[0-9]:/ && $2 ~ /^\// { for (i=2; i<=NF; i++) { print $(i) } }' |  fzf --height 40% --reverse --inline-info)"
 }
+
+# combine ripgrep and xargs to search for two strings
+# display the print function for all files that import the pandas library
+# fif2 "import pandas" print

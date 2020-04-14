@@ -7,8 +7,7 @@ your %USERPROFILE%/\_vimrc file on Windows.
 
 ## How to install the Plugins?
 There are a lot of plugins, configurations and color schemes that make Vim
-a lot better. To install the plugins first install
-[Vundle](https://github.com/gmarik/Vundle.vim).
+a lot better. To install the plugins first install [vim-plug](https://github.com/junegunn/vim-plug).
 
 ## Included Plugins
 

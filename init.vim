@@ -28,6 +28,10 @@
 " curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 "    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 "
+" Start neovim remotely
+" NVIM_LISTEN_ADDRESS=127.0.0.1:7777 nvim --headless
+" nvim-qt --server localhost:7777
+"
 " See plugins for Python
 " https://www.reddit.com/r/neovim/comments/98hyj9/async_plugins_for_neovim/
 
@@ -36,24 +40,18 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Make sure you use single quotes
 
 Plug 'tpope/vim-fugitive' " integration with git
-Plug 'gregsexton/gitv'    " git repository viewer
 
 Plug 'junegunn/vim-easy-align'  " vim alignment: start with ga
 
 Plug 'tpope/vim-surround'   " surround with parentheses, brackets, quotes, xml
 Plug 'tpope/vim-unimpaired' " pairs of ops: previous/next, turn on/off
 Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
-Plug 'tpope/vim-repeat'     " improved repeate previous operations
+Plug 'tpope/vim-repeat'     " improved repeat previous operations
 Plug 'tpope/vim-rsi'        " readline keys in insert mode ctrl-a start of line
 
-Plug 'justinmk/vim-sneak'  " jump to location specified by 2 chars, sab
-
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
-" Plug 'reedes/vim-pencil'       " editing text & markdown files
 
 Plug 'kshenoy/vim-signature'   " display marks
-Plug 'xolox/vim-misc'          " works with vim session
-Plug 'xolox/vim-session'       " session management with vim
 Plug 'mbbill/undotree'         " undo history visualizer
 
 " gcc - comment out a line
@@ -62,15 +60,15 @@ Plug 'mbbill/undotree'         " undo history visualizer
 " :7,17Commentary - command a range
 " :g/TODO/Commentary - comment using a global invocation
 Plug 'tpope/vim-commentary'  " comment/uncomment stuff
+Plug 'will133/vim-dirdiff'      " difference between two directories
 
 " replaced by 'tpope/vim-commentary'
 " Plug 'scrooloose/nerdcommenter'       " add comments in any language
 
-Plug 'vim-airline/vim-airline'        " fancy status bar
-Plug 'vim-airline/vim-airline-themes' " themes for status bar
 Plug 'airblade/vim-gitgutter'         " display git status in gutter
 
-Plug 'will133/vim-dirdiff'      " difference between two directories
+Plug 'reedes/vim-pencil'       " editing text & markdown files
+
 
 " Uses https://github.com/palantir/python-language-server
 " Create environment: conda create -n pyls python=3.7
@@ -81,14 +79,17 @@ Plug 'w0rp/ale'
 Plug 'skywind3000/asyncrun.vim' " run processes asynchronously
 
 Plug 'jlanzarotta/bufexplorer' " display buffers in vim
-Plug 'yegappan/mru'            " most recently used file
-Plug 'Raimondi/delimitMate'    " auto insert open close parenthesis
+
+" text objects and motions for Python classes, methods, functions, and doc strings
+" ]]/][ forward to the beginning of next/end of this class
+Plug 'jeetsukumaran/vim-pythonsense'
 
 Plug 'Yggdroot/indentLine'     " display vertical lines at indentation
 
-Plug 'KabbAmine/zeavim.vim'  " Zeal offline documentation, choco install zeal
 
 Plug 'vimoutliner/vimoutliner'
+Plug 'flazz/vim-colorschemes'
+Plug 'junegunn/goyo.vim'
 
 " text object for indent levels; useful for Python
 Plug 'michaeljsmith/vim-indent-object'
@@ -111,11 +112,18 @@ Plug 'junegunn/fzf.vim'
 Plug 'lifepillar/vim-solarized8'  " Optimized Solarized colorschemes
 Plug 'markonm/traces.vim'
 
-Plug 'kassio/neoterm'  " send code to terminal REPL
+
+" :Tmap python temp.py
+" ,tt will then run the mapped command in the previous line
+Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
+
+Plug 'xolox/vim-misc'          " works with vim session
+Plug 'xolox/vim-session'       " session management with vim
 
 " create Python docstring
 Plug 'heavenshell/vim-pydocstring'
 " test the following plugins
+"Plug 'KabbAmine/zeavim.vim'  " Zeal offline documentation, choco install zeal
 "Plug 'benmills/vimux'
 "Plug 'jeetsukumaran/vim-buffergator'
 "Plug 'jtratner/vim-flavored-markdown'
@@ -129,6 +137,9 @@ Plug 'heavenshell/vim-pydocstring'
 
 " Initialize plugin system
 call plug#end()
+
+" makes it easier to use mappings that use :map <leader>
+let mapleader = "\<Space>"
 
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
@@ -165,14 +176,17 @@ let maplocalleader = ',,'
 
 " }
 
-" Window navigation mappings {
+" Key Mappings {
 
-    nnoremap <c-j> <c-w><c-j>
-    nnoremap <c-k> <c-w><c-k>
-    nnoremap <c-l> <c-w><c-l>
-    nnoremap <c-h> <c-w><c-h>
+    set winaltkeys=yes  " allows the Alt+Space menu to work on Windows
 
-    " resize horzontal split window
+    " map to left/down/top/right window
+    nnoremap <c-h> <c-w>h
+    nnoremap <c-j> <c-w>j
+    nnoremap <c-k> <c-w>k
+    nnoremap <c-l> <c-w>l
+
+    " resize horizontal split window
     nmap <M-Up> <C-W>+
     nmap <M-Down> <C-W>-
 
@@ -228,6 +242,15 @@ let maplocalleader = ',,'
         let g:ale_set_balloons = 1
         nnoremap <silent> <leader>af :ALEFix<CR>
         nnoremap <silent> <leader>at :ALEToggle<CR>
+        nnoremap <silent> <leader>an :ALENext<cr>
+        nnoremap <silent> <leader>ap :ALEPrevious<cr>
+    " }
+
+    " reedes/vim-pencil {
+        nnoremap <silent> <leader>po :PencilOff<CR>
+        nnoremap <silent> <leader>pt :PencilToggle<CR>
+        nnoremap <silent> <leader>ph :PencilHard<CR>
+        nnoremap <silent> <leader>ps :PencilSoft<CR>
     " }
 
     " mbbill/undotree  {
@@ -298,22 +321,40 @@ let maplocalleader = ',,'
     " }
 
     " FZF {
+        let g:fzf_command_prefix = 'Fzf'
+
+        " type Rg pattern to search (will be replaced by command FzfRg)
+        fun! SetupCommandAlias(from, to)
+            exec 'cnoreabbrev <expr> '.a:from
+                \ .' ((getcmdtype() is# ":" && getcmdline() is# "'.a:from.'")'
+                \ .'? ("'.a:to.'") : ("'.a:from.'"))'
+        endfun
+        call SetupCommandAlias("Rg", "FzfRg")
+
         " list files
-        nnoremap <silent> <leader>ff :Files<CR>
+        nnoremap <silent> <leader>ff :FzfFiles<CR>
         " git status
-        nnoremap <silent> <leader>fg :GFiles?<CR>
+        nnoremap <silent> <leader>fg :FzfGFiles?<CR>
         " lines in loaded buffers
-        nnoremap <silent> <leader>fl :Lines<CR>
+        nnoremap <silent> <leader>fl :FzfLines<CR>
         " tags in the project
-        nnoremap <silent> <leader>ft :Tags<CR>
+        nnoremap <silent> <leader>ft :FzfTags<CR>
         " marks
-        nnoremap <silent> <leader>fm :Marks<CR>
+        nnoremap <silent> <leader>fm :FzfMarks<CR>
         " oldfiles and open buffers
-        nnoremap <silent> <leader>fh :History<CR>
+        nnoremap <silent> <leader>fh :FzfHistory<CR>
+        " snippets works with Ultisnips
+        nnoremap <silent> <leader>fs :FzfSnippets<CR>
+        " git status
+        nnoremap <silent> <leader>fg :FzfGFiles?<CR>
+        " git commits
+        nnoremap <silent> <leader>fc :FzfCommits<CR>
+        " git commits for current buffer
+        nnoremap <silent> <leader>fb :FzfBCommits<CR>
         " color schemes
-        nnoremap <silent> <leader>fc :Colors<CR>
+        " nnoremap <silent> <leader>fc :Colors<CR>
         " buffers
-        nnoremap <silent> <leader>fb :Buffers<CR>
+        " nnoremap <silent> <leader>fb :Buffers<CR>
     " }
 
     " plasticboy/vim-markdown {
@@ -338,18 +379,16 @@ let maplocalleader = ',,'
         let g:sneak#map_netrw = 0
     " }
 
-    " vim wiki {
-        let g:vimwiki_list = [{'path': '~/vimwiki/',
-                              \ 'syntax': 'markdown', 'ext': '.mdv'}]
-        let g:vimwiki_folding='expr:quick'
-    " }
-
     " heavenshell/vim-pydocstring {
         " instead of <C-l>
         nmap <silent> <C-S> <Plug>(pydocstring)
     " }
 
     " neoterm {
+
+        let g:neoterm_repl_command="/bin/bash"
+        let g:neoterm_repl_python="ipython"
+        let g:neoterm_direct_open_repl=1
         " Use gy{text-object} in normal mode
         nmap gy <Plug>(neoterm-repl-send)
 
@@ -361,6 +400,9 @@ let maplocalleader = ',,'
     " }
 
 " Miscellaneous Key Mappings {
+    " paste in terminal mode
+    tmap <S-Insert> <C-W>"+
+
     " running external programs
     "open explorer in the current file's directory
     map <leader>oe :!start explorer "%:p:h"<CR>
@@ -370,6 +412,11 @@ let maplocalleader = ',,'
 
     " open vifm file manager in a terminal window
     map <leader>ov :term vifm<CR>
+
+    " mappings to format a paragraph in text format
+    nnoremap <silent> Q gqap
+    xnoremap <silent> Q gq
+    nnoremap <silent> <leader>Q vapJgqap
 
     " Change to directory of current file
     map <leader>cd :cd %:p:h<cr>
@@ -452,7 +499,6 @@ let maplocalleader = ',,'
     " }
 
 
-    " }
     if executable("rg")
         set grepprg=rg\ --vimgrep\ --no-heading
         set grepformat=%f:%l:%c:%m,%f:%l:%m
