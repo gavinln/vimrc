@@ -16,52 +16,6 @@ In "System Preferences"
 
 * Uncheck "Scroll direction: Natural"
 
-## Command line software utils
-
-### Git utilities
-
-1. git-extras - useful scripts for git
-2. lazygit - user-friendly git terminal UI
-3. tig - git terminal UI
-4. hub - command line tool for Github
-
-### Searching
-
-1. fd - to search files
-2. ripgrep - similar to grep
-
-### JSON
-
-1. jq - command line json processor
-2. jid - json incremental debugger
-
-### HTTP
-
-1. httpie - user-friendly curl alternative
-2. http-prompt - interactive httpie
-3. wuzz - interactive tool for HTTP inspection
-
-### Miscellaneous
-
-1. osquery - query operating systems using SQL
-2. pandoc - convert documents from one format to another
-3. bat - cat with color formatting
-4. xsv - command line CSV toolkit
-5. [csvtk](https://github.com/shenwei356/csvtk) - go language csv toolkit
-6. exa - modern version of ls
-7. tldr - documentation and examples of utilities
-8. ctags - [Universal ctags](https://github.com/universal-ctags/ctags): a maintained ctags version
-
-## Secrets server
-
-[Vault](https://www.vaultproject.io/) from Hashicorp is a secrets server.
-
-## Use Mac Preview to edit photos
-
-### Tile images
-
-https://www.maketecheasier.com/join-images-vertically-horizontally-mac/
-
 ## Software setup
 
 ### Setup macvim
@@ -82,10 +36,10 @@ brew install pyqt5
 brew cask install iterm2
 ```
 
-### Install ripgrep to search within files
+### Install watch to periodically run software
 
-```shell
-brew install ripgrep
+```
+brew install watch
 ```
 
 ### Install exa - a modern version of ls (can also display trees and git status)
@@ -139,28 +93,68 @@ pandoc input.md -o output.docx
 brew cask install firefox
 ```
 
-### Install tig
+### Git utilities
+
+#### Install tig
 
 ```shell
 brew install tig
 ```
 
-### Install lazygit
+#### Install lazygit
 
 ```shell
 brew install lazygit
 ```
 
-### Install git extras
+#### Install git extras
 
 ```shell
 brew install git-extras
 ```
 
-### Install fd to find files
+### Search utilities
+
+#### Install fd to find files
 
 ```shell
 brew install fd
+```
+
+#### Install fselect to find files with SQL like queries
+
+```
+https://github.com/jhspetersson/fselect
+```
+
+```shell
+brew install fselect
+```
+
+#### Install ripgrep to search within files
+
+```shell
+brew install ripgrep
+```
+
+
+#### Install fzf - a command line fuzzy finder
+
+```shell
+brew install fzf
+```
+
+Example command with preview
+
+```
+fzf --preview 'head -100 {}'
+```
+
+```
+fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
+                 echo {} is a binary file ||
+                 (bat --style=numbers --color=always {} ||
+                  cat {}) 2> /dev/null | head -500'
 ```
 
 ### Install bat to view files in color
@@ -181,12 +175,6 @@ brew install vifm
 brew install tree
 ```
 
-### Install fzf - a command line fuzzy finder
-
-```shell
-brew install fzf
-```
-
 ### Install tmux
 
 ```shell
@@ -199,42 +187,218 @@ brew install tmux
 brew install ncdu
 ```
 
-### Install tmuxp to manage tmux configurations
-
-```shell
-pip install tmuxp
-```
-
-### Install bash-it
-
-Follow instructions on the github page:
-
-https://github.com/bash-it/bash-it
-
-### Install jq to filter json
-
-```shell
-brew install jq
-```
-
 ### Install spectacle to arrange windows
 
 ```shell
 brew install spectacle
 ```
 
-### Install rclone to sync files to and from remote systems
+### JSON
+
+#### Install jq to filter json
+
+```shell
+brew install jq
+```
+
+#### JSON incremental debugger
+
+```
+brew install jid  # jid - json incremental debugger
+```
+
+### HTTP
+
+```
+pip install httpie  # user-friendly curl alternative
+```
+
+### Install rclone
 
 ```
 brew install rclone
 ```
 
-## Python software setup
+Configure using `rclone config`
 
-### Install pipenv
+    * s3
+    * sftp for the datascience box using ubuntu username and ~/.ssh/id_rsa private key
+
+### Install minio client
 
 ```
-pip install pipenv
+brew install minio/stable/mc
+```
+
+### Install bash-it (Mac OS Catalina 10.15 and later use zsh as default)
+
+Follow instructions on the github page:
+
+https://github.com/bash-it/bash-it
+
+### Install direnv
+
+```
+brew install direnv
+```
+
+Add the following to the end of the .bashrc or .zshrc files
+
+```
+eval "$(direnv hook bash)"  # in ~/.bashrc
+eval "$(direnv hook zsh)"  # in ~/.zshrc
+```
+
+## Shell utilities
+
+### Install oh-my-zsh
+
+```
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+### Install oh-my-zsh plugins by editing ~/.zshrc
+
+```
+plugins=(git autojump)
+```
+
+
+### Install autojump
+
+```
+brew install autojump
+```
+
+### Csv utilities
+
+1. Install xsv to search csv files
+
+```
+brew install xsv
+```
+
+## Profile files
+
+In .zshrc
+
+```
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+eval "$(direnv hook zsh)"  # in ~/.zshrc
+
+source /usr/local/opt/git-extras/share/git-extras/git-extras-completion.zsh
+
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+```
+
+## Upgrade bash
+
+The Catalina version of Mac OS sets the default shell to zsh. The version of
+bash shipped with MacOS is very old - 3.2.57.
+
+```
+bash --version
+```
+
+```
+https://itnext.io/upgrading-bash-on-macos-7138bd1066ba
+```
+
+## Python environment setup
+
+### Install pipx
+
+Setup a [Python environment][1000]
+
+[1000]: https://sourcery.ai/blog/python-best-practices/
+
+```
+brew install pipx
+pipx ensurepath
+```
+
+Add to ~/.zshrc to [enable completions][1010]
+
+[1010]: https://stackoverflow.com/questions/3249432/can-a-bash-tab-completion-script-be-used-in-zsh
+
+```
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+bashcompinit
+
+eval "$(register-python-argcomplete pipx)"
+```
+
+### Install cookiecutter
+
+```
+pipx install cookiecutter
+```
+
+### Install tmuxp to manage tmux configurations
+
+```
+pipx install tmuxp
+```
+
+### Stormssh to manage ssh configurations
+
+```
+pipx install stormssh
+```
+
+### Install pipenv to manage virtual environments
+
+```
+pipx install pipenv
+```
+
+### Install httpie a user-friendly curl alternative
+
+```
+pipx install httpie
+```
+
+## Example Python project
+
+### Setup a new Python project by running the following
+
+```
+pipenv install isort --dev
+pipenv install flake8 --dev
+pipenv install mypy --dev
+pipenv install pytest --dev
+pipenv install pytest-cov --dev
+pipenv install black --pre --dev
+```
+
+## Command line software utils
+
+Investigate these utilities
+
+### Git utilities
+
+1. hub - command line tool for Github
+
+### HTTP
+
+1. http-prompt - interactive httpie
+2. wuzz - interactive tool for HTTP inspection
+
+### Miscellaneous
+
+1. osquery - query operating systems using SQL
+2. [csvtk](https://github.com/shenwei356/csvtk) - go language csv toolkit
+3. tldr - documentation and examples of utilities
+4. ctags - [Universal ctags](https://github.com/universal-ctags/ctags): a maintained ctags version
+
+## Use Mac Preview to edit photos
+
+### Tile images
+
+```
+https://www.maketecheasier.com/join-images-vertically-horizontally-mac/
 ```
 
 ## Links
