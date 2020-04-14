@@ -249,6 +249,12 @@ eval "$(direnv hook bash)"  # in ~/.bashrc
 eval "$(direnv hook zsh)"  # in ~/.zshrc
 ```
 
+### Install pastel to display colors in the terminal
+
+```
+brew install pastel
+```
+
 ## Shell utilities
 
 ### Install oh-my-zsh
