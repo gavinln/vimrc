@@ -407,6 +407,27 @@ Investigate these utilities
 https://www.maketecheasier.com/join-images-vertically-horizontally-mac/
 ```
 
+### Parquet tools
+
+Command line tools to display information about a parquet file
+
+```
+# https://github.com/apache/parquet-mr/tree/master/parquet-tools
+brew install parquet-tools
+```
+
+1. Display the schema
+
+```
+parquet-tools schema -d file1.parq
+```
+
+2. Display metadata
+
+```
+parquet-tools meta file1.parq
+```
+
 ## Links
 
 * [Mac productivity apps][1000]
