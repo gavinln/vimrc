@@ -1,4 +1,4 @@
-# Setup Mac software
+ Setup Mac software
 
 ## Preferences
 
@@ -426,6 +426,21 @@ parquet-tools schema -d file1.parq
 
 ```
 parquet-tools meta file1.parq
+```
+
+### Tex tools
+
+Tools to create pdf files from Latex
+
+```
+# https://superuser.com/questions/1038612/where-do-i-get-the-pdflatex-program-for-mac
+brew cask install basictex
+```
+
+1. Use pandoc to create slides
+
+```
+pandoc -t beamer autojump-slides.md -o autojump-slides.pdf
 ```
 
 ## Links
