@@ -443,8 +443,16 @@ brew cask install basictex
 pandoc -t beamer autojump-slides.md -o autojump-slides.pdf
 ```
 
+
+## Other software
+
+Investigate
+
+* [git-delta][https://github.com/dandavison/delta] which displays syntax colored git delta
+
 ## Links
 
 * [Mac productivity apps][1000]
 
 [1000]: https://medium.com/skynox/the-only-mac-apps-you-need-for-a-productive-2018-5e1d6de787b7
+
