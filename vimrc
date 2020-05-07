@@ -53,16 +53,19 @@ Plug 'reedes/vim-pencil'       " format for prose
 Plug 'kkoomen/vim-doge'        " document code using \d
 
 Plug 'LnL7/vim-nix'  " nix package manager
+Plug 'vifm/vifm.vim'            " use vifm as a file picker
 
 " Uses https://github.com/palantir/python-language-server
 " Create environment: conda create -n pyls python=3.7
 " conda install -y 'python-language-server[all]'
 " Install proselint for Markdown linter: pip install proselint
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
+Plug 'liuchengxu/vista.vim'  " viewer and finder for LSP symbols and tags
+
+Plug 'prabirshrestha/async.vim'  " needed for vim-lsp
+Plug 'prabirshrestha/vim-lsp'  " vim language server protocol (lsp) support
+Plug 'mattn/vim-lsp-settings'  " install lsp servers
 
 " settings for LanguageClient have been disabled as replaced by vim-lsp
 " Plug 'autozimu/LanguageClient-neovim', {
@@ -85,9 +88,8 @@ Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
 " Explore https://github.com/jeetsukumaran/vim-buffergator instead of bufexplorer
 
 " text objects and motions for Python classes, methods, functions, and doc strings
-" ]]/][ forward to the beginning of next/end of this class
-Plug 'jeetsukumaran/vim-pythonsense'
 
+Plug 'michaeljsmith/vim-indent-object'  " indent text obj with ii, iI, ai, aI
 Plug 'Yggdroot/indentLine'            " display vertical lines at indentation
 
 Plug 'vimoutliner/vimoutliner'
@@ -144,13 +146,25 @@ set diffexpr=
 " convert Jupyter notebooks to Python files
 " pip install jupytext flake8 autopep8 yapf  # Install libraries
 " jupytext --to py data-analysis.ipynb  # Jupyter notebook to a python file
+
+" Python formatting
 " flake8 data-analysis.py  " Check the python file for pep8 issues
 " autopep8 -i -a data-analysis.py  # Fix the python file
-" Use \jp in vim for Jupytext mode and ]d/[d to go to the next/previous header
 " set makeprg=flake8\ %  # Setup flake8 to go to the quickfix list
 " type :make  to run the flake8 program
 " type :clast to go to the last issue
 " type :cpr to go the previous issue
+" convert otl to md
+" %s/\(\t\)\+/\0* /
+
+" Editing Jupyter files in Python format
+" Use \jp in vim for Jupytext mode and ]d/[d to go to the next/previous header
+
+" Convert otl files to md to docx
+" make sure all lines are indented one level deep or more
+" run the substitution below
+" %s/\(\t\)\+/\0* /
+" pandoc file_name.md -o file_name.docx
 
 " Basics {
     set nocompatible    " Use gVim defaults
@@ -310,11 +324,12 @@ set diffexpr=
 
     set winaltkeys=yes  " allows the Alt+Space menu to work on Windows
 
+    " no longer needed as 'christoomey/vim-tmux-navigator' does the same
     " map to left/down/top/right window
-    nnoremap <c-h> <c-w>h
-    nnoremap <c-j> <c-w>j
-    nnoremap <c-k> <c-w>k
-    nnoremap <c-l> <c-w>l
+    " nnoremap <c-h> <c-w>h
+    " nnoremap <c-j> <c-w>j
+    " nnoremap <c-k> <c-w>k
+    " nnoremap <c-l> <c-w>l
 
     " resize horizontal split window
     nmap <M-Up> <C-W>+
@@ -617,10 +632,19 @@ set diffexpr=
         nnoremap <silent> <leader>ap :ALEPrevious<cr>
     " }
 
+    " vista {
+        " https://github.com/liuchengxu/vista.vim
+        " open sidebar to view symbols and tags
+        nnoremap <silent> <leader>vv :Vista vim_lsp<cr>
+        " open fzf to view symbols and tags
+        nnoremap <silent> <leader>vf :Vista finder fzf:vim_lsp<cr>
+        " close vista window
+        nnoremap <silent> <leader>vc :Vista!<cr>
+    " }
+
     " vim-lsp {
         " https://github.com/prabirshrestha/vim-lsp
-        " set omnifunc=lsp#complete
-        set omnifunc=
+        set omnifunc=lsp#complete
 
         set foldmethod=expr
           \ foldexpr=lsp#ui#vim#folding#foldexpr()
@@ -631,15 +655,15 @@ set diffexpr=
 
         nnoremap <silent> <leader>la :LspCodeAction<cr>
         " nnoremap <silent> <leader>l? :LspDeclaration<cr>  " not for Python
-        nnoremap <silent> <leader>ld :LspDefiniion<cr>
-        nnoremap <silent> <leader>le :LspDocumentDiagnostics<cr>
+        nnoremap <silent> <leader>ld :LspDefinition<cr>
+        nnoremap <silent> <leader>lt :LspDocumentDiagnostics<cr>
         " nnoremap <silent> <leader>l? :LspDocumentFold<cr>  " not needed
         " nnoremap <silent> <leader>l? :LspDocumentFoldSync<cr>  " not sure functionality
         nnoremap <silent> <leader>lf :LspDocumentFormat<cr>
         " nnoremap <silent> <leader>l? :LspDocumentFormatSync<cr>  " not sure functionality
-        nnoremap <silent> <leader>lg :LspDocumentRangeFormat<cr>
+        nnoremap <silent> <leader>lm :LspDocumentRangeFormat<cr>
         " nnoremap <silent> <leader>l? :LspDocumentRangeFormatSync<cr>  " not sure functionality
-        nnoremap <silent> <leader>lb :LspDocumentSymbol<cr>
+        nnoremap <silent> <leader>ls :LspDocumentSymbol<cr>
         nnoremap <silent> <leader>lh :LspHover<cr>
         " nnoremap <silent> <leader>l? :LspImplementation<cr>  " not for Python
         " nnoremap <silent> <leader>l? :LspNextError<cr>  " vim issues
@@ -651,7 +675,7 @@ set diffexpr=
         " nnoremap <silent> <leader>l? :LspPreviousReference<cr>  " vim issues
         nnoremap <silent> <leader>lr :LspReferences<cr>
         nnoremap <silent> <leader>ln :LspRename<cr>
-        nnoremap <silent> <leader>ls :LspStatus<cr>
+        " nnoremap <silent> <leader>l? :LspStatus<cr>  "not needed
         " nnoremap <silent> <leader>l? :LspTypeDefinition<cr>  " not for Python
         " nnoremap <silent> <leader>l? :LspWorkspaceSymbol<cr>  " not for Python
     " }
@@ -676,7 +700,9 @@ set diffexpr=
         " very slow
         " nnoremap <silent> <leader>gl :0Glog<CR>
 
-        nnoremap <silent> <leader>gp :Git push<CR>
+        " <leader>gp used to select last pasted text
+        " nnoremap <silent> <leader>gp :Git push<CR>
+
         nnoremap <silent> <leader>gr :Gread<CR>:GitGutter<CR>
         nnoremap <silent> <leader>gw :Gwrite<CR>:GitGutter<CR>
         nnoremap <silent> <leader>ge :Gedit<CR>
@@ -722,6 +748,27 @@ set diffexpr=
         " buffers
         " nnoremap <silent> <leader>fb :Buffers<CR>
 
+    " }
+    
+    " jeetsukumaran/vim-buffergator {
+
+        let g:buffergator_suppress_keymaps = 1
+        " <Leader>b                 Invokes ":BuffergatorOpen": open the buffer catalog,
+        " <Leader>B                 Invokes ":BuffergatorClose": close the buffer catalog.
+        " <Leader>t, <Leader>to     Invokes ":BuffergatorTabsOpen": open the tab page
+        " <Leader>T, <Leader>tc     Invokes ":BuffergatorTabsClose": close the tab page
+        " gb, <M-B>                 Invokes ":BuffergatorMruCyclePrev": cycle to an older buffer in the MRU
+        " gB, <M-S-B>               Invokes ":BuffergatorMruCycleNext": cycle to a newer buffer in the MRU
+        " ]b                        cycles to next buffer by index/number
+        " [b                        cycles to preceding buffer by index/number
+        " toggle Buffergator window
+        nnoremap <silent> <leader>bg :BuffergatorToggle<CR>
+        " 
+    " }
+
+
+    " jlanzarotta/bufexplorer {
+        " nnoremap <silent> <leader>bg :BuffergatorToggle<CR>
     " }
 
     " plasticboy/vim-markdown {
@@ -794,17 +841,6 @@ set diffexpr=
         let g:session_autosave = 'yes'
     " }
     
-    " prabirshrestha/vim-lsp {
-        if executable('pyls')
-            " pip install python-language-server
-            au User lsp_setup call lsp#register_server({
-                \ 'name': 'pyls',
-                \ 'cmd': {server_info->['pyls']},
-                \ 'whitelist': ['python'],
-                \ })
-        endif
-    " }
-
 " }
 
 " Miscellaneous Key Mappings {
@@ -827,11 +863,12 @@ set diffexpr=
     map <leader>cd :cd %:p:h<cr>
 
     " Pull word under cursor into LHS of a substitute
-    nmap <leader>vz :%s#\<<c-r>=expand("<cword>")<cr>\>#
+    nmap <leader>zz :%s#\<<c-r>=expand("<cword>")<cr>\>#
     " Pull Visually Highlighted text into LHS of a substitute
-    vnoremap <leader>vz ""y:%s/<C-R>=escape(@", '/\')<CR>//g<Left><Left>
+    vnoremap <leader>zz ""y:%s/<C-R>=escape(@", '/\')<CR>//g<Left><Left>
+
     " search for text
-    map <leader>vg :vimgrep /\<<c-r>=expand("<cword>")<cr>\>/ **/*.<left><left><left><left><left><left><left>
+    map <leader>zg :vimgrep /\<<c-r>=expand("<cword>")<cr>\>/ **/*.<left><left><left><left><left><left><left>
 
     " copy full path of current buffer to the clipboard
     map <leader>cp :let @* = expand("%:p")<CR>
@@ -840,6 +877,8 @@ set diffexpr=
     nnoremap <expr> <leader>gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
     " Close the current buffer without closing the window {
+        " may be able to do this without a function
+        " https://stackoverflow.com/questions/4465095/vim-delete-buffer-without-losing-the-split-window
         map <leader>bd :Bclose<cr>
 
         command! Bclose call <SID>BufcloseCloseIt()
@@ -936,4 +975,10 @@ set diffexpr=
         set grepformat=%f:%l:%c:%m,%f:%l:%m
     endif
 
+" }
+
+" VIM tips {
+    " To send the output of a command to a temporary buffer
+    " https://stackoverflow.com/questions/25038687/vim-show-window-with-output-after-issuing-external-command
+    " :new | read !ls ~/
 " }
