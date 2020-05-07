@@ -17,3 +17,11 @@ Get the status of all git directories
 ```
 ls -d */ | xargs -I{} git -C '{}' status
 ```
+
+## xargs
+
+Find all directories containing sql files
+
+```
+find . -name '*.sql' | xargs -I{} dirname {} | uniq
+```
