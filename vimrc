@@ -16,6 +16,16 @@
 " TODO: document chezmoi to setup vifmrc and tmux.conf: chezmoi cd; tree
 " TODO: add comments for each plugin
 " TODO: group related plugins
+"
+" To use scp on Windows need to change 3 lines to following 3 lines for netrw to work
+"
+"  if g:netrw_scp_cmd =~ '^scp' && (has("win32") || has("win95") || has("win64") || has("win16"))
+"    let tmpfile_get = substitute(tr(tmpfile, '\', '/'), '^\(\a\):[/\\]\(.*\)$', '/\1/\2', '') 
+"   else
+"
+"  if g:netrw_scp_cmd =~ '^scp' && (has("win32") || has("win95") || has("win64") || has("win16")) && !has("gui_running")
+"    let tmpfile_get = substitute(tr(tmpfile, '\', '/'), '^\(\a\):[/\\]\(.*\)$', '/\1/\2', '') 
+"   else
 
 call plug#begin('~/.vim/plugged')
 
