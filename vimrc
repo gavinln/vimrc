@@ -58,7 +58,22 @@ Plug 'LnL7/vim-nix'  " nix package manager
 " Create environment: conda create -n pyls python=3.7
 " conda install -y 'python-language-server[all]'
 " Install proselint for Markdown linter: pip install proselint
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
+
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+
+" settings for LanguageClient have been disabled as replaced by vim-lsp
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
+" let g:LanguageClient_serverCommands = {
+"     \ 'python': ['C:/Users/gavin/Miniconda3/Scripts/pyls.exe'],
+"     \ }
+" let g:LanguageClient_selectionUI = "fzf"
+
 
 " Alternatives to ALE using language server protocol
 " Plug 'prabirshrestha/async.vim'
@@ -600,6 +615,45 @@ set diffexpr=
         nnoremap <silent> <leader>at :ALEToggle<CR>
         nnoremap <silent> <leader>an :ALENext<cr>
         nnoremap <silent> <leader>ap :ALEPrevious<cr>
+    " }
+
+    " vim-lsp {
+        " https://github.com/prabirshrestha/vim-lsp
+        " set omnifunc=lsp#complete
+        set omnifunc=
+
+        set foldmethod=expr
+          \ foldexpr=lsp#ui#vim#folding#foldexpr()
+          \ foldtext=lsp#ui#vim#folding#foldtext()
+
+        let g:lsp_log_verbose = 1
+        let g:lsp_log_file = expand('~/vim-lsp.log')
+
+        nnoremap <silent> <leader>la :LspCodeAction<cr>
+        " nnoremap <silent> <leader>l? :LspDeclaration<cr>  " not for Python
+        nnoremap <silent> <leader>ld :LspDefiniion<cr>
+        nnoremap <silent> <leader>le :LspDocumentDiagnostics<cr>
+        " nnoremap <silent> <leader>l? :LspDocumentFold<cr>  " not needed
+        " nnoremap <silent> <leader>l? :LspDocumentFoldSync<cr>  " not sure functionality
+        nnoremap <silent> <leader>lf :LspDocumentFormat<cr>
+        " nnoremap <silent> <leader>l? :LspDocumentFormatSync<cr>  " not sure functionality
+        nnoremap <silent> <leader>lg :LspDocumentRangeFormat<cr>
+        " nnoremap <silent> <leader>l? :LspDocumentRangeFormatSync<cr>  " not sure functionality
+        nnoremap <silent> <leader>lb :LspDocumentSymbol<cr>
+        nnoremap <silent> <leader>lh :LspHover<cr>
+        " nnoremap <silent> <leader>l? :LspImplementation<cr>  " not for Python
+        " nnoremap <silent> <leader>l? :LspNextError<cr>  " vim issues
+        " nnoremap <silent> <leader>l? :LspNextReference<cr>   " vim issues
+        " nnoremap <silent> <leader>l? :LspPeekDeclaration<cr>  " not for Python
+        nnoremap <silent> <leader>lp :LspPeekDefinition<cr>
+        " nnoremap <silent> <leader>l? :LspPeekTypeDefinition<cr>  " not for Python
+        " nnoremap <silent> <leader>l? :LspPreviousError<cr>  " vim issues
+        " nnoremap <silent> <leader>l? :LspPreviousReference<cr>  " vim issues
+        nnoremap <silent> <leader>lr :LspReferences<cr>
+        nnoremap <silent> <leader>ln :LspRename<cr>
+        nnoremap <silent> <leader>ls :LspStatus<cr>
+        " nnoremap <silent> <leader>l? :LspTypeDefinition<cr>  " not for Python
+        " nnoremap <silent> <leader>l? :LspWorkspaceSymbol<cr>  " not for Python
     " }
 
     " reedes/vim-pencil {
