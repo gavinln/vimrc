@@ -39,6 +39,9 @@ Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
 Plug 'tpope/vim-repeat'     " improved repeat previous operations
 Plug 'tpope/vim-rsi'        " readline keys in insert mode ctrl-a start of line
 
+Plug 'tpope/vim-dadbod'     " database interface
+Plug 'kristijanhusak/vim-dadbod-ui'  " database interface UI
+
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
 
 Plug 'kshenoy/vim-signature'   " display marks
