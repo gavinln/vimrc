@@ -1,6 +1,7 @@
 " vim: sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell
 
 " Install VIM for Windows from https://tuxproject.de/projects/vim/
+" Vim tips: https://github.com/mhinz/vim-galore
 
 " Uses vim-plug
 " On Windows (PowerShell)
@@ -18,6 +19,7 @@
 " TODO: group related plugins
 "
 " To use scp on Windows need to change 3 lines to following 3 lines for netrw to work
+" in the autload\netrw.vim file in the vim installation directory
 "
 "  if g:netrw_scp_cmd =~ '^scp' && (has("win32") || has("win95") || has("win64") || has("win16"))
 "    let tmpfile_get = substitute(tr(tmpfile, '\', '/'), '^\(\a\):[/\\]\(.*\)$', '/\1/\2', '') 
@@ -47,6 +49,11 @@ Plug 'plasticboy/vim-markdown' " better formatting for markdown
 Plug 'kshenoy/vim-signature'   " display marks
 Plug 'mbbill/undotree'         " undo history visualizer
 
+" gcc - comment out a line
+" gcap - comment out a paragraph)
+" gc in visual mode to comment out the selection
+" :7,17Commentary - comment a range
+" :g/TODO/Commentary - comment using a global invocation
 Plug 'tpope/vim-commentary'             " comment code gc in any language
 " Plug 'vim-airline/vim-airline'        " fancy status bar
 " Plug 'vim-airline/vim-airline-themes' " themes for status bar
@@ -70,25 +77,9 @@ Plug 'prabirshrestha/async.vim'  " needed for vim-lsp
 Plug 'prabirshrestha/vim-lsp'  " vim language server protocol (lsp) support
 Plug 'mattn/vim-lsp-settings'  " install lsp servers
 
-" settings for LanguageClient have been disabled as replaced by vim-lsp
-" Plug 'autozimu/LanguageClient-neovim', {
-"     \ 'branch': 'next',
-"     \ 'do': 'bash install.sh',
-"     \ }
-" let g:LanguageClient_serverCommands = {
-"     \ 'python': ['C:/Users/gavin/Miniconda3/Scripts/pyls.exe'],
-"     \ }
-" let g:LanguageClient_selectionUI = "fzf"
-
-
 " Alternatives to ALE using language server protocol
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
-" Alternative language server protocol plugin for vim and neovim
-" https://github.com/autozimu/LanguageClient-neovim
 
 Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
-" Explore https://github.com/jeetsukumaran/vim-buffergator instead of bufexplorer
 
 " text objects and motions for Python classes, methods, functions, and doc strings
 
@@ -101,7 +92,15 @@ Plug 'junegunn/goyo.vim'
 
 Plug 'junegunn/vim-easy-align'
 
+Plug 'easymotion/vim-easymotion'  " move to char, word, line with prompts
+Plug 'mg979/vim-visual-multi'  " multiple cursors
+
+" Using the Tmux Plugin Manager (TPM) and modify ~/.tmux.conf
+" set -g @plugin 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-navigator' " vim tmux navigator
+
+Plug 'voldikss/vim-floaterm'  " vim floating window
+Plug 'liuchengxu/vim-which-key'  " help for leader and localleader keys
 
 " display tags of current buffer
 " Needs ctags from https://github.com/universal-ctags/ctags
@@ -117,12 +116,6 @@ Plug 'ron89/thesaurus_query.vim'
 
 " highlights patterns and ranges for ex commands
 Plug 'markonm/traces.vim'
-
-" Track the engine.
-" Plug 'SirVer/ultisnips'  " sometime crashed when editing .vimrc
-
-" Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
 
 " :Tmap python temp.py
 " ,tt will then run the mapped command in the previous line
@@ -142,6 +135,9 @@ let mapleader = "\<Space>"
 " In the file vimfiles\bundle\vimoutliner\vimoutlinerc
 " uncomment the following line for the comma comma keyboard mappings to work
 let maplocalleader = ',,'
+
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ',,'<CR>
 
 " use internal diff program
 set diffexpr=
@@ -168,6 +164,10 @@ set diffexpr=
 " run the substitution below
 " %s/\(\t\)\+/\0* /
 " pandoc file_name.md -o file_name.docx
+
+" Terminal colors in vim
+" Try :set termguicolors
+" Try :set notermguicolors
 
 " Basics {
     set nocompatible    " Use gVim defaults
@@ -327,14 +327,7 @@ set diffexpr=
 
     set winaltkeys=yes  " allows the Alt+Space menu to work on Windows
 
-    " no longer needed as 'christoomey/vim-tmux-navigator' does the same
-    " map to left/down/top/right window
-    " nnoremap <c-h> <c-w>h
-    " nnoremap <c-j> <c-w>j
-    " nnoremap <c-k> <c-w>k
-    " nnoremap <c-l> <c-w>l
-
-    " resize horizontal split window
+   " resize horizontal split window
     nmap <M-Up> <C-W>+
     nmap <M-Down> <C-W>-
 
@@ -601,6 +594,7 @@ set diffexpr=
 " }
 
 " Plugins {
+
     " Ale {
         " to customize proselint see https://github.com/amperser/proselint
         " On Windows/Linux/Mac
@@ -626,7 +620,6 @@ set diffexpr=
         let g:ale_set_loclist = 1
         let g:ale_set_quickfix = 0
         let g:ale_completion_enabled = 0
-        " set omnifunc=ale#completion#OmniFunc
 
         let g:ale_set_balloons = 1
         nnoremap <silent> <leader>af :ALEFix<CR>
@@ -753,22 +746,6 @@ set diffexpr=
 
     " }
     
-    " jeetsukumaran/vim-buffergator {
-
-        let g:buffergator_suppress_keymaps = 1
-        " <Leader>b                 Invokes ":BuffergatorOpen": open the buffer catalog,
-        " <Leader>B                 Invokes ":BuffergatorClose": close the buffer catalog.
-        " <Leader>t, <Leader>to     Invokes ":BuffergatorTabsOpen": open the tab page
-        " <Leader>T, <Leader>tc     Invokes ":BuffergatorTabsClose": close the tab page
-        " gb, <M-B>                 Invokes ":BuffergatorMruCyclePrev": cycle to an older buffer in the MRU
-        " gB, <M-S-B>               Invokes ":BuffergatorMruCycleNext": cycle to a newer buffer in the MRU
-        " ]b                        cycles to next buffer by index/number
-        " [b                        cycles to preceding buffer by index/number
-        " toggle Buffergator window
-        nnoremap <silent> <leader>bg :BuffergatorToggle<CR>
-        " 
-    " }
-
 
     " jlanzarotta/bufexplorer {
         " nnoremap <silent> <leader>bg :BuffergatorToggle<CR>
@@ -783,6 +760,14 @@ set diffexpr=
         let g:vim_markdown_no_default_key_mappings = 1
         nnoremap [oe :setlocal conceallevel=<c-r>=&conceallevel > 0 ? &conceallevel - 1 : 0<cr><cr>
         nnoremap ]oe :setlocal conceallevel=<c-r>=&conceallevel < 2 ? &conceallevel + 1 : 2<cr><cr>
+
+        map ]] <Plug>Markdown_MoveToNextHeader
+        map [[ <Plug>Markdown_MoveToPreviousHeader
+        map [] <Plug>Markdown_MoveToPreviousSiblingHeader
+        map ][ <Plug>Markdown_MoveToNextSiblingHeader
+        
+        " map ]u <Plug>Markdown_MoveToParentHeader
+        " map ]c <Plug>Markdown_MoveToCurHeader
     " }
 
     " vim-easy-align {
