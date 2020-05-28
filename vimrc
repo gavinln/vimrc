@@ -2,6 +2,7 @@
 
 " Install VIM for Windows from https://tuxproject.de/projects/vim/
 " Vim tips: https://github.com/mhinz/vim-galore
+" More vim tips: https://github.com/jbranchaud/til
 
 " Uses vim-plug
 " On Windows (PowerShell)
@@ -22,17 +23,24 @@
 " in the autload\netrw.vim file in the vim installation directory
 "
 "  if g:netrw_scp_cmd =~ '^scp' && (has("win32") || has("win95") || has("win64") || has("win16"))
-"    let tmpfile_get = substitute(tr(tmpfile, '\', '/'), '^\(\a\):[/\\]\(.*\)$', '/\1/\2', '') 
+"    let tmpfile_get = substitute(tr(tmpfile, '\', '/'), '^\(\a\):[/\\]\(.*\)$', '/\1/\2', '')
 "   else
 "
 "  if g:netrw_scp_cmd =~ '^scp' && (has("win32") || has("win95") || has("win64") || has("win16")) && !has("gui_running")
-"    let tmpfile_get = substitute(tr(tmpfile, '\', '/'), '^\(\a\):[/\\]\(.*\)$', '/\1/\2', '') 
+"    let tmpfile_get = substitute(tr(tmpfile, '\', '/'), '^\(\a\):[/\\]\(.*\)$', '/\1/\2', '')
 "   else
 
 call plug#begin('~/.vim/plugged')
 
+" Try the following plugins
+" Plug 'tpope/vim-sleuth'  " auto sets expandtab
+" Plug 'dhruvasagar/vim-table-mode'  " create tables
+" Plug 'AndrewRadev/splitjoin.vim'  " switch between single line/multi line
+
 Plug 'tpope/vim-fugitive' " integration with git
-Plug 'junegunn/gv.vim'    " Git browser, :GV
+
+" Git browser, :GV
+Plug 'junegunn/gv.vim', {'on': 'GV'}
 
 Plug 'tpope/vim-sensible'   " sensible defaults for vim
 Plug 'tpope/vim-surround'   " surround with parentheses, brackets, quotes, xml
@@ -41,13 +49,23 @@ Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
 Plug 'tpope/vim-repeat'     " improved repeat previous operations
 Plug 'tpope/vim-rsi'        " readline keys in insert mode ctrl-a start of line
 
-Plug 'tpope/vim-dadbod'     " database interface
-Plug 'kristijanhusak/vim-dadbod-ui'  " database interface UI
+" vim startup screen & session
+" https://github.com/mhinz/vim-startify
+" Plug 'mhinz/vim-startify'
+
+" database interface
+Plug 'tpope/vim-dadbod', {'on': 'DBUIToggle'}
+
+" database interface UI
+Plug 'kristijanhusak/vim-dadbod-ui', {'on': 'DBUIToggle'}
 
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
 
-Plug 'kshenoy/vim-signature'   " display marks
-Plug 'mbbill/undotree'         " undo history visualizer
+" display marks
+Plug 'kshenoy/vim-signature', {'on': 'SignatureToggleSigns'}
+
+" undo history visualizer
+Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
 
 " gcc - comment out a line
 " gcap - comment out a paragraph)
@@ -59,11 +77,19 @@ Plug 'tpope/vim-commentary'             " comment code gc in any language
 " Plug 'vim-airline/vim-airline-themes' " themes for status bar
 Plug 'airblade/vim-gitgutter'           " display git status in gutter
 
-Plug 'reedes/vim-pencil'       " format for prose
-Plug 'kkoomen/vim-doge'        " document code using \d
+" format for prose
+Plug 'reedes/vim-pencil', {'on': 'PencilToggle'}
+
+" document generator using \d
+Plug 'kkoomen/vim-doge'
 
 Plug 'LnL7/vim-nix'  " nix package manager
-Plug 'vifm/vifm.vim'            " use vifm as a file picker
+
+" use vifm as a file picker
+Plug 'vifm/vifm.vim', {'on': 'Vifm'}
+
+Plug 'preservim/nerdtree'  " file browser with bookmarks
+Plug 'Xuyuanp/nerdtree-git-plugin'  " git plugin for nerd tree
 
 " Uses https://github.com/palantir/python-language-server
 " Create environment: conda create -n pyls python=3.7
@@ -71,7 +97,8 @@ Plug 'vifm/vifm.vim'            " use vifm as a file picker
 " Install proselint for Markdown linter: pip install proselint
 Plug 'w0rp/ale'
 
-Plug 'liuchengxu/vista.vim'  " viewer and finder for LSP symbols and tags
+" viewer and finder for LSP symbols and tags
+Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
 
 Plug 'prabirshrestha/async.vim'  " needed for vim-lsp
 Plug 'prabirshrestha/vim-lsp'  " vim language server protocol (lsp) support
@@ -87,13 +114,19 @@ Plug 'michaeljsmith/vim-indent-object'  " indent text obj with ii, iI, ai, aI
 Plug 'Yggdroot/indentLine'            " display vertical lines at indentation
 
 Plug 'vimoutliner/vimoutliner'
-Plug 'flazz/vim-colorschemes'
-Plug 'junegunn/goyo.vim'
+" Plug 'flazz/vim-colorschemes'
+Plug 'altercation/vim-colors-solarized'
 
-Plug 'junegunn/vim-easy-align'
+" vim reading mode
+Plug 'junegunn/goyo.vim', {'on': 'Goyo'}
 
-Plug 'easymotion/vim-easymotion'  " move to char, word, line with prompts
-Plug 'mg979/vim-visual-multi'  " multiple cursors
+Plug 'junegunn/vim-easy-align', {'on': 'EasyAlign'}
+
+" move to char, word, line with prompts, trigger <leader><leader>
+Plug 'easymotion/vim-easymotion'
+" Plug 'mg979/vim-visual-multi'  " multiple cursors
+
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 
 " Using the Tmux Plugin Manager (TPM) and modify ~/.tmux.conf
 " set -g @plugin 'christoomey/vim-tmux-navigator'
@@ -122,12 +155,14 @@ Plug 'markonm/traces.vim'
 Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 
 Plug 'xolox/vim-misc'          " works with vim session
-Plug 'xolox/vim-session'       " session management with vim
+" session management with vim
+Plug 'xolox/vim-session', {'on': 'OpenSession'}
 
 " Plug 'zerowidth/vim-copy-as-rtf'  " command CopyRTF to copy as syntax highlighted RTF on Macs
 
 " Initialize plugin system
 call plug#end()
+
 
 " makes it easier to use mappings that use :map <leader>
 let mapleader = "\<Space>"
@@ -226,7 +261,8 @@ set diffexpr=
         set cursorline                  " Highlight current line
         autocmd VimEnter * colorscheme solarized | highlight clear SignColumn
     else
-        colorscheme xterm16
+        " colorscheme xterm16
+        let g:solarized_termcolors=256
         set nocursorline
     endif
 
@@ -745,7 +781,6 @@ set diffexpr=
         " nnoremap <silent> <leader>fb :Buffers<CR>
 
     " }
-    
 
     " jlanzarotta/bufexplorer {
         " nnoremap <silent> <leader>bg :BuffergatorToggle<CR>
@@ -765,7 +800,7 @@ set diffexpr=
         map [[ <Plug>Markdown_MoveToPreviousHeader
         map [] <Plug>Markdown_MoveToPreviousSiblingHeader
         map ][ <Plug>Markdown_MoveToNextSiblingHeader
-        
+
         " map ]u <Plug>Markdown_MoveToParentHeader
         " map ]c <Plug>Markdown_MoveToCurHeader
     " }
@@ -781,8 +816,8 @@ set diffexpr=
     " neoterm {
 
         let g:neoterm_repl_command="/bin/bash"
-        let g:neoterm_repl_python="ipython"
-        let g:neoterm_direct_open_repl=1
+        " let g:neoterm_repl_python="ipython"
+        let g:neoterm_direct_open_repl=0
         " Use gy{text-object} in normal mode
         nmap gy <Plug>(neoterm-repl-send)
 
@@ -798,8 +833,8 @@ set diffexpr=
     " airblade/vim-gitgutter {
         " toggle gitgutter display
         nnoremap <silent> <leader>tg :GitGutterToggle<CR>
-        nmap ]h <Plug>GitGutterNextHunk
-        nmap [h <Plug>GitGutterPrevHunk
+        nmap ]h <Plug>(GitGutterNextHunk)
+        nmap [h <Plug>(GitGutterPrevHunk)
     " }
 
     " junegunn/goyo.vim {
@@ -828,7 +863,7 @@ set diffexpr=
         let g:session_autoload = 'no'
         let g:session_autosave = 'yes'
     " }
-    
+
 " }
 
 " Miscellaneous Key Mappings {
