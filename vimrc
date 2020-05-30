@@ -196,8 +196,10 @@ set diffexpr=
 
 " Convert otl files to md to docx
 " make sure all lines are indented one level deep or more
-" run the substitution below
+" convert otl to Google doc compatible indent
 " %s/\(\t\)\+/\0* /
+" convert otl to markdown for Confluence
+" %s/^\t\(\S\)/### \1/
 " pandoc file_name.md -o file_name.docx
 
 " Terminal colors in vim
