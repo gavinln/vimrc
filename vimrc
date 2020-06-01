@@ -395,11 +395,17 @@ set diffexpr=
 
     " Some helpers to edit mode
     " http://vimcasts.org/e/14
-    cnoremap %% <C-R>=expand('%:h').'/'<cr>
-    map <leader>ew :e %%
-    map <leader>es :sp %%
-    map <leader>ev :vsp %%
-    map <leader>et :tabe %%
+    "
+    " cnoremap %% <C-R>=expand('%:h').'/'<cr>
+    " map <leader>ew :e %%
+    " map <leader>es :sp %%
+    " map <leader>ev :vsp %%
+    " map <leader>et :tabe %%
+
+    nnoremap <silent> <leader>ee :Explore<CR>
+    nnoremap <silent> <leader>es :Sexplore<CR>
+    nnoremap <silent> <leader>ev :Vexplore<CR>
+    nnoremap <silent> <leader>et :Texplore<CR>
 
     " Map <Leader>tt to display all lines with keyword under cursor
     " and ask which one to jump to
