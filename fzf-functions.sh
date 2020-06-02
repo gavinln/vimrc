@@ -7,10 +7,10 @@ fe() {
     [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
 
-# preview files using bat
-# find python files with search string import and edit selected files
-# vim $(rg -l -g '*.py' import | fzfp)
 fzfp() {
+    # preview files using bat
+    # find python files with search string import and edit selected files
+    # vim $(rg -l -g '*.py' import | fzfp)
     fzf -m --preview 'bat --style=numbers --color=always {} | head -500'
 }
 
@@ -50,6 +50,6 @@ j() {
 # search files modified since last Monday and edit them
 # vim $(fsm 'last monday' | fzfp)
 fsm() {
-    if [ ! "$#" -gt 0 ]; then echo "Need a time like (last monday)"; return 1; fi
+    if [ ! "$#" -gt 0 ]; then echo "Usage: fsm 'last monday' or fsm 2020-05-01)"; return 1; fi
     fselect "path from . gitignore where created gte '$1' and is_file=true"
 }
