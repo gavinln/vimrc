@@ -1,4 +1,4 @@
- Setup Mac software
+# Setup Mac software
 
 ## Preferences
 
