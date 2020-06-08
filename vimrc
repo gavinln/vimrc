@@ -88,8 +88,8 @@ Plug 'LnL7/vim-nix'  " nix package manager
 " use vifm as a file picker
 Plug 'vifm/vifm.vim', {'on': 'Vifm'}
 
-Plug 'preservim/nerdtree'  " file browser with bookmarks
-Plug 'Xuyuanp/nerdtree-git-plugin'  " git plugin for nerd tree
+" Plug 'preservim/nerdtree'  " file browser with bookmarks
+" Plug 'Xuyuanp/nerdtree-git-plugin'  " git plugin for nerd tree
 
 " Uses https://github.com/palantir/python-language-server
 " Create environment: conda create -n pyls python=3.7
@@ -157,6 +157,8 @@ Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 Plug 'xolox/vim-misc'          " works with vim session
 " session management with vim
 Plug 'xolox/vim-session', {'on': 'OpenSession'}
+
+Plug 'vimwiki/vimwiki'
 
 " Plug 'zerowidth/vim-copy-as-rtf'  " command CopyRTF to copy as syntax highlighted RTF on Macs
 
@@ -870,6 +872,11 @@ set diffexpr=
     " xolox/vim-session {
         let g:session_autoload = 'no'
         let g:session_autosave = 'yes'
+    " }
+
+    " vimwiki/vimwiki {
+        let g:vimwiki_list = [{'path': '~/vimwiki/',
+                          \ 'syntax': 'markdown', 'ext': '.md-wiki'}]
     " }
 
 " }
