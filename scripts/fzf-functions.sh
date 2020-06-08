@@ -82,7 +82,7 @@ fshow_preview() {
 
 
 # fstatus - git status browser
-_gitStatusLineToFileName="echo {} | sed -n 's/ M \(\S\)/\1/p' | head -1 | xargs -I % sh -c 'git diff % | delta | less -R'"
+_gitStatusLineToFileName="echo {} | sed -nE 's/ M (.*)/\1/p' | head -1 | xargs -I % sh -c 'git diff % | delta | less -R'"
 fstatus() {
   git status --short "$@" |
   fzf --ansi --no-sort --reverse --tiebreak=index --no-multi \
