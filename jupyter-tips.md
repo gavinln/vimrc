@@ -20,6 +20,11 @@
 ### Write code
 
 * Use "Code prettify" to clean the code
+* use the autoload extension
+
+### Debug code
+
+* Use the snoop extension for Jupyter https://github.com/alexmojaki/snoop
 
 ### Execute code
 
