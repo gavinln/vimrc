@@ -16,6 +16,10 @@ In "System Preferences"
 
 * Uncheck "Scroll direction: Natural"
 
+### hosts file on a Mac
+
+The hosts file on a Mac is '/etc/private/hosts'
+
 ## Software setup
 
 ### Setup macvim
@@ -157,16 +161,38 @@ fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
                   cat {}) 2> /dev/null | head -500'
 ```
 
+#### Install fpp - path picker
+
+```shell
+brew install fpp
+```
+
 ### Install bat to view files in color
 
 ```shell
 brew install bat
 ```
 
+### Code style utilities
+
+1. Install shellcheck to check bash scripts
+
+```
+brew install shellcheck
+```
+
 ### Install vifm
 
 ```shell
 brew install vifm
+```
+
+### Install midnight commander (mc)
+
+mc can view and copy files to and from remote machines over sftp (ssh)
+
+```shell
+brew install mc
 ```
 
 ### Install tree
@@ -227,7 +253,8 @@ Configure using `rclone config`
 ### Install minio client
 
 ```
-brew install minio/stable/mc
+# do not install as clashes with midnight commander (mc)
+# brew install minio/stable/mc
 ```
 
 ### Install bash-it (Mac OS Catalina 10.15 and later use zsh as default)
