@@ -114,8 +114,14 @@ Plug 'michaeljsmith/vim-indent-object'  " indent text obj with ii, iI, ai, aI
 Plug 'Yggdroot/indentLine'            " display vertical lines at indentation
 
 Plug 'vimoutliner/vimoutliner'
+
+" https://tomlankhorst.nl/iterm-tmux-vim-true-color/
 " Plug 'flazz/vim-colorschemes'
-Plug 'altercation/vim-colors-solarized'
+" Plug 'altercation/vim-colors-solarized'
+
+" solarized8_high: high-contrast, solarized8: default Solarized,
+" solarized8_low: low-contrast, solarized8_flat: flat
+Plug 'lifepillar/vim-solarized8'
 
 " vim reading mode
 Plug 'junegunn/goyo.vim', {'on': 'Goyo'}
@@ -257,16 +263,17 @@ set diffexpr=
 
 " Vim UI {
     syntax enable
-    set background=dark
+    set background=light
 
-    let g:airline_theme='solarized'
+    let g:airline_theme='solarized8'
     if has('gui_running')
-        colorscheme solarized
+        colorscheme solarized8_high
         set cursorline                  " Highlight current line
-        autocmd VimEnter * colorscheme solarized | highlight clear SignColumn
+        autocmd VimEnter * colorscheme solarized8_high | highlight clear SignColumn
     else
         " colorscheme xterm16
         let g:solarized_termcolors=256
+        colorscheme solarized8_high
         set nocursorline
     endif
 
@@ -877,6 +884,7 @@ set diffexpr=
     " vimwiki/vimwiki {
         let g:vimwiki_list = [{'path': '~/vimwiki/',
                           \ 'syntax': 'markdown', 'ext': '.md-wiki'}]
+        let g:vimwiki_global_ext = 0  " do not consider every markdown file a wiki file
     " }
 
 " }
@@ -907,6 +915,28 @@ set diffexpr=
 
     " search for text
     map <leader>zg :vimgrep /\<<c-r>=expand("<cword>")<cr>\>/ **/*.<left><left><left><left><left><left><left>
+
+    " toggle background between dark and light
+    if exists("*ToggleBackground") == 0
+        function ToggleBackground()
+            if &background == "dark"
+                set background=light
+            else
+                set background=dark
+            endif
+        endfunction
+
+        command TB call ToggleBackground()
+    endif
+
+    " toggle background between dark and light
+    map <leader>zb :call ToggleBackground()<cr>
+
+    " choose solarized8 colorschemes
+    map <leader>z1 :colorscheme solarized8<cr>
+    map <leader>z2 :colorscheme solarized8_flat<cr>
+    map <leader>z3 :colorscheme solarized8_low<cr>
+    map <leader>z4 :colorscheme solarized8_high<cr>
 
     " copy full path of current buffer to the clipboard
     map <leader>cp :let @* = expand("%:p")<CR>
