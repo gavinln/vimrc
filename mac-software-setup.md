@@ -40,6 +40,12 @@ brew install pyqt5
 brew cask install iterm2
 ```
 
+#### Customize iterm2
+
+1. Open "Session"/"Edit Session"/Keys
+2. Change "^Home" to "Load Color Preset Solarized Dark"
+3. Change "^End" to "Load Color Preset Solarized Light"
+
 ### Install watch to periodically run software
 
 ```
