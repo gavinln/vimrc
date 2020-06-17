@@ -38,12 +38,12 @@ j() {
     cd "$(autojump -s | sort -k1gr | awk '$1 ~ /[0-9]:/ && $2 ~ /^\// { for (i=2; i<=NF; i++) { print $(i) } }' |  fzf --height 40% --reverse --inline-info)" 
 }
 
-# search for recently modified files
-# search files modified since last Monday and edit them
-# vim $(fs_modified 'last monday' | fzfp)
-fs_modified() {
-    if [ ! "$#" -gt 0 ]; then echo "Usage: fs_modified today or 'last monday' or fsm 2020-05-01)"; return 1; fi
-    fselect "path from . gitignore where modified gte '$1' and is_file=true"
+# search for recently changed files
+# search files changed within the last 2 days
+# vim $(fd_changed 2days | fzfp)
+fd_changed() {
+    if [ ! "$#" -gt 0 ]; then echo "Usage: fd_changed today or 2days or '2020-05-01 00:00:00')"; return 1; fi
+    fd --type file --changed-within "$1"
 }
 
 # search for recently created files
