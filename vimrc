@@ -263,7 +263,7 @@ set diffexpr=
 
 " Vim UI {
     syntax enable
-    set background=light
+    set background=dark
 
     let g:airline_theme='solarized8'
     if has('gui_running')
@@ -411,10 +411,11 @@ set diffexpr=
     " map <leader>ev :vsp %%
     " map <leader>et :tabe %%
 
-    nnoremap <silent> <leader>ee :Explore<CR>
-    nnoremap <silent> <leader>es :Sexplore<CR>
-    nnoremap <silent> <leader>ev :Vexplore<CR>
-    nnoremap <silent> <leader>et :Texplore<CR>
+    nnoremap <silent> <leader>ee :Explore<CR>  " open netrw to current file dir
+    nnoremap <silent> <leader>es :Sexplore<CR>  " split netrw horizontal
+    nnoremap <silent> <leader>ev :Vexplore<CR>  " split netrw vertical
+    nnoremap <silent> <leader>et :Texplore<CR>  " split netrw tab
+    nnoremap <silent> <leader>er :Rexplore<CR>  " restore netrw
 
     " Map <Leader>tt to display all lines with keyword under cursor
     " and ask which one to jump to
