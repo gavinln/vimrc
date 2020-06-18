@@ -982,6 +982,9 @@ set diffexpr=
     " redirect output of last :g// command to new window
     nmap <F4> :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>
 
+    " search & send output to a new buffer. Example :Filter red\|blue
+    command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
+
     " clear all signs placed by pymode checker, syntastic
     map <F12> :sign unplace *<cr>
 
