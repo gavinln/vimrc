@@ -17,3 +17,5 @@ Active
 	[_] Try omniduct 2019-10-19
 		Connect to multi datasources from Jupyter notebooks
 		: https://github.com/airbnb/omniduct
+	[_] Try ipython sql 2020-06-18
+		: https://github.com/catherinedevlin/ipython-sql
