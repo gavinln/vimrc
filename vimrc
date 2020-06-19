@@ -985,6 +985,9 @@ set diffexpr=
     " search & send output to a new buffer. Example :Filter red\|blue
     command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
 
+    " redirect external command to a new buffer (# is the current file)
+    ":new | read !ls -la #
+
     " clear all signs placed by pymode checker, syntastic
     map <F12> :sign unplace *<cr>
 
