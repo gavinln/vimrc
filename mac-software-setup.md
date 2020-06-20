@@ -489,3 +489,21 @@ Investigate
 
 [1000]: https://medium.com/skynox/the-only-mac-apps-you-need-for-a-productive-2018-5e1d6de787b7
 
+* [20 tips to help you master your Mac][1010]
+
+[1010]: https://computing.which.co.uk/hc/en-gb/articles/115002557845-20-top-tips-to-help-you-master-your-Mac
+
+* [25 must know MacOS tips][1020]
+
+[1020]: https://www.macrumors.com/guide/useful-mac-tips/
+
+* [Best Mac tips and tricks][1030]
+
+[1030]: https://www.digitaltrends.com/computing/best-mac-tips-tricks/
+
+* [Mac tips and tricks][1040]
+
+[1040]: https://www.cnet.com/how-to/mac-tips-and-tricks-10-things-you-didnt-know-you-could-make-your-laptop-do/
+
+
+
