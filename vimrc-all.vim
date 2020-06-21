@@ -1,6 +1,8 @@
 " vim: sw=4 ts=4 sts=4 et tw=78 foldmarker={,} foldlevel=0 foldmethod=marker spell
 
 " Install VIM for Windows from https://tuxproject.de/projects/vim/
+" Vim tips: https://github.com/mhinz/vim-galore
+" More vim tips: https://github.com/jbranchaud/til
 
 " Uses vim-plug
 " On Windows (PowerShell)
@@ -13,12 +15,32 @@
 "   )
 " )
 
+" TODO: document chezmoi to setup vifmrc and tmux.conf: chezmoi cd; tree
 " TODO: add comments for each plugin
 " TODO: group related plugins
+"
+" To use scp on Windows need to change 3 lines to following 3 lines for netrw to work
+" in the autload\netrw.vim file in the vim installation directory
+"
+"  if g:netrw_scp_cmd =~ '^scp' && (has("win32") || has("win95") || has("win64") || has("win16"))
+"    let tmpfile_get = substitute(tr(tmpfile, '\', '/'), '^\(\a\):[/\\]\(.*\)$', '/\1/\2', '')
+"   else
+"
+"  if g:netrw_scp_cmd =~ '^scp' && (has("win32") || has("win95") || has("win64") || has("win16")) && !has("gui_running")
+"    let tmpfile_get = substitute(tr(tmpfile, '\', '/'), '^\(\a\):[/\\]\(.*\)$', '/\1/\2', '')
+"   else
 
 call plug#begin('~/.vim/plugged')
 
+" Try the following plugins
+" Plug 'tpope/vim-sleuth'  " auto sets expandtab
+" Plug 'dhruvasagar/vim-table-mode'  " create tables
+" Plug 'AndrewRadev/splitjoin.vim'  " switch between single line/multi line
+
 Plug 'tpope/vim-fugitive' " integration with git
+
+" Git browser, :GV
+Plug 'junegunn/gv.vim', {'on': 'GV'}
 
 Plug 'tpope/vim-sensible'   " sensible defaults for vim
 Plug 'tpope/vim-surround'   " surround with parentheses, brackets, quotes, xml
@@ -27,18 +49,47 @@ Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
 Plug 'tpope/vim-repeat'     " improved repeat previous operations
 Plug 'tpope/vim-rsi'        " readline keys in insert mode ctrl-a start of line
 
+" vim startup screen & session
+" https://github.com/mhinz/vim-startify
+" Plug 'mhinz/vim-startify'
+
+" database interface
+Plug 'tpope/vim-dadbod', {'on': 'DBUIToggle'}
+
+" database interface UI
+Plug 'kristijanhusak/vim-dadbod-ui', {'on': 'DBUIToggle'}
+
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
 
-Plug 'kshenoy/vim-signature'   " display marks
-Plug 'mbbill/undotree'         " undo history visualizer
+" display marks
+Plug 'kshenoy/vim-signature', {'on': 'SignatureToggleSigns'}
 
+" undo history visualizer
+Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
+
+" gcc - comment out a line
+" gcap - comment out a paragraph)
+" gc in visual mode to comment out the selection
+" :7,17Commentary - comment a range
+" :g/TODO/Commentary - comment using a global invocation
 Plug 'tpope/vim-commentary'             " comment code gc in any language
 " Plug 'vim-airline/vim-airline'        " fancy status bar
 " Plug 'vim-airline/vim-airline-themes' " themes for status bar
 Plug 'airblade/vim-gitgutter'           " display git status in gutter
 
-Plug 'reedes/vim-pencil'       " format for prose
-Plug 'kkoomen/vim-doge'        " document code using \d
+" format for prose
+Plug 'reedes/vim-pencil', {'on': 'PencilToggle'}
+
+" document generator using \d
+Plug 'kkoomen/vim-doge'
+
+Plug 'LnL7/vim-nix'  " nix package manager
+
+" use vifm as a file picker
+Plug 'vifm/vifm.vim', {'on': 'Vifm'}
+
+" Plug 'preservim/nerdtree'  " file browser with bookmarks
+" Plug 'Xuyuanp/nerdtree-git-plugin'  " git plugin for nerd tree
 
 " Uses https://github.com/palantir/python-language-server
 " Create environment: conda create -n pyls python=3.7
@@ -46,26 +97,49 @@ Plug 'kkoomen/vim-doge'        " document code using \d
 " Install proselint for Markdown linter: pip install proselint
 Plug 'w0rp/ale'
 
+" viewer and finder for LSP symbols and tags
+Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
+
+Plug 'prabirshrestha/async.vim'  " needed for vim-lsp
+Plug 'prabirshrestha/vim-lsp'  " vim language server protocol (lsp) support
+Plug 'mattn/vim-lsp-settings'  " install lsp servers
+
 " Alternatives to ALE using language server protocol
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
 
 Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
-" Explore https://github.com/jeetsukumaran/vim-buffergator instead of bufexplorer
 
 " text objects and motions for Python classes, methods, functions, and doc strings
-" ]]/][ forward to the beginning of next/end of this class
-Plug 'jeetsukumaran/vim-pythonsense'
 
+Plug 'michaeljsmith/vim-indent-object'  " indent text obj with ii, iI, ai, aI
 Plug 'Yggdroot/indentLine'            " display vertical lines at indentation
 
 Plug 'vimoutliner/vimoutliner'
-Plug 'flazz/vim-colorschemes'
-Plug 'junegunn/goyo.vim'
 
-Plug 'junegunn/vim-easy-align'
+" https://tomlankhorst.nl/iterm-tmux-vim-true-color/
+" Plug 'flazz/vim-colorschemes'
+" Plug 'altercation/vim-colors-solarized'
 
+" solarized8_high: high-contrast, solarized8: default Solarized,
+" solarized8_low: low-contrast, solarized8_flat: flat
+Plug 'lifepillar/vim-solarized8'
+
+" vim reading mode
+Plug 'junegunn/goyo.vim', {'on': 'Goyo'}
+
+Plug 'junegunn/vim-easy-align', {'on': 'EasyAlign'}
+
+" move to char, word, line with prompts, trigger <leader><leader>
+Plug 'easymotion/vim-easymotion'
+" Plug 'mg979/vim-visual-multi'  " multiple cursors
+
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+
+" Using the Tmux Plugin Manager (TPM) and modify ~/.tmux.conf
+" set -g @plugin 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-navigator' " vim tmux navigator
+
+Plug 'voldikss/vim-floaterm'  " vim floating window
+Plug 'liuchengxu/vim-which-key'  " help for leader and localleader keys
 
 " display tags of current buffer
 " Needs ctags from https://github.com/universal-ctags/ctags
@@ -82,23 +156,21 @@ Plug 'ron89/thesaurus_query.vim'
 " highlights patterns and ranges for ex commands
 Plug 'markonm/traces.vim'
 
-" Track the engine.
-" Plug 'SirVer/ultisnips'  " sometime crashed when editing .vimrc
-
-" Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
-
 " :Tmap python temp.py
 " ,tt will then run the mapped command in the previous line
 Plug 'kassio/neoterm'  " executes code in a REPL in the vim terminal
 
 Plug 'xolox/vim-misc'          " works with vim session
-Plug 'xolox/vim-session'       " session management with vim
+" session management with vim
+Plug 'xolox/vim-session', {'on': 'OpenSession'}
 
-Plug 'zerowidth/vim-copy-as-rtf'  " command CopyRTF to copy as syntax highlighted RTF on Macs
+Plug 'vimwiki/vimwiki'
+
+" Plug 'zerowidth/vim-copy-as-rtf'  " command CopyRTF to copy as syntax highlighted RTF on Macs
 
 " Initialize plugin system
 call plug#end()
+
 
 " makes it easier to use mappings that use :map <leader>
 let mapleader = "\<Space>"
@@ -107,25 +179,46 @@ let mapleader = "\<Space>"
 " uncomment the following line for the comma comma keyboard mappings to work
 let maplocalleader = ',,'
 
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ',,'<CR>
+
 " use internal diff program
 set diffexpr=
 
 " convert Jupyter notebooks to Python files
 " pip install jupytext flake8 autopep8 yapf  # Install libraries
 " jupytext --to py data-analysis.ipynb  # Jupyter notebook to a python file
+
+" Python formatting
 " flake8 data-analysis.py  " Check the python file for pep8 issues
 " autopep8 -i -a data-analysis.py  # Fix the python file
-" Use \jp in vim for Jupytext mode and ]d/[d to go to the next/previous header
 " set makeprg=flake8\ %  # Setup flake8 to go to the quickfix list
 " type :make  to run the flake8 program
 " type :clast to go to the last issue
 " type :cpr to go the previous issue
+" convert otl to md
+" %s/\(\t\)\+/\0* /
+
+" Editing Jupyter files in Python format
+" Use \jp in vim for Jupytext mode and ]d/[d to go to the next/previous header
+
+" Convert otl files to md to docx
+" make sure all lines are indented one level deep or more
+" convert otl to Google doc compatible indent
+" %s/\(\t\)\+/\0* /
+" convert otl to markdown for Confluence
+" %s/^\t\(\S\)/### \1/
+" pandoc file_name.md -o file_name.docx
+
+" Terminal colors in vim
+" Try :set termguicolors
+" Try :set notermguicolors
 
 " Basics {
     set nocompatible    " Use gVim defaults
     " source $VIMRUNTIME/vimrc_example.vim
     " source $VIMRUNTIME/mswin.vim
-    behave mswin
+    " behave mswin
     if !(has('win16') || has('win32') || has('win64'))
         set shell=/bin/bash
     endif
@@ -172,13 +265,15 @@ set diffexpr=
     syntax enable
     set background=dark
 
-    let g:airline_theme='solarized'
+    let g:airline_theme='solarized8'
     if has('gui_running')
-        colorscheme solarized
+        colorscheme solarized8_high
         set cursorline                  " Highlight current line
-        autocmd VimEnter * colorscheme solarized | highlight clear SignColumn
+        autocmd VimEnter * colorscheme solarized8_high | highlight clear SignColumn
     else
-        colorscheme xterm16
+        " colorscheme xterm16
+        let g:solarized_termcolors=256
+        colorscheme solarized8_high
         set nocursorline
     endif
 
@@ -263,7 +358,7 @@ set diffexpr=
         elseif has("gui_macvim")
             set guifont=Hack\ Regular:h14,Menlo\ Regular:h14,Consolas\ Regular:h16,Courier\ New\ Regular:h18
         elseif has("gui_win32")
-            set guifont=Consolas:h11,Courier_New:h11
+            set guifont=Hack\ Regular:h10,Consolas:h11,Courier_New:h11
         endif
     else
         if &term == 'xterm' || &term == 'screen' || &term == 'ansi'
@@ -279,13 +374,7 @@ set diffexpr=
 
     set winaltkeys=yes  " allows the Alt+Space menu to work on Windows
 
-    " map to left/down/top/right window
-    nnoremap <c-h> <c-w>h
-    nnoremap <c-j> <c-w>j
-    nnoremap <c-k> <c-w>k
-    nnoremap <c-l> <c-w>l
-
-    " resize horizontal split window
+   " resize horizontal split window
     nmap <M-Up> <C-W>+
     nmap <M-Down> <C-W>-
 
@@ -315,11 +404,18 @@ set diffexpr=
 
     " Some helpers to edit mode
     " http://vimcasts.org/e/14
-    cnoremap %% <C-R>=expand('%:h').'/'<cr>
-    map <leader>ew :e %%
-    map <leader>es :sp %%
-    map <leader>ev :vsp %%
-    map <leader>et :tabe %%
+    "
+    " cnoremap %% <C-R>=expand('%:h').'/'<cr>
+    " map <leader>ew :e %%
+    " map <leader>es :sp %%
+    " map <leader>ev :vsp %%
+    " map <leader>et :tabe %%
+
+    nnoremap <silent> <leader>ee :Explore<CR>  " open netrw to current file dir
+    nnoremap <silent> <leader>es :Sexplore<CR>  " split netrw horizontal
+    nnoremap <silent> <leader>ev :Vexplore<CR>  " split netrw vertical
+    nnoremap <silent> <leader>et :Texplore<CR>  " split netrw tab
+    nnoremap <silent> <leader>er :Rexplore<CR>  " restore netrw
 
     " Map <Leader>tt to display all lines with keyword under cursor
     " and ask which one to jump to
@@ -552,6 +648,7 @@ set diffexpr=
 " }
 
 " Plugins {
+
     " Ale {
         " to customize proselint see https://github.com/amperser/proselint
         " On Windows/Linux/Mac
@@ -577,13 +674,60 @@ set diffexpr=
         let g:ale_set_loclist = 1
         let g:ale_set_quickfix = 0
         let g:ale_completion_enabled = 0
-        " set omnifunc=ale#completion#OmniFunc
 
         let g:ale_set_balloons = 1
         nnoremap <silent> <leader>af :ALEFix<CR>
         nnoremap <silent> <leader>at :ALEToggle<CR>
         nnoremap <silent> <leader>an :ALENext<cr>
         nnoremap <silent> <leader>ap :ALEPrevious<cr>
+    " }
+
+    " vista {
+        " https://github.com/liuchengxu/vista.vim
+        " open sidebar to view symbols and tags
+        nnoremap <silent> <leader>vv :Vista vim_lsp<cr>
+        " open fzf to view symbols and tags
+        nnoremap <silent> <leader>vf :Vista finder fzf:vim_lsp<cr>
+        " close vista window
+        nnoremap <silent> <leader>vc :Vista!<cr>
+    " }
+
+    " vim-lsp {
+        " https://github.com/prabirshrestha/vim-lsp
+        set omnifunc=lsp#complete
+
+        set foldmethod=expr
+          \ foldexpr=lsp#ui#vim#folding#foldexpr()
+          \ foldtext=lsp#ui#vim#folding#foldtext()
+
+        let g:lsp_log_verbose = 1
+        let g:lsp_log_file = expand('~/vim-lsp.log')
+
+        nnoremap <silent> <leader>la :LspCodeAction<cr>
+        " nnoremap <silent> <leader>l? :LspDeclaration<cr>  " not for Python
+        nnoremap <silent> <leader>ld :LspDefinition<cr>
+        nnoremap <silent> <leader>lt :LspDocumentDiagnostics<cr>
+        " nnoremap <silent> <leader>l? :LspDocumentFold<cr>  " not needed
+        " nnoremap <silent> <leader>l? :LspDocumentFoldSync<cr>  " not sure functionality
+        nnoremap <silent> <leader>lf :LspDocumentFormat<cr>
+        " nnoremap <silent> <leader>l? :LspDocumentFormatSync<cr>  " not sure functionality
+        nnoremap <silent> <leader>lm :LspDocumentRangeFormat<cr>
+        " nnoremap <silent> <leader>l? :LspDocumentRangeFormatSync<cr>  " not sure functionality
+        nnoremap <silent> <leader>ls :LspDocumentSymbol<cr>
+        nnoremap <silent> <leader>lh :LspHover<cr>
+        " nnoremap <silent> <leader>l? :LspImplementation<cr>  " not for Python
+        " nnoremap <silent> <leader>l? :LspNextError<cr>  " vim issues
+        " nnoremap <silent> <leader>l? :LspNextReference<cr>   " vim issues
+        " nnoremap <silent> <leader>l? :LspPeekDeclaration<cr>  " not for Python
+        nnoremap <silent> <leader>lp :LspPeekDefinition<cr>
+        " nnoremap <silent> <leader>l? :LspPeekTypeDefinition<cr>  " not for Python
+        " nnoremap <silent> <leader>l? :LspPreviousError<cr>  " vim issues
+        " nnoremap <silent> <leader>l? :LspPreviousReference<cr>  " vim issues
+        nnoremap <silent> <leader>lr :LspReferences<cr>
+        nnoremap <silent> <leader>ln :LspRename<cr>
+        " nnoremap <silent> <leader>l? :LspStatus<cr>  "not needed
+        " nnoremap <silent> <leader>l? :LspTypeDefinition<cr>  " not for Python
+        " nnoremap <silent> <leader>l? :LspWorkspaceSymbol<cr>  " not for Python
     " }
 
     " reedes/vim-pencil {
@@ -606,7 +750,9 @@ set diffexpr=
         " very slow
         " nnoremap <silent> <leader>gl :0Glog<CR>
 
-        nnoremap <silent> <leader>gp :Git push<CR>
+        " <leader>gp used to select last pasted text
+        " nnoremap <silent> <leader>gp :Git push<CR>
+
         nnoremap <silent> <leader>gr :Gread<CR>:GitGutter<CR>
         nnoremap <silent> <leader>gw :Gwrite<CR>:GitGutter<CR>
         nnoremap <silent> <leader>ge :Gedit<CR>
@@ -654,14 +800,27 @@ set diffexpr=
 
     " }
 
+    " jlanzarotta/bufexplorer {
+        " nnoremap <silent> <leader>bg :BuffergatorToggle<CR>
+    " }
+
     " plasticboy/vim-markdown {
         let g:vim_markdown_folding_style_pythonic = 1
         " let g:vim_markdown_conceal = 0
         " let g:vim_markdown_conceal_code_blocks = 0
         let g:vim_markdown_frontmatter = 1
         let g:vim_markdown_conceal = 1
+        let g:vim_markdown_no_default_key_mappings = 1
         nnoremap [oe :setlocal conceallevel=<c-r>=&conceallevel > 0 ? &conceallevel - 1 : 0<cr><cr>
         nnoremap ]oe :setlocal conceallevel=<c-r>=&conceallevel < 2 ? &conceallevel + 1 : 2<cr><cr>
+
+        map ]] <Plug>Markdown_MoveToNextHeader
+        map [[ <Plug>Markdown_MoveToPreviousHeader
+        map [] <Plug>Markdown_MoveToPreviousSiblingHeader
+        map ][ <Plug>Markdown_MoveToNextSiblingHeader
+
+        " map ]u <Plug>Markdown_MoveToParentHeader
+        " map ]c <Plug>Markdown_MoveToCurHeader
     " }
 
     " vim-easy-align {
@@ -675,9 +834,8 @@ set diffexpr=
     " neoterm {
 
         let g:neoterm_repl_command="/bin/bash"
-        " let g:neoterm_repl_command="C:/Program Files/Git/usr/bin/bash.exe"
         " let g:neoterm_repl_python="ipython"
-        let g:neoterm_direct_open_repl=1
+        let g:neoterm_direct_open_repl=0
         " Use gy{text-object} in normal mode
         nmap gy <Plug>(neoterm-repl-send)
 
@@ -693,8 +851,8 @@ set diffexpr=
     " airblade/vim-gitgutter {
         " toggle gitgutter display
         nnoremap <silent> <leader>tg :GitGutterToggle<CR>
-        nmap ]h <Plug>GitGutterNextHunk
-        nmap [h <Plug>GitGutterPrevHunk
+        nmap ]h <Plug>(GitGutterNextHunk)
+        nmap [h <Plug>(GitGutterPrevHunk)
     " }
 
     " junegunn/goyo.vim {
@@ -723,21 +881,19 @@ set diffexpr=
         let g:session_autoload = 'no'
         let g:session_autosave = 'yes'
     " }
-    
-    " prabirshrestha/vim-lsp {
-        if executable('pyls')
-            " pip install python-language-server
-            au User lsp_setup call lsp#register_server({
-                \ 'name': 'pyls',
-                \ 'cmd': {server_info->['pyls']},
-                \ 'whitelist': ['python'],
-                \ })
-        endif
+
+    " vimwiki/vimwiki {
+        let g:vimwiki_list = [{'path': '~/vimwiki/',
+                          \ 'syntax': 'markdown', 'ext': '.md-wiki'}]
+        let g:vimwiki_global_ext = 0  " do not consider every markdown file a wiki file
     " }
 
 " }
 
 " Miscellaneous Key Mappings {
+    " paste in terminal mode
+    tmap <S-Insert> <C-W>"+
+
     " running external programs
     "open explorer in the current file's directory
     map <leader>oe :!start explorer "%:p:h"<CR>
@@ -754,11 +910,34 @@ set diffexpr=
     map <leader>cd :cd %:p:h<cr>
 
     " Pull word under cursor into LHS of a substitute
-    nmap <leader>vz :%s#\<<c-r>=expand("<cword>")<cr>\>#
+    nmap <leader>zz :%s#\<<c-r>=expand("<cword>")<cr>\>#
     " Pull Visually Highlighted text into LHS of a substitute
-    vnoremap <leader>vz ""y:%s/<C-R>=escape(@", '/\')<CR>//g<Left><Left>
+    vnoremap <leader>zz ""y:%s/<C-R>=escape(@", '/\')<CR>//g<Left><Left>
+
     " search for text
-    map <leader>vg :vimgrep /\<<c-r>=expand("<cword>")<cr>\>/ **/*.<left><left><left><left><left><left><left>
+    map <leader>zg :vimgrep /\<<c-r>=expand("<cword>")<cr>\>/ **/*.<left><left><left><left><left><left><left>
+
+    " toggle background between dark and light
+    if exists("*ToggleBackground") == 0
+        function ToggleBackground()
+            if &background == "dark"
+                set background=light
+            else
+                set background=dark
+            endif
+        endfunction
+
+        command TB call ToggleBackground()
+    endif
+
+    " toggle background between dark and light
+    map <leader>zb :call ToggleBackground()<cr>
+
+    " choose solarized8 colorschemes
+    map <leader>z1 :colorscheme solarized8<cr>
+    map <leader>z2 :colorscheme solarized8_flat<cr>
+    map <leader>z3 :colorscheme solarized8_low<cr>
+    map <leader>z4 :colorscheme solarized8_high<cr>
 
     " copy full path of current buffer to the clipboard
     map <leader>cp :let @* = expand("%:p")<CR>
@@ -767,6 +946,8 @@ set diffexpr=
     nnoremap <expr> <leader>gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
     " Close the current buffer without closing the window {
+        " may be able to do this without a function
+        " https://stackoverflow.com/questions/4465095/vim-delete-buffer-without-losing-the-split-window
         map <leader>bd :Bclose<cr>
 
         command! Bclose call <SID>BufcloseCloseIt()
@@ -800,6 +981,12 @@ set diffexpr=
 
     " redirect output of last :g// command to new window
     nmap <F4> :redir @a<CR>:g//<CR>:redir END<CR>:new<CR>:put! a<CR><CR>
+
+    " search & send output to a new buffer. Example :Filter red\|blue
+    command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
+
+    " redirect external command to a new buffer (# is the current file)
+    ":new | read !ls -la #
 
     " clear all signs placed by pymode checker, syntastic
     map <F12> :sign unplace *<cr>
@@ -863,4 +1050,10 @@ set diffexpr=
         set grepformat=%f:%l:%c:%m,%f:%l:%m
     endif
 
+" }
+
+" VIM tips {
+    " To send the output of a command to a temporary buffer
+    " https://stackoverflow.com/questions/25038687/vim-show-window-with-output-after-issuing-external-command
+    " :new | read !ls ~/
 " }

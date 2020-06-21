@@ -39,25 +39,12 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-fugitive' " integration with git
 
-" Git browser, :GV
-Plug 'junegunn/gv.vim', {'on': 'GV'}
-
 Plug 'tpope/vim-sensible'   " sensible defaults for vim
 Plug 'tpope/vim-surround'   " surround with parentheses, brackets, quotes, xml
 Plug 'tpope/vim-unimpaired' " pairs of ops: previous/next, turn on/off
 Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
 Plug 'tpope/vim-repeat'     " improved repeat previous operations
 Plug 'tpope/vim-rsi'        " readline keys in insert mode ctrl-a start of line
-
-" vim startup screen & session
-" https://github.com/mhinz/vim-startify
-" Plug 'mhinz/vim-startify'
-
-" database interface
-Plug 'tpope/vim-dadbod', {'on': 'DBUIToggle'}
-
-" database interface UI
-Plug 'kristijanhusak/vim-dadbod-ui', {'on': 'DBUIToggle'}
 
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
 
@@ -73,8 +60,6 @@ Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
 " :7,17Commentary - comment a range
 " :g/TODO/Commentary - comment using a global invocation
 Plug 'tpope/vim-commentary'             " comment code gc in any language
-" Plug 'vim-airline/vim-airline'        " fancy status bar
-" Plug 'vim-airline/vim-airline-themes' " themes for status bar
 Plug 'airblade/vim-gitgutter'           " display git status in gutter
 
 " format for prose
@@ -83,16 +68,11 @@ Plug 'reedes/vim-pencil', {'on': 'PencilToggle'}
 " document generator using \d
 Plug 'kkoomen/vim-doge'
 
-Plug 'LnL7/vim-nix'  " nix package manager
-
 " use vifm as a file picker
 Plug 'vifm/vifm.vim', {'on': 'Vifm'}
 
-" Plug 'preservim/nerdtree'  " file browser with bookmarks
-" Plug 'Xuyuanp/nerdtree-git-plugin'  " git plugin for nerd tree
-
 " Uses https://github.com/palantir/python-language-server
-" Create environment: conda create -n pyls python=3.7
+" Create environment: conda create -n pyls python=3.8
 " conda install -y 'python-language-server[all]'
 " Install proselint for Markdown linter: pip install proselint
 Plug 'w0rp/ale'
@@ -117,8 +97,6 @@ Plug 'vimoutliner/vimoutliner'
 
 " https://tomlankhorst.nl/iterm-tmux-vim-true-color/
 " Plug 'flazz/vim-colorschemes'
-" Plug 'altercation/vim-colors-solarized'
-
 " solarized8_high: high-contrast, solarized8: default Solarized,
 " solarized8_low: low-contrast, solarized8_flat: flat
 Plug 'lifepillar/vim-solarized8'
@@ -138,7 +116,6 @@ Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 " set -g @plugin 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-navigator' " vim tmux navigator
 
-Plug 'voldikss/vim-floaterm'  " vim floating window
 Plug 'liuchengxu/vim-which-key'  " help for leader and localleader keys
 
 " display tags of current buffer
@@ -308,7 +285,7 @@ set diffexpr=
 
     set backspace=indent,eol,start  " Backspace for dummies
     set linespace=0                 " No extra spaces between rows
-    set number                      " Line numbers on
+    set nonumber                      " Line numbers on
     set showmatch                   " Show matching brackets/parenthesis
     set incsearch                   " Find as you type search
     set hlsearch                    " Highlight search terms
@@ -362,8 +339,8 @@ set diffexpr=
         endif
     else
         if &term == 'xterm' || &term == 'screen' || &term == 'ansi'
-            " set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
-            set t_Co=16              " Use only 16 colors to make it easier to see
+            set t_Co=256            " Enable 256 colors to stop the CSApprox warning and make xterm vim shine
+            " set t_Co=16              " Use only 16 colors to make it easier to see
         endif
         "set term=builtin_ansi       " Make arrow and other keys work
     endif
@@ -419,7 +396,8 @@ set diffexpr=
 
     " Map <Leader>tt to display all lines with keyword under cursor
     " and ask which one to jump to
-    " nmap <Leader>tt [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+    " nmap <Leader>zt [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+    nmap <Leader>zt [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
     " Error window mapping {
     if has("win32")
@@ -773,12 +751,14 @@ set diffexpr=
         endfun
         call SetupCommandAlias("Rg", "FzfRg")
 
-        " list files
+        " list files in all sub directories
         nnoremap <silent> <leader>ff :FzfFiles<CR>
         " git status
         nnoremap <silent> <leader>fg :FzfGFiles?<CR>
         " lines in loaded buffers
         nnoremap <silent> <leader>fl :FzfLines<CR>
+        " lines in current buffer
+        nnoremap <silent> <leader>fa :FzfBLines<CR>
         " tags in the project
         nnoremap <silent> <leader>ft :FzfTags<CR>
         " marks
@@ -793,7 +773,7 @@ set diffexpr=
         nnoremap <silent> <leader>fc :FzfCommits<CR>
         " git commits for current buffer
         nnoremap <silent> <leader>fb :FzfBCommits<CR>
-        " color schemes
+        " color schemes FzfColors
         " nnoremap <silent> <leader>fc :Colors<CR>
         " buffers
         " nnoremap <silent> <leader>fb :Buffers<CR>
@@ -801,7 +781,8 @@ set diffexpr=
     " }
 
     " jlanzarotta/bufexplorer {
-        " nnoremap <silent> <leader>bg :BuffergatorToggle<CR>
+        nnoremap <silent> <leader>bb :buffers<CR>
+        nnoremap <leader>ba :badd *
     " }
 
     " plasticboy/vim-markdown {
@@ -893,13 +874,6 @@ set diffexpr=
 " Miscellaneous Key Mappings {
     " paste in terminal mode
     tmap <S-Insert> <C-W>"+
-
-    " running external programs
-    "open explorer in the current file's directory
-    map <leader>oe :!start explorer "%:p:h"<CR>
-
-    "open windows command prompt in the current file's directory
-    map <leader>oc :!start cmd /k cd "%:p:h"<CR>
 
     " mappings to format a paragraph in text format
     nnoremap <silent> Q gqap
@@ -1028,7 +1002,6 @@ set diffexpr=
     set smartindent
     "set visualbell
     set ttyfast
-    set nonumber
 
     " handle long lines
     set textwidth=79
