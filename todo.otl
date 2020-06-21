@@ -12,10 +12,11 @@ Active
 		Type Space>t
 		[_] Change tm, ti, tg, tu, tt, ty mappings to mt, it, gt, ut, tt, yt
 		[_] Check for clashes with other mappings
-	[_] Try python-dotenv 2019-10-19
-		https://github.com/theskumar/python-dotenv
 	[_] Try omniduct 2019-10-19
 		Connect to multi datasources from Jupyter notebooks
 		: https://github.com/airbnb/omniduct
 	[_] Try ipython sql 2020-06-18
 		: https://github.com/catherinedevlin/ipython-sql
+	Split repository into two repos
+		dotfiles
+		vimwiki
