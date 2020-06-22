@@ -46,14 +46,6 @@ fd_changed() {
     fd --type file --changed-within "$1"
 }
 
-# search for recently created files
-# search files created since last Monday and edit them
-# vim $(fs_created 'last monday' | fzfp)
-fs_created() {
-    if [ ! "$#" -gt 0 ]; then echo "Usage: fs_created today or 'last monday' or fsm 2020-05-01)"; return 1; fi
-    fselect "path from . gitignore where created gte '$1' and is_file=true"
-}
-
 # fshow - git commit browser
 fshow() {
   git log --graph --color=always \
