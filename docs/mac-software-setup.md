@@ -193,9 +193,10 @@ brew install shellcheck
 brew install vifm
 ```
 
-### Install midnight commander (mc)
+### DO NOT install midnight commander (mc)
 
 mc can view and copy files to and from remote machines over sftp (ssh)
+Unusual key combinations and works better with menus.
 
 ```shell
 brew install mc
