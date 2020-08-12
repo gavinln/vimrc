@@ -40,6 +40,19 @@
 * Use jupytext to convert back to notebook
 * Use jupyter nbconvert to execute notebook
 
+Add the following to the ~/.config/vifm/vifmrc file
+
+```
+" Convert notebook to Python file
+nnoremap ,p :!jupytext --to py %f %m<cr>
+
+" Convert python file to Notebook
+nnoremap ,n :!jupytext --to notebook %f %m<cr>
+
+" execute notebook inplace
+nnoremap ,e :!jupyter nbconvert --to notebook --ExecutePreprocessor.timeout=300 --inplace --execute %f %s<cr>
+```
+
 ### Get data
 
 * Use df.info() and df.describe() to summarize data frame
