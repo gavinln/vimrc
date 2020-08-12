@@ -226,6 +226,10 @@ brew install ncdu
 brew install spectacle
 ```
 
+### Install amethyst a tiling window manager
+
+https://ianyh.com/amethyst/
+
 ### JSON
 
 #### Install jq to filter json
