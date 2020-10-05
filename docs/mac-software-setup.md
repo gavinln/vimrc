@@ -103,6 +103,12 @@ pandoc input.md -o output.docx
 brew cask install firefox
 ```
 
+### Install nodejs
+
+```shell
+brew install nodejs
+```
+
 ### Git utilities
 
 #### Install tig
@@ -121,6 +127,15 @@ brew install lazygit
 
 ```shell
 brew install git-extras
+```
+
+#### Install git delta
+
+[git-delta](https://github.com/dandavison/delta) displays code diff side-by-side with syntax
+highlights.
+
+```shell
+brew install git-delta
 ```
 
 ### Search utilities
@@ -171,6 +186,12 @@ fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
 
 ```shell
 brew install fpp
+```
+
+#### Install git extras
+
+```shell
+brew install git-extras
 ```
 
 ### Install bat to view files in color
@@ -480,13 +501,6 @@ brew cask install basictex
 ```
 pandoc -t beamer autojump-slides.md -o autojump-slides.pdf
 ```
-
-
-## Other software
-
-Investigate
-
-* [git-delta][https://github.com/dandavison/delta] which displays syntax colored git delta
 
 ## Links
 
