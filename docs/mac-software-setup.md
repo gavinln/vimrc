@@ -162,6 +162,13 @@ brew install fselect
 brew install ripgrep
 ```
 
+#### Install ripgrep-all to search pdf, docx and other files with ripgrep
+
+```shell
+brew install rga
+```
+https://github.com/phiresky/ripgrep-all
+
 
 #### Install fzf - a command line fuzzy finder
 
@@ -250,6 +257,13 @@ brew install spectacle
 ### Install amethyst a tiling window manager
 
 https://ianyh.com/amethyst/
+
+### Install a vnc viewer
+
+```
+echo https://formulae.brew.sh/cask/vnc-viewer
+brew install --cask vnc-viewer
+```
 
 ### JSON
 
