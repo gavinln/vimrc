@@ -3,6 +3,9 @@
 " Install VIM for Windows from https://tuxproject.de/projects/vim/
 " Vim tips: https://github.com/mhinz/vim-galore
 " More vim tips: https://github.com/jbranchaud/til
+" Configuring VIM video: https://www.youtube.com/watch?v=Gs1VDYnS-Ac
+" Learning VIM: https://www.youtube.com/watch?v=SZ-xHGD7sMc
+" Configuring VIM for python: https://www.vimfromscratch.com/articles/vim-for-python/
 
 " Uses vim-plug
 " On Windows (PowerShell)
@@ -29,6 +32,9 @@
 "  if g:netrw_scp_cmd =~ '^scp' && (has("win32") || has("win95") || has("win64") || has("win16")) && !has("gui_running")
 "    let tmpfile_get = substitute(tr(tmpfile, '\', '/'), '^\(\a\):[/\\]\(.*\)$', '/\1/\2', '')
 "   else
+"
+" extract lines from an otl file
+" new | r !~/ws/vimrc/python/filter-indent.py # Standup
 
 call plug#begin('~/.vim/plugged')
 
@@ -46,6 +52,13 @@ Plug 'tpope/vim-vinegar'    " improved shortcuts for netrw
 Plug 'tpope/vim-repeat'     " improved repeat previous operations
 Plug 'tpope/vim-rsi'        " readline keys in insert mode ctrl-a start of line
 
+Plug 'thinca/vim-quickrun'  " run command line programs from VIM
+
+" Better syntax highlighting with scripts loaded on demand
+let g:polyglot_disabled = ['markdown']  " plasticboy/vim-markdown used instead
+Plug 'sheerun/vim-polyglot'
+
+Plug 'godlygeek/tabular'  " needed for vim-markdown
 Plug 'plasticboy/vim-markdown' " better formatting for markdown
 
 " display marks
@@ -75,14 +88,15 @@ Plug 'vifm/vifm.vim', {'on': 'Vifm'}
 " Create environment: conda create -n pyls python=3.8
 " conda install -y 'python-language-server[all]'
 " Install proselint for Markdown linter: pip install proselint
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 
 " viewer and finder for LSP symbols and tags
 Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
 
 Plug 'prabirshrestha/async.vim'  " needed for vim-lsp
 Plug 'prabirshrestha/vim-lsp'  " vim language server protocol (lsp) support
-Plug 'mattn/vim-lsp-settings'  " install lsp servers
+Plug 'mattn/vim-lsp-settings'  " edit a supported language file ...
+" then type :LspInstallServer
 
 " Alternatives to ALE using language server protocol
 
@@ -109,8 +123,6 @@ Plug 'junegunn/vim-easy-align', {'on': 'EasyAlign'}
 " move to char, word, line with prompts, trigger <leader><leader>
 Plug 'easymotion/vim-easymotion'
 " Plug 'mg979/vim-visual-multi'  " multiple cursors
-
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 
 " Using the Tmux Plugin Manager (TPM) and modify ~/.tmux.conf
 " set -g @plugin 'christoomey/vim-tmux-navigator'
@@ -148,6 +160,7 @@ Plug 'vimwiki/vimwiki'
 " Initialize plugin system
 call plug#end()
 
+" vim plugins https://github.com/akrawchyk/awesome-vim
 
 " makes it easier to use mappings that use :map <leader>
 let mapleader = "\<Space>"
@@ -335,7 +348,7 @@ set diffexpr=
         elseif has("gui_macvim")
             set guifont=Hack\ Regular:h14,Menlo\ Regular:h14,Consolas\ Regular:h16,Courier\ New\ Regular:h18
         elseif has("gui_win32")
-            set guifont=Hack\ Regular:h10,Consolas:h11,Courier_New:h11
+            set guifont=Hack\ Regular:h11,Consolas:h11,Courier_New:h11
         endif
     else
         if &term == 'xterm' || &term == 'screen' || &term == 'ansi'
@@ -388,11 +401,18 @@ set diffexpr=
     " map <leader>ev :vsp %%
     " map <leader>et :tabe %%
 
-    nnoremap <silent> <leader>ee :Explore<CR>  " open netrw to current file dir
-    nnoremap <silent> <leader>es :Sexplore<CR>  " split netrw horizontal
-    nnoremap <silent> <leader>ev :Vexplore<CR>  " split netrw vertical
-    nnoremap <silent> <leader>et :Texplore<CR>  " split netrw tab
-    nnoremap <silent> <leader>er :Rexplore<CR>  " restore netrw
+    " open netrw to current file dir
+    nnoremap <silent> <leader>ee :Explore<CR>
+    " split netrw horizontal
+    nnoremap <silent> <leader>es :Sexplore<CR>
+    " split netrw vertical
+    nnoremap <silent> <leader>ev :Vexplore<CR>
+    " split netrw tab
+    nnoremap <silent> <leader>et :Texplore<CR>
+    " restore netrw
+    nnoremap <silent> <leader>er :Rexplore<CR>
+    " left explorer toggle
+    nnoremap <silent> <leader>el :Lexplore!<CR>
 
     " Map <Leader>tt to display all lines with keyword under cursor
     " and ask which one to jump to
@@ -736,12 +756,17 @@ set diffexpr=
         nnoremap <silent> <leader>ge :Gedit<CR>
     " }
 
-    " ultisnips {
-        let g:UltiSnipsExpandTrigger='<tab>'
-    "
-
     " FZF {
         let g:fzf_command_prefix = 'Fzf'
+
+		" Empty value to disable preview window altogether
+		let g:fzf_preview_window = ''
+
+		" Always enable preview window on the right with 60% width
+		" let g:fzf_preview_window = 'right:60%'
+
+        " You can set up fzf window using a Vim command (Neovim or latest Vim 8 required)
+        let g:fzf_layout = { 'window': 'enew' }
 
         " type Rg pattern to search (will be replaced by command FzfRg)
         fun! SetupCommandAlias(from, to)
@@ -815,6 +840,7 @@ set diffexpr=
     " neoterm {
 
         let g:neoterm_repl_command="/bin/bash"
+        " let g:neoterm_repl_command="C:/Program Files/Git/usr/bin/bash.exe"
         " let g:neoterm_repl_python="ipython"
         let g:neoterm_direct_open_repl=0
         " Use gy{text-object} in normal mode
