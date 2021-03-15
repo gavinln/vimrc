@@ -73,10 +73,16 @@ fshow_preview() {
 }
 
 
-# fstatus - git status browser
-_gitStatusLineToFileName="echo {} | sed -nE 's/ M (.*)/\1/p' | head -1 | xargs -I % sh -c 'git diff % | delta | less -R'"
-fstatus() {
-  git status --short "$@" |
+# gmodified - git modified files preview
+gmodified() {
+  git ls-files -m "$@" |
   fzf --ansi --no-sort --reverse --tiebreak=index --no-multi \
-      --preview="$_gitStatusLineToFileName" 
+      --preview='git diff {} | delta | less -R'
+}
+
+# guntracked - git untracked files preview
+guntracked() {
+  git ls-files --others --exclude-standard "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index --no-multi \
+      --preview='bat --style=plain --color=always {} | head -500'
 }
