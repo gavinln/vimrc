@@ -221,6 +221,12 @@ brew install shellcheck
 brew install vifm
 ```
 
+### Install nnn file manager
+
+```shell
+brew install nnn
+```
+
 ### DO NOT install midnight commander (mc)
 
 mc can view and copy files to and from remote machines over sftp (ssh)
@@ -263,6 +269,26 @@ https://ianyh.com/amethyst/
 ```
 echo https://formulae.brew.sh/cask/vnc-viewer
 brew install --cask vnc-viewer
+```
+### Install Postgres client
+
+```
+brew install libpq
+```
+
+Find the location of the `psql` utility by searching in the root dir
+
+```
+pushd /
+find /usr/local -name psql -type f
+# /usr/local/Cellar/libpq/13.2/bin/psql
+popd
+```
+
+Create a symlink
+
+```
+ln -s /usr/local/Cellar/libpq/13.2/bin/psql /usr/local/bin/psql
 ```
 
 ### JSON
@@ -347,6 +373,14 @@ plugins=(git autojump)
 
 ```
 brew install autojump
+```
+
+### Install nushell
+
+A shell with pipelines and plugins: https://www.nushell.sh/
+
+```
+brew install nushell
 ```
 
 ### Csv utilities
