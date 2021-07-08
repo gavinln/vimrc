@@ -28,6 +28,13 @@ The hosts file on a Mac is '/etc/private/hosts'
 brew install macvim
 ```
 
+### Setup neovim
+
+```shell
+brew install neovim
+brew install neovim-qt
+```
+
 ### Setup pyqt5 of jupyter qtconsole
 
 ```shell
