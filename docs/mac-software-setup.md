@@ -53,6 +53,40 @@ brew cask install iterm2
 2. Change "^Home" to "Load Color Preset Solarized Dark"
 3. Change "^End" to "Load Color Preset Solarized Light"
 
+### Setup alacritty
+
+```shell
+brew install alacritty
+```
+
+#### Setup alacritty color scheme switcher
+
+1. Install the Python utility
+
+```shell
+pipx install alacritty-colorscheme
+```
+
+2. Clone the color themes repo
+
+```
+git clone https://github.com/aarowill/base16-alacritty
+```
+
+3. Copy themese form the colors directory to ~/.config/alacritty/colors
+
+4. List available themes
+
+```
+alacritty-colorscheme list
+```
+
+5. Apply theme
+
+```
+alacritty-colorscheme apply $(ls ~/.config/alacritty/colors | fzf)
+```
+
 ### Install watch to periodically run software
 
 ```
