@@ -77,7 +77,7 @@ fshow_preview() {
 gmodified() {
   git ls-files -m "$@" |
   fzf --ansi --no-sort --reverse --tiebreak=index --no-multi \
-      --preview='git diff {} | delta | less -R'
+      --preview='git diff -- {} | delta | less -R'
 }
 
 # guntracked - git untracked files preview
