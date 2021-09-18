@@ -39,7 +39,7 @@
 call plug#begin('~/.vim/plugged')
 
 " Try the following plugins
-" Plug 'tpope/vim-sleuth'  " auto sets expandtab
+" Plug 'tpope/vim-sleuth'  " auto sets expandtab - vim polyglot may be enough
 " Plug 'dhruvasagar/vim-table-mode'  " create tables
 " Plug 'AndrewRadev/splitjoin.vim'  " switch between single line/multi line
 
@@ -79,6 +79,7 @@ Plug 'airblade/vim-gitgutter'           " display git status in gutter
 Plug 'reedes/vim-pencil', {'on': 'PencilToggle'}
 
 " document generator using \d
+" :call doge#install()
 Plug 'kkoomen/vim-doge'
 
 " use vifm as a file picker
@@ -107,7 +108,7 @@ Plug 'jlanzarotta/bufexplorer'        " display buffers in vim
 Plug 'michaeljsmith/vim-indent-object'  " indent text obj with ii, iI, ai, aI
 Plug 'Yggdroot/indentLine'            " display vertical lines at indentation
 
-Plug 'vimoutliner/vimoutliner'
+Plug 'vimoutliner/vimoutliner', {'for': 'votl'}
 
 " https://tomlankhorst.nl/iterm-tmux-vim-true-color/
 " Plug 'flazz/vim-colorschemes'
@@ -154,6 +155,9 @@ Plug 'xolox/vim-misc'          " works with vim session
 Plug 'xolox/vim-session', {'on': 'OpenSession'}
 
 Plug 'vimwiki/vimwiki'
+
+" gS to split and gJ to join
+Plug 'AndrewRadev/splitjoin.vim'  " switch between single and multi-line formas of code
 
 " Plug 'zerowidth/vim-copy-as-rtf'  " command CopyRTF to copy as syntax highlighted RTF on Macs
 
@@ -714,16 +718,19 @@ set diffexpr=
         nnoremap <silent> <leader>ls :LspDocumentSymbol<cr>
         nnoremap <silent> <leader>lh :LspHover<cr>
         " nnoremap <silent> <leader>l? :LspImplementation<cr>  " not for Python
-        " nnoremap <silent> <leader>l? :LspNextError<cr>  " vim issues
+        nnoremap <silent> <leader>le :LspNextError<cr>  " vim issues
         " nnoremap <silent> <leader>l? :LspNextReference<cr>   " vim issues
+        nnoremap <silent> <leader>lw :LspNextWarning<cr>
         " nnoremap <silent> <leader>l? :LspPeekDeclaration<cr>  " not for Python
         nnoremap <silent> <leader>lp :LspPeekDefinition<cr>
         " nnoremap <silent> <leader>l? :LspPeekTypeDefinition<cr>  " not for Python
-        " nnoremap <silent> <leader>l? :LspPreviousError<cr>  " vim issues
+        nnoremap <silent> <leader>lE :LspPreviousError<cr>  " vim issues
         " nnoremap <silent> <leader>l? :LspPreviousReference<cr>  " vim issues
+        nnoremap <silent> <leader>lW :LspPreviousWarning<cr>
         nnoremap <silent> <leader>lr :LspReferences<cr>
         nnoremap <silent> <leader>ln :LspRename<cr>
-        " nnoremap <silent> <leader>l? :LspStatus<cr>  "not needed
+        " nnoremap <silent> <leader>ll :LspStatus<cr>
+        nnoremap <silent> <leader>lx :LspStopServer<cr>
         " nnoremap <silent> <leader>l? :LspTypeDefinition<cr>  " not for Python
         " nnoremap <silent> <leader>l? :LspWorkspaceSymbol<cr>  " not for Python
     " }
@@ -889,12 +896,20 @@ set diffexpr=
         let g:session_autosave = 'yes'
     " }
 
+    " sheerun/vim-polyglot {
+        " better syntax highlighting, folding and indentation for Python
+        let g:python_highlight_all = 1
+    " }
+
     " vimwiki/vimwiki {
         let g:vimwiki_list = [{'path': '~/vimwiki/',
-                          \ 'syntax': 'markdown', 'ext': '.md-wiki'}]
+                          \ 'syntax': 'markdown', 'ext': '.md'}]
         let g:vimwiki_global_ext = 0  " do not consider every markdown file a wiki file
     " }
 
+    " vimoutliner/vimoutliner {
+        autocmd BufNewFile,BufRead *.otl set syntax=votl
+    " }
 " }
 
 " Miscellaneous Key Mappings {
@@ -1033,7 +1048,7 @@ set diffexpr=
     set textwidth=79
     set formatoptions=qrn1
     " highlight column 80 to display long lines
-    "set colorcolumn=80
+    set colorcolumn=80
     " remember window size and position
     set sessionoptions+=resize,winpos
 
@@ -1055,4 +1070,8 @@ set diffexpr=
     " To send the output of a command to a temporary buffer
     " https://stackoverflow.com/questions/25038687/vim-show-window-with-output-after-issuing-external-command
     " :new | read !ls ~/
+
+    " To search in a selected range
+    " use /\%Vsearchterm
+    " https://stackoverflow.com/questions/3264120/
 " }
