@@ -158,6 +158,14 @@ brew install nodejs
 brew install tig
 ```
 
+#### Install gitui
+
+gitui is a terminal git client in Rust
+
+```shell
+brew install gitui
+```
+
 #### Install lazygit
 
 ```shell
@@ -590,6 +598,67 @@ brew cask install basictex
 ```
 pandoc -t beamer autojump-slides.md -o autojump-slides.pdf
 ```
+
+## SQL Workbench setup
+
+### Install Java
+
+1. Display the installed version of Java
+
+```
+java -version
+```
+
+2. Update homebrew
+
+```
+brew update
+```
+
+3. List tapbs
+
+```
+brew list
+```
+
+4. Add the casks tap
+
+```
+brew tap AdoptOpenJDK/openjdk
+```
+
+5. Search for versions
+
+```
+brew search jdk
+```
+
+6. Install a version
+
+```
+brew install --cask adoptopenjdk16
+```
+
+7. Chedk the Java version
+
+```
+java -version
+```
+
+### Install SQL Workbench
+
+For SQL Workbench use the following commands
+
+    1. WbHelp - show a list of commands
+    2. WbDefineDriver - to add a new driver
+    3. WbListProfiles - to list the profiles
+    4. WbConnect -profile=presto - to connect using profile presto
+
+The profiles are stored in ~/.sqlworkbench in the WbProfiles.xml file
+
+https://stackoverflow.com/questions/52524112/how-do-i-install-java-on-mac-osx-allowing-version-switching
+
+http://www.sql-workbench.eu/downloads.html
 
 ## Links
 
