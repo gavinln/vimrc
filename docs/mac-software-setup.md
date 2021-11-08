@@ -297,6 +297,14 @@ brew install tree
 brew install tmux
 ```
 
+### Install just command runner
+
+https://github.com/casey/just
+
+```shell
+brew install just
+```
+
 ### Install ncdu to view disk usage
 
 ```shell
