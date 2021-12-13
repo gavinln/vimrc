@@ -150,6 +150,13 @@ brew cask install firefox
 brew install nodejs
 ```
 
+### Sync utilities
+
+```shell
+brew install rsync
+brew install watchexec
+```
+
 ### Git utilities
 
 #### Install tig
