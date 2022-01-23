@@ -4,14 +4,13 @@
 # non-file arguments are passed to Makefile directly
 # file arguments are converted to relative paths
 
+set -Eeuo pipefail
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 MAKEFILE_DIR=$(realpath "$SCRIPT_DIR/..")
 
-echo "mk.sh"
-
 if [[ $# -eq 0 ]]; then
-    echo "No argument supplied"
-    exit 1
+    make -C "$MAKEFILE_DIR"
 elif [[ ! -e $1 ]]; then
     # not a path argument so pass it to Makefile
     make -C "$MAKEFILE_DIR" "$@"
