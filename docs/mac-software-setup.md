@@ -35,6 +35,12 @@ brew install neovim
 brew install neovim-qt
 ```
 
+#### Setup neovide, gui for neovim
+
+```shell
+brew install neovide
+```
+
 ### Setup pyqt5 of jupyter qtconsole
 
 ```shell
