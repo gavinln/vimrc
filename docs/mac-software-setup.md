@@ -543,6 +543,14 @@ pipx install pipenv
 pipx install httpie
 ```
 
+### Install rich-cli to view Jupyter notebooks
+
+```
+pipx install rich-cli
+# rich notebook.ipynb
+```
+
+
 ## Example Python project
 
 ### Setup a new Python project by running the following
