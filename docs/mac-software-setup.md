@@ -550,6 +550,17 @@ pipx install rich-cli
 # rich notebook.ipynb
 ```
 
+## Rust setup
+
+Install Rust and the tools using rustup
+
+https://www.rust-lang.org/tools/install
+
+```
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+Add `~/.cargo/bin` to your PATH to run rust binaries
 
 ## Example Python project
 
